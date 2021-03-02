@@ -1,0 +1,1 @@
+import 'spica/cache.test';
