@@ -2,7 +2,7 @@
 
 ![CI](https://github.com/falsandtru/dw-cache/workflows/CI/badge.svg)
 
-Dual window cache adaptively coordinates the ratio of LRU to LFU using the two sliding window.
+Dual window cache adaptively coordinates the ratio of LRU to LFU using the two sliding windows.
 
 - Higher x2.0 hit rate of LRU.
 - Slower x0.5 of [lru-cache](https://www.npmjs.com/package/lru-cache).
