@@ -11,35 +11,35 @@ Dual window cache adaptively coordinates the ratio of LRU to LFU using the two s
 Higher x0.9-2.8 hit rate of LRU.
 
 ```
-DEBUG: 'LRU hit rate even 100', 10.026
-DEBUG: 'DWC hit rate even 100', 10.007
-DEBUG: 'LFU ratio even 100', 83, 82
-DEBUG: 'DWC / LRU hit rate ratio even 100', '99%'
-.
-DEBUG: 'LRU hit rate uneven 100', 18.526
-DEBUG: 'DWC hit rate uneven 100', 37.309
-DEBUG: 'LFU ratio uneven 100', 98, 97
-DEBUG: 'DWC / LRU hit rate ratio uneven 100', '201%'
-.
-DEBUG: 'LRU hit rate uneven 100 transitive distribution', 18.466
-DEBUG: 'DWC hit rate uneven 100 transitive distribution', 37.79
-DEBUG: 'LFU ratio uneven 100 transitive distribution', 100, 97
-DEBUG: 'DWC / LRU hit rate ratio uneven 100 transitive distribution', '204%'
-.
-DEBUG: 'LRU hit rate uneven 100 transitive bias', 17.526
-DEBUG: 'DWC hit rate uneven 100 transitive bias', 16.659
-DEBUG: 'LFU ratio uneven 100 transitive bias', 54, 54
-DEBUG: 'DWC / LRU hit rate ratio uneven 100 transitive bias', '95%'
-.
-DEBUG: 'LRU hit rate uneven 100 sequential', 13.963
-DEBUG: 'DWC hit rate uneven 100 sequential', 39.154
-DEBUG: 'LFU ratio uneven 100 sequential', 100, 97
-DEBUG: 'DWC / LRU hit rate ratio uneven 100 sequential', '280%'
-.
-DEBUG: 'LRU hit rate uneven 100 adversarial', 41.95
-DEBUG: 'DWC hit rate uneven 100 adversarial', 42.615
-DEBUG: 'LFU ratio uneven 100 adversarial', 10, 10
-DEBUG: 'DWC / LRU hit rate ratio uneven 100 adversarial', '101%'
+'LRU hit rate even 100', 10.026
+'DWC hit rate even 100', 10.007
+'LFU ratio even 100', 83, 82
+'DWC / LRU hit rate ratio even 100', '99%'
+
+'LRU hit rate uneven 100', 18.526
+'DWC hit rate uneven 100', 37.309
+'LFU ratio uneven 100', 98, 97
+'DWC / LRU hit rate ratio uneven 100', '201%'
+
+'LRU hit rate uneven 100 transitive distribution', 18.466
+'DWC hit rate uneven 100 transitive distribution', 37.79
+'LFU ratio uneven 100 transitive distribution', 100, 97
+'DWC / LRU hit rate ratio uneven 100 transitive distribution', '204%'
+
+'LRU hit rate uneven 100 transitive bias', 17.526
+'DWC hit rate uneven 100 transitive bias', 16.659
+'LFU ratio uneven 100 transitive bias', 54, 54
+'DWC / LRU hit rate ratio uneven 100 transitive bias', '95%'
+
+'LRU hit rate uneven 100 sequential', 13.963
+'DWC hit rate uneven 100 sequential', 39.154
+'LFU ratio uneven 100 sequential', 100, 97
+'DWC / LRU hit rate ratio uneven 100 sequential', '280%'
+
+'LRU hit rate uneven 100 adversarial', 41.95
+'DWC hit rate uneven 100 adversarial', 42.615
+'LFU ratio uneven 100 adversarial', 10, 10
+'DWC / LRU hit rate ratio uneven 100 adversarial', '101%'
 ```
 
 https://github.com/falsandtru/spica/runs/2031763150
