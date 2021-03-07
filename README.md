@@ -4,6 +4,12 @@
 
 Dual window cache adaptively coordinates the ratio of LRU to LFU using the two sliding windows.
 
+## Maintenance
+
+This repository is maintained on the following source repository.
+
+https://github.com/falsandtru/spica
+
 ## Performance comparison
 
 ### Hit rate (%)
