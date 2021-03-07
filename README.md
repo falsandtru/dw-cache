@@ -17,38 +17,38 @@ https://github.com/falsandtru/spica
 Higher x0.9-2.8 hit rate of LRU.
 
 ```
-'LRU hit rate even 100', 10.0505
-'DWC hit rate even 100', 10.113
-'LFU ratio even 100', 43, 43
+'LRU hit rate even 100', 9.9
+'DWC hit rate even 100', 9.98
+'LFU ratio even 100', 31, 31
 'DWC / LRU hit rate ratio even 100', '100%'
 
-'LRU hit rate uneven 100', 18.5265
-'DWC hit rate uneven 100', 37.7265
-'LFU ratio uneven 100', 100, 98
-'DWC / LRU hit rate ratio uneven 100', '203%'
+'LRU hit rate uneven 100', 18.562
+'DWC hit rate uneven 100', 37.5645
+'LFU ratio uneven 100', 98, 97
+'DWC / LRU hit rate ratio uneven 100', '202%'
 
-'LRU hit rate uneven 100 transitive distribution', 18.362
-'DWC hit rate uneven 100 transitive distribution', 38.055
-'LFU ratio uneven 100 transitive distribution', 99, 97
-'DWC / LRU hit rate ratio uneven 100 transitive distribution', '207%'
+'LRU hit rate uneven 100 transitive distribution', 18.3415
+'DWC hit rate uneven 100 transitive distribution', 37.9475
+'LFU ratio uneven 100 transitive distribution', 98, 97
+'DWC / LRU hit rate ratio uneven 100 transitive distribution', '206%'
 
-'LRU hit rate uneven 100 transitive bias', 17.606
-'DWC hit rate uneven 100 transitive bias', 16.445
-'LFU ratio uneven 100 transitive bias', 56, 56
+'LRU hit rate uneven 100 transitive bias', 17.527
+'DWC hit rate uneven 100 transitive bias', 16.3925
+'LFU ratio uneven 100 transitive bias', 54, 54
 'DWC / LRU hit rate ratio uneven 100 transitive bias', '93%'
 
-'LRU hit rate uneven 100 sequential', 14.0175
-'DWC hit rate uneven 100 sequential', 39.122
-'LFU ratio uneven 100 sequential', 100, 98
-'DWC / LRU hit rate ratio uneven 100 sequential', '279%'
+'LRU hit rate uneven 100 sequential', 14.1095
+'DWC hit rate uneven 100 sequential', 39.128
+'LFU ratio uneven 100 sequential', 100, 99
+'DWC / LRU hit rate ratio uneven 100 sequential', '277%'
 
-'LRU hit rate uneven 100 adversarial', 42.024
-'DWC hit rate uneven 100 adversarial', 42.6485
+'LRU hit rate uneven 100 adversarial', 42.074
+'DWC hit rate uneven 100 adversarial', 42.649
 'LFU ratio uneven 100 adversarial', 10, 10
 'DWC / LRU hit rate ratio uneven 100 adversarial', '101%'
 ```
 
-https://github.com/falsandtru/spica/runs/2047781229
+https://github.com/falsandtru/spica/runs/2051018534
 
 ### Benchmark (ops/sec)
 
@@ -56,24 +56,24 @@ Slower x0.2-0.5 of [lru-cache](https://www.npmjs.com/package/lru-cache).
 
 |Operation         |dw-cache |lru-cache|Faster|
 |:-----------------|--------:|--------:|-----:|
-|set     100 (hit) | 20,549K | 12,378K |  66% |
-|set   1,000 (hit) | 18,664K | 11,697K |  59% |
-|set  10,000 (hit) | 17,992K | 11,648K |  54% |
-|set 100,000 (hit) | 11,126K |  8,709K |  27% |
-|set     100 (miss)|  3,454K |  7,765K | -66% |
-|set   1,000 (miss)|  4,921K |  7,185K | -32% |
-|set  10,000 (miss)|  3,041K |  3,704K | -18% |
-|set 100,000 (miss)|  1,820K |  2,275K | -20% |
-|get     100 (hit) | 12,187K | 25,068K | -52% |
-|get   1,000 (hit) | 15,451K | 21,783K | -30% |
-|get  10,000 (hit) | 14,723K | 19,179K | -24% |
-|get 100,000 (hit) | 10,548K | 13,161K | -20% |
-|get     100 (miss)| 44,823K | 43,858K |   2% |
-|get   1,000 (miss)| 38,587K | 38,482K |   0% |
-|get  10,000 (miss)| 41,334K | 39,888K |   3% |
-|get 100,000 (miss)| 22,200K | 21,821K |   1% |
+|set     100 (hit) | 11,404K |  7,523K |  51% |
+|set   1,000 (hit) | 13,133K |  7,299K |  79% |
+|set  10,000 (hit) | 11,907K |  7,905K |  50% |
+|set 100,000 (hit) |  8,204K |  6,326K |  29% |
+|set     100 (miss)|  4,139K |  2,693K |  53% |
+|set   1,000 (miss)|  3,726K |  5,126K | -28% |
+|set  10,000 (miss)|  2,467K |  3,161K | -22% |
+|set 100,000 (miss)|  1,362K |  1,771K | -24% |
+|get     100 (hit) |  7,633K | 12,656K | -40% |
+|get   1,000 (hit) |  9,189K | 11,638K | -22% |
+|get  10,000 (hit) | 10,022K | 11,439K | -13% |
+|get 100,000 (hit) |  7,639K |  8,563K | -11% |
+|get     100 (miss)| 20,562K | 20,484K |   0% |
+|get   1,000 (miss)| 19,942K | 18,580K |   7% |
+|get  10,000 (miss)| 20,401K | 19,310K |   5% |
+|get 100,000 (miss)| 14,883K | 14,011K |   6% |
 
-https://github.com/falsandtru/spica/runs/2047788861
+https://github.com/falsandtru/spica/runs/2051028115
 
 ## API
 
