@@ -50,7 +50,7 @@ Higher x0.9-2.8 hit rate of LRU.
 
 https://github.com/falsandtru/spica/runs/2061824226
 
-### Benchmark (ops/sec)
+### Benchmark
 
 Slower x0.0-0.2 of [lru-cache](https://www.npmjs.com/package/lru-cache).
 
