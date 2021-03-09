@@ -49,7 +49,7 @@ const config = {
   } else if (typeof module === 'object' && module.exports) {
       module.exports = factory();
   } else {
-      Object.assign(root, factory());
+      root.returnExports = factory();
   }
 }(typeof self !== 'undefined' ? self : this, function () {
   return require('${pkg.name}');
