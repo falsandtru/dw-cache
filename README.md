@@ -17,62 +17,62 @@ https://github.com/falsandtru/spica
 Higher x0.9-2.8 hit rate of LRU.
 
 ```
-'LRU hit rate even 100', 9.97
-'DWC hit rate even 100', 9.973
-'LFU ratio even 100', 36, 36
-'DWC / LRU hit rate ratio even 100', '100%'
+'LRU hit rate even 100', 10.024
+'DWC hit rate even 100', 9.9915
+'LFU ratio even 100', 10, 10
+'DWC / LRU hit rate ratio even 100', '99%'
 
-'LRU hit rate uneven 100', 18.5465
-'DWC hit rate uneven 100', 37.235
-'LFU ratio uneven 100', 100, 99
-'DWC / LRU hit rate ratio uneven 100', '200%'
+'LRU hit rate uneven 100', 18.6375
+'DWC hit rate uneven 100', 38.374
+'LFU ratio uneven 100', 100, 98
+'DWC / LRU hit rate ratio uneven 100', '205%'
 
-'LRU hit rate uneven 100 transitive distribution', 18.2985
-'DWC hit rate uneven 100 transitive distribution', 37.7805
-'LFU ratio uneven 100 transitive distribution', 99, 98
-'DWC / LRU hit rate ratio uneven 100 transitive distribution', '206%'
+'LRU hit rate uneven 100 transitive distribution', 18.4425
+'DWC hit rate uneven 100 transitive distribution', 38.279
+'LFU ratio uneven 100 transitive distribution', 99, 96
+'DWC / LRU hit rate ratio uneven 100 transitive distribution', '207%'
 
-'LRU hit rate uneven 100 transitive bias', 17.563
-'DWC hit rate uneven 100 transitive bias', 16.6145
-'LFU ratio uneven 100 transitive bias', 46, 45
+'LRU hit rate uneven 100 transitive bias', 17.6445
+'DWC hit rate uneven 100 transitive bias', 16.703
+'LFU ratio uneven 100 transitive bias', 45, 44
 'DWC / LRU hit rate ratio uneven 100 transitive bias', '94%'
 
-'LRU hit rate uneven 100 sequential', 14.0395
-'DWC hit rate uneven 100 sequential', 39.1375
-'LFU ratio uneven 100 sequential', 100, 97
+'LRU hit rate uneven 100 sequential', 14.067
+'DWC hit rate uneven 100 sequential', 39.226
+'LFU ratio uneven 100 sequential', 100, 98
 'DWC / LRU hit rate ratio uneven 100 sequential', '278%'
 
-'LRU hit rate uneven 100 adversarial', 42.0305
-'DWC hit rate uneven 100 adversarial', 42.635
-'LFU ratio uneven 100 adversarial', 10, 10
-'DWC / LRU hit rate ratio uneven 100 adversarial', '101%'
+'LRU hit rate uneven 100 adversarial', 42.1185
+'DWC hit rate uneven 100 adversarial', 49.814
+'LFU ratio uneven 100 adversarial', 96, 93
+'DWC / LRU hit rate ratio uneven 100 adversarial', '118%'
 ```
 
-https://github.com/falsandtru/spica/runs/2107011452
+https://github.com/falsandtru/spica/runs/2158086653
 
 ### Benchmark
 
 Slower x0.0-0.2 of [lru-cache](https://www.npmjs.com/package/lru-cache).
 
 ```
-'LRUCache simulation 100 x 3,334,131 ops/sec ±0.49% (67 runs sampled)'
+'LRUCache simulation 100 x 3,424,702 ops/sec ±1.24% (64 runs sampled)'
 
-'DW-Cache simulation 100 x 2,339,294 ops/sec ±2.74% (55 runs sampled)'
+'DW-Cache simulation 100 x 2,702,646 ops/sec ±3.15% (58 runs sampled)'
 
-'LRUCache simulation 1,000 x 3,186,070 ops/sec ±0.32% (65 runs sampled)'
+'LRUCache simulation 1,000 x 3,328,666 ops/sec ±0.63% (66 runs sampled)'
 
-'DW-Cache simulation 1,000 x 2,308,224 ops/sec ±3.47% (58 runs sampled)'
+'DW-Cache simulation 1,000 x 2,701,732 ops/sec ±3.95% (58 runs sampled)'
 
-'LRUCache simulation 10,000 x 2,214,603 ops/sec ±3.59% (60 runs sampled)'
+'LRUCache simulation 10,000 x 2,240,699 ops/sec ±3.42% (62 runs sampled)'
 
-'DW-Cache simulation 10,000 x 1,976,012 ops/sec ±3.26% (57 runs sampled)'
+'DW-Cache simulation 10,000 x 2,359,943 ops/sec ±3.91% (59 runs sampled)'
 
-'LRUCache simulation 100,000 x 1,375,549 ops/sec ±3.33% (52 runs sampled)'
+'LRUCache simulation 100,000 x 1,337,542 ops/sec ±3.97% (55 runs sampled)'
 
-'DW-Cache simulation 100,000 x 1,284,223 ops/sec ±4.85% (53 runs sampled)'
+'DW-Cache simulation 100,000 x 1,475,735 ops/sec ±5.69% (55 runs sampled)'
 ```
 
-https://github.com/falsandtru/spica/runs/2107019303
+https://github.com/falsandtru/spica/runs/2158095040
 
 ## API
 
