@@ -58,7 +58,7 @@ https://github.com/falsandtru/spica/runs/3711171582
 
 ### Benchmark
 
-Slower x0.0-0.9 of [lru-cache](https://www.npmjs.com/package/lru-cache).
+Slower x0.0-0.1 of [lru-cache](https://www.npmjs.com/package/lru-cache).
 
 ```
 'LRUCache simulation 100 x 3,390,762 ops/sec ±0.89% (62 runs sampled)'
