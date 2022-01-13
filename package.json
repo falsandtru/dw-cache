@@ -51,7 +51,7 @@
     "mocha": "^9.1.3",
     "npm-check-updates": "^12.1.0",
     "power-assert": "^1.6.1",
-    "spica": "0.0.496",
+    "spica": "0.0.498",
     "tsify": "^5.0.4",
     "typescript": "4.5.4",
     "vinyl-buffer": "^1.0.1",
