@@ -18,88 +18,78 @@ Higher x1.0-2.7 hit rate of LRU.
 
 ```
 'Cache even 100'
-'LRU hit rate', 10.49
-'DWC hit rate', 10.49
+'LRU hit rate', 9.57
+'DWC hit rate', 9.57
 'DWC ratio', 0, 0
 'DWC / LRU hit rate ratio', '100%'
 
 'Cache uneven 100'
-'LRU hit rate', 18.67
-'DWC hit rate', 36.62
+'LRU hit rate', 18.98
+'DWC hit rate', 37.27
 'DWC ratio', 95, 95
 'DWC / LRU hit rate ratio', '196%'
 
 'Cache uneven 100 transitive distribution'
-'LRU hit rate', 18.49
-'DWC hit rate', 37.03
+'LRU hit rate', 18.07
+'DWC hit rate', 35.74
 'DWC ratio', 95, 95
-'DWC / LRU hit rate ratio', '200%'
+'DWC / LRU hit rate ratio', '197%'
 
 'Cache uneven 100 transitive bias'
-'LRU hit rate', 11.37
-'DWC hit rate', 11.37
+'LRU hit rate', 11.21
+'DWC hit rate', 11.21
 'DWC ratio', 0, 0
 'DWC / LRU hit rate ratio', '100%'
 
 'Cache uneven 100 sequential'
-'LRU hit rate', 13.64
-'DWC hit rate', 37.76
+'LRU hit rate', 14.14
+'DWC hit rate', 38.24
 'DWC ratio', 95, 95
-'DWC / LRU hit rate ratio', '276%'
+'DWC / LRU hit rate ratio', '270%'
 
 'Cache uneven 100 adversarial'
-'LRU hit rate', 42.35
-'DWC hit rate', 50
-'DWC ratio', 95, 95
+'LRU hit rate', 41.78
+'DWC hit rate', 49.59
+'DWC ratio', 94, 93
 'DWC / LRU hit rate ratio', '118%'
 ```
 
-https://github.com/falsandtru/spica/runs/4975199942
+https://github.com/falsandtru/spica/runs/4991878619
 
 ### Benchmark
 
 ±10% speed of [lru-cache](https://www.npmjs.com/package/lru-cache).
 
 ```
-'LRUCache simulation 100 x 4,374,051 ops/sec ±0.29% (42 runs sampled)'
+'LRUCache simulation 100 x 3,492,847 ops/sec ±0.94% (65 runs sampled)'
 
-'DW-Cache simulation 100 x 4,266,032 ops/sec ±0.34% (40 runs sampled)'
+'DW-Cache simulation 100 x 3,415,062 ops/sec ±0.55% (66 runs sampled)'
 
-'LRUCache simulation 1,000 x 4,157,006 ops/sec ±0.84% (39 runs sampled)'
+'LRUCache simulation 1,000 x 3,304,101 ops/sec ±0.47% (67 runs sampled)'
 
-'DW-Cache simulation 1,000 x 4,040,645 ops/sec ±5.22% (32 runs sampled)'
+'DW-Cache simulation 1,000 x 2,767,648 ops/sec ±3.77% (55 runs sampled)'
 
-'LRUCache simulation 10,000 x 2,812,756 ops/sec ±2.48% (36 runs sampled)'
+'LRUCache simulation 10,000 x 2,257,419 ops/sec ±3.30% (59 runs sampled)'
 
-'DW-Cache simulation 10,000 x 3,123,457 ops/sec ±3.11% (39 runs sampled)'
+'DW-Cache simulation 10,000 x 2,455,625 ops/sec ±3.14% (63 runs sampled)'
 
-'LRUCache simulation 100,000 x 1,493,577 ops/sec ±2.45% (39 runs sampled)'
+'LRUCache simulation 100,000 x 1,235,246 ops/sec ±3.40% (55 runs sampled)'
 
-'DW-Cache simulation 100,000 x 1,610,209 ops/sec ±8.14% (30 runs sampled)'
+'DW-Cache simulation 100,000 x 1,194,966 ops/sec ±6.72% (53 runs sampled)'
+
+'LRUCache simulation 1,000,000 x 769,860 ops/sec ±7.67% (58 runs sampled)'
+
+'DW-Cache simulation 1,000,000 x 681,607 ops/sec ±7.97% (57 runs sampled)'
 ```
 
-https://github.com/falsandtru/spica/runs/4975213482
+https://github.com/falsandtru/spica/runs/4991888588
 
 ## API
 
 ```ts
-export interface CacheOptions<K, V = undefined> {
-  readonly space?: number;
-  readonly age?: number;
-  readonly life?: number;
-  readonly limit?: number;
-  readonly disposer?: (value: V, key: K) => void;
-  readonly capture?: {
-    readonly delete?: boolean;
-    readonly clear?: boolean;
-  };
-}
-
 export class Cache<K, V = undefined> {
-  constructor(
-    capacity: number,
-    opts: CacheOptions<K, V> = {},
-  );
+  constructor(capacity: number, opts?: Cache.Options<K, V>);
+  constructor(opts: Cache.Options<K, V>);
   put(key: K, value: V, size?: number, age?: number): boolean;
   set(key: K, value: V, size?: number, age?: number): this;
   get(key: K): V | undefined;
@@ -109,5 +99,18 @@ export class Cache<K, V = undefined> {
   readonly length: number;
   readonly size: number;
   [Symbol.iterator](): Iterator<[K, V], undefined, undefined>;
+}
+namespace Cache {
+  export interface Options<K, V = undefined> {
+    readonly space?: number;
+    readonly age?: number;
+    readonly life?: number;
+    readonly limit?: number;
+    readonly disposer?: (value: V, key: K) => void;
+    readonly capture?: {
+      readonly delete?: boolean;
+      readonly clear?: boolean;
+    };
+  }
 }
 ```
