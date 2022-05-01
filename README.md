@@ -113,6 +113,19 @@ https://github.com/falsandtru/spica/runs/5989284811
 ## API
 
 ```ts
+export namespace Cache {
+  export interface Options<K, V = undefined> {
+    readonly space?: number;
+    readonly age?: number;
+    readonly life?: number;
+    readonly limit?: number;
+    readonly disposer?: (value: V, key: K) => void;
+    readonly capture?: {
+      readonly delete?: boolean;
+      readonly clear?: boolean;
+    };
+  }
+}
 export class Cache<K, V = undefined> {
   constructor(capacity: number, opts?: Cache.Options<K, V>);
   constructor(opts: Cache.Options<K, V>);
@@ -127,18 +140,5 @@ export class Cache<K, V = undefined> {
   readonly length: number;
   readonly size: number;
   [Symbol.iterator](): Iterator<[K, V], undefined, undefined>;
-}
-namespace Cache {
-  export interface Options<K, V = undefined> {
-    readonly space?: number;
-    readonly age?: number;
-    readonly life?: number;
-    readonly limit?: number;
-    readonly disposer?: (value: V, key: K) => void;
-    readonly capture?: {
-      readonly delete?: boolean;
-      readonly clear?: boolean;
-    };
-  }
 }
 ```
