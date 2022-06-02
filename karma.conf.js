@@ -1,42 +1,22 @@
 module.exports = function (config) {
   config.set({
-    basePath: '',
-    frameworks: ['mocha'],
+    browsers: ['Chrome', 'Firefox'],
+    frameworks: ['mocha', 'power-assert'],
     files: [
-      { pattern: 'node_modules/power-assert/build/power-assert.js', watched: true, served: true, included: true },
-      { pattern: 'dist/*.test.js', watched: true, served: true, included: true }
+      { pattern: 'dist/**/*.{js,map}', watched: true, served: true, included: true },
     ],
-    exclude: [
-    ],
-    espowerPreprocessor: {
-      options: {
-        emitActualCode: false,
-        ignoreUpstreamSourceMap: true
-      }
-    },
     reporters: ['dots'],
-    coverageIstanbulReporter: {
-      reports: ['html', 'lcovonly', 'text-summary'],
+    preprocessors: {
+      'dist/**/*.js': ['coverage'],
+    },
+    coverageReporter: {
       dir: 'coverage',
-      combineBrowserReports: true,
-      skipFilesWithNoCoverage: false,
-      verbose: false,
-      'report-config': {
-        html: {
-          subdir: 'html',
-        },
-      },
-      instrumentation: {
-        'default-excludes': false,
-      },
+      reporters: [
+        { type: 'html', subdir: browser => browser.split(/\s/)[0] },
+        { type: 'text-summary', subdir: '.', file: 'summary.txt' },
+      ],
     },
-    coverageIstanbulInstrumenter: {
-      esModules: true,
-    },
-    autoWatch: true,
-    autoWatchBatchDelay: 500,
-    browserDisconnectTimeout: 30000,
-    browsers: ['Chrome'],
-    singleRun: true,
+    browserDisconnectTimeout: 60 * 1e3,
+    browserNoActivityTimeout: 90 * 1e3,
   });
 };
