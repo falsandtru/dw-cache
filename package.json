@@ -30,6 +30,7 @@
     "LICENSE"
   ],
   "devDependencies": {
+    "@types/lru-cache": "7.10.9",
     "@types/mocha": "9.1.1",
     "@types/power-assert": "1.5.8",
     "@typescript-eslint/parser": "^5.27.0",
@@ -46,6 +47,7 @@
     "karma-firefox-launcher": "^2.1.2",
     "karma-mocha": "^2.0.1",
     "karma-power-assert": "^1.0.0",
+    "lru-cache": "^7.10.1",
     "mocha": "^10.0.0",
     "npm-check-updates": "^13.0.4",
     "spica": "0.0.555",
@@ -60,7 +62,7 @@
     "dev": "concurrently \"webpack --env mode=test -w\" \"karma start --auto-watch\"",
     "test": "webpack --env mode=test && karma start --single-run --concurrency 1 --reporters dots,coverage",
     "lint": "webpack --env mode=lint",
-    "bench": "webpack --env mode=bench && karma start --single-run --concurrency 1 --browsers Chrome",
+    "bench": "webpack --env mode=bench && karma start --concurrency 1 --browsers Chrome",
     "dist": "webpack --env mode=dist"
   },
   "author": "falsandtru",
