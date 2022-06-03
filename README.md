@@ -10,7 +10,7 @@ This repository is maintained on the following source repository.
 
 https://github.com/falsandtru/spica
 
-## Performance comparison
+## Benchmark
 
 ### Hit rate
 
@@ -38,7 +38,7 @@ DWC / LRU hit rate ratio 111%
 
 https://github.com/dgraph-io/ristretto#search
 
-### Benchmark
+### Throughput
 
 ±10% speed of [lru-cache](https://www.npmjs.com/package/lru-cache)@6 (basic implementation using a linked list).
 
