@@ -36,7 +36,7 @@ DWC - LRU hit rate delta 6.6%
 DWC / LRU hit rate ratio 111%
 ```
 
-https://github.com/ben-manes/caffeine/wiki/Efficiency
+https://github.com/ben-manes/caffeine/wiki/Efficiency#search
 
 ### Throughput
 
