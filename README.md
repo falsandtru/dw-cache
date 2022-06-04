@@ -36,7 +36,7 @@ DWC - LRU hit rate delta 6.6%
 DWC / LRU hit rate ratio 111%
 ```
 
-https://github.com/dgraph-io/ristretto#search
+https://github.com/ben-manes/caffeine/wiki/Efficiency
 
 ### Throughput
 
@@ -99,6 +99,7 @@ export namespace Cache {
   export interface Options<K, V = undefined> {
     readonly space?: number;
     readonly age?: number;
+    readonly overlap?: boolean;
     readonly limit?: number;
     readonly disposer?: (value: V, key: K) => void;
     readonly capture?: {
