@@ -10,6 +10,17 @@ This repository is maintained on the following source repository.
 
 https://github.com/falsandtru/spica
 
+## Extra key size
+
+Some algorithms require extra memory space to retain evicted keys.
+
+|Algorithm|Key size|
+|---------|-|
+|LRU      |x1|
+|DWC      |x1<br>x1.25 (Enabled ages and overlap tracking)|
+|ARC      |x2|
+|LIRS     |x3|
+
 ## Benchmark
 
 ### Hit rate
@@ -31,9 +42,9 @@ DWC / LRU hit rate ratio 164%
 
 S3 800,000
 LRU hit rate 56.5%
-DWC hit rate 63.2%
-DWC - LRU hit rate delta 6.6%
-DWC / LRU hit rate ratio 111%
+DWC hit rate 63.5%
+DWC - LRU hit rate delta 6.9%
+DWC / LRU hit rate ratio 112%
 ```
 
 https://github.com/ben-manes/caffeine/wiki/Efficiency#search
@@ -69,28 +80,28 @@ https://github.com/falsandtru/spica/runs/5132776032
 Slower x2.0 of [lru-cache](https://www.npmjs.com/package/lru-cache)@7 (optimized implementation using an indexed list).
 
 ```
-'LRUCache simulation 100 x 5,706,707 ops/sec ±0.42% (67 runs sampled)'
+'LRUCache simulation 100 x 6,278,213 ops/sec ±0.18% (69 runs sampled)'
 
-'DW-Cache simulation 100 x 4,338,039 ops/sec ±0.32% (67 runs sampled)'
+'DW-Cache simulation 100 x 4,838,019 ops/sec ±0.85% (66 runs sampled)'
 
-'LRUCache simulation 1,000 x 5,541,349 ops/sec ±0.37% (68 runs sampled)'
+'LRUCache simulation 1,000 x 5,643,045 ops/sec ±1.55% (52 runs sampled)'
 
-'DW-Cache simulation 1,000 x 3,837,441 ops/sec ±4.18% (59 runs sampled)'
+'DW-Cache simulation 1,000 x 3,732,200 ops/sec ±4.46% (58 runs sampled)'
 
-'LRUCache simulation 10,000 x 4,988,649 ops/sec ±0.84% (67 runs sampled)'
+'LRUCache simulation 10,000 x 5,398,721 ops/sec ±2.11% (65 runs sampled)'
 
-'DW-Cache simulation 10,000 x 3,329,407 ops/sec ±2.98% (63 runs sampled)'
+'DW-Cache simulation 10,000 x 2,718,213 ops/sec ±3.46% (57 runs sampled)'
 
-'LRUCache simulation 100,000 x 3,602,254 ops/sec ±0.92% (65 runs sampled)'
+'LRUCache simulation 100,000 x 3,329,175 ops/sec ±1.31% (61 runs sampled)'
 
-'DW-Cache simulation 100,000 x 2,159,631 ops/sec ±5.76% (59 runs sampled)'
+'DW-Cache simulation 100,000 x 1,506,367 ops/sec ±7.53% (52 runs sampled)'
 
-'LRUCache simulation 1,000,000 x 2,236,289 ops/sec ±4.41% (54 runs sampled)'
+'LRUCache simulation 1,000,000 x 1,290,187 ops/sec ±5.52% (52 runs sampled)'
 
-'DW-Cache simulation 1,000,000 x 1,007,920 ops/sec ±11.58% (49 runs sampled)'
+'DW-Cache simulation 1,000,000 x 761,712 ops/sec ±6.02% (55 runs sampled)'
 ```
 
-https://github.com/falsandtru/spica/runs/6723710455
+https://github.com/falsandtru/spica/runs/6739256193
 
 ## API
 

@@ -32,7 +32,7 @@ describe('Benchmark: Package', async function () {
     console.log(`S3 ${capacity.toLocaleString('en')}`);
     console.log('LRU hit rate', result.lru * 100 / result.count);
     console.log('DWC hit rate', result.dwc * 100 / result.count);
-    console.log('DWC - LRU hit rate delta', `${(result.dwc - result.lru) * 100 / result.count}%`);
+    console.log('DWC - LRU hit rate delta', (result.dwc - result.lru) * 100 / result.count);
     console.log('DWC / LRU hit rate ratio', `${result.dwc / result.lru * 100}%`);
   }
 
