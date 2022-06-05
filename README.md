@@ -15,11 +15,13 @@ https://github.com/falsandtru/spica
 Some algorithms require extra memory space to retain evicted keys.
 
 |Algorithm|Key size|
-|---------|--|
+|:-------:|:-:|
 |LRU      |x1|
 |DWC      |x1|
 |ARC      |x2|
 |LIRS     |x3|
+
+https://github.com/ben-manes/caffeine/wiki/Efficiency
 
 ## Benchmark
 
@@ -47,7 +49,7 @@ DWC - LRU hit rate delta 7.0%
 DWC / LRU hit rate ratio 112%
 ```
 
-https://github.com/ben-manes/caffeine/wiki/Efficiency#search
+https://github.com/dgraph-io/ristretto#search
 
 ### Throughput
 
