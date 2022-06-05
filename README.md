@@ -10,14 +10,14 @@ This repository is maintained on the following source repository.
 
 https://github.com/falsandtru/spica
 
-## Extra key size
+## Extra keys
 
 Some algorithms require extra memory space to retain evicted keys.
 
 |Algorithm|Key size|
-|---------|-|
+|---------|--|
 |LRU      |x1|
-|DWC      |x1<br>x1.25 (Enabled ages and overlap tracking)|
+|DWC      |x1|
 |ARC      |x2|
 |LIRS     |x3|
 
@@ -51,7 +51,9 @@ https://github.com/ben-manes/caffeine/wiki/Efficiency#search
 
 ### Throughput
 
-±10% speed of [lru-cache](https://www.npmjs.com/package/lru-cache)@6 (basic implementation using a linked list).
+#### Comparison with [lru-cache](https://www.npmjs.com/package/lru-cache)@6 (basic implementation using a linked list).
+
+Equivalent.
 
 ```
 'LRUCache simulation 100 x 4,408,911 ops/sec ±0.50% (67 runs sampled)'
@@ -77,31 +79,33 @@ https://github.com/ben-manes/caffeine/wiki/Efficiency#search
 
 https://github.com/falsandtru/spica/runs/5132776032
 
-Slower x2.0 of [lru-cache](https://www.npmjs.com/package/lru-cache)@7 (optimized implementation using an indexed list).
+#### Comparison with [lru-cache](https://www.npmjs.com/package/lru-cache)@7 (optimized implementation using an indexed list).
+
+Slower x2.0.
 
 ```
-'LRUCache simulation 100 x 4,774,111 ops/sec ±0.55% (62 runs sampled)'
+'LRUCache simulation 100 x 4,921,231 ops/sec ±0.65% (64 runs sampled)'
 
-'DW-Cache simulation 100 x 3,774,560 ops/sec ±1.28% (60 runs sampled)'
+'DW-Cache simulation 100 x 3,932,885 ops/sec ±0.48% (66 runs sampled)'
 
-'LRUCache simulation 1,000 x 4,428,369 ops/sec ±1.96% (61 runs sampled)'
+'LRUCache simulation 1,000 x 4,643,937 ops/sec ±0.63% (64 runs sampled)'
 
-'DW-Cache simulation 1,000 x 3,171,718 ops/sec ±1.90% (60 runs sampled)'
+'DW-Cache simulation 1,000 x 3,659,060 ops/sec ±0.47% (65 runs sampled)'
 
-'LRUCache simulation 10,000 x 3,780,789 ops/sec ±1.51% (62 runs sampled)'
+'LRUCache simulation 10,000 x 4,309,322 ops/sec ±1.62% (62 runs sampled)'
 
-'DW-Cache simulation 10,000 x 2,104,149 ops/sec ±3.14% (60 runs sampled)'
+'DW-Cache simulation 10,000 x 2,682,612 ops/sec ±3.44% (62 runs sampled)'
 
-'LRUCache simulation 100,000 x 2,871,172 ops/sec ±1.77% (60 runs sampled)'
+'LRUCache simulation 100,000 x 3,083,105 ops/sec ±1.11% (62 runs sampled)'
 
-'DW-Cache simulation 100,000 x 1,282,683 ops/sec ±5.08% (57 runs sampled)'
+'DW-Cache simulation 100,000 x 1,646,118 ops/sec ±6.21% (55 runs sampled)'
 
-'LRUCache simulation 1,000,000 x 1,158,911 ops/sec ±5.39% (50 runs sampled)'
+'LRUCache simulation 1,000,000 x 1,519,991 ops/sec ±5.31% (50 runs sampled)'
 
-'DW-Cache simulation 1,000,000 x 630,909 ops/sec ±9.15% (57 runs sampled)'
+'DW-Cache simulation 1,000,000 x 798,439 ops/sec ±6.88% (54 runs sampled)'
 ```
 
-https://github.com/falsandtru/spica/runs/6740556474
+https://github.com/falsandtru/spica/runs/6743280573
 
 ## API
 
@@ -110,7 +114,6 @@ export namespace Cache {
   export interface Options<K, V = undefined> {
     readonly space?: number;
     readonly age?: number;
-    readonly overlap?: boolean;
     readonly limit?: number;
     readonly disposer?: (value: V, key: K) => void;
     readonly capture?: {
