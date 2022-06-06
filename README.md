@@ -86,28 +86,28 @@ https://github.com/falsandtru/spica/runs/5132776032
 Slower x2.0.
 
 ```
-'LRUCache simulation 100 x 4,921,231 ops/sec ±0.65% (64 runs sampled)'
+'LRUCache simulation 100 x 5,161,510 ops/sec ±2.47% (58 runs sampled)'
 
-'DW-Cache simulation 100 x 3,932,885 ops/sec ±0.48% (66 runs sampled)'
+'DW-Cache simulation 100 x 3,699,800 ops/sec ±1.56% (60 runs sampled)'
 
-'LRUCache simulation 1,000 x 4,643,937 ops/sec ±0.63% (64 runs sampled)'
+'LRUCache simulation 1,000 x 4,374,297 ops/sec ±0.62% (61 runs sampled)'
 
-'DW-Cache simulation 1,000 x 3,659,060 ops/sec ±0.47% (65 runs sampled)'
+'DW-Cache simulation 1,000 x 3,111,354 ops/sec ±3.63% (58 runs sampled)'
 
-'LRUCache simulation 10,000 x 4,309,322 ops/sec ±1.62% (62 runs sampled)'
+'LRUCache simulation 10,000 x 4,603,830 ops/sec ±2.30% (61 runs sampled)'
 
-'DW-Cache simulation 10,000 x 2,682,612 ops/sec ±3.44% (62 runs sampled)'
+'DW-Cache simulation 10,000 x 2,754,571 ops/sec ±3.38% (55 runs sampled)'
 
-'LRUCache simulation 100,000 x 3,083,105 ops/sec ±1.11% (62 runs sampled)'
+'LRUCache simulation 100,000 x 3,059,272 ops/sec ±1.63% (59 runs sampled)'
 
-'DW-Cache simulation 100,000 x 1,646,118 ops/sec ±6.21% (55 runs sampled)'
+'DW-Cache simulation 100,000 x 1,625,055 ops/sec ±7.78% (49 runs sampled)'
 
-'LRUCache simulation 1,000,000 x 1,519,991 ops/sec ±5.31% (50 runs sampled)'
+'LRUCache simulation 1,000,000 x 1,700,876 ops/sec ±5.18% (51 runs sampled)'
 
-'DW-Cache simulation 1,000,000 x 798,439 ops/sec ±6.88% (54 runs sampled)'
+'DW-Cache simulation 1,000,000 x 836,083 ops/sec ±8.45% (53 runs sampled)'
 ```
 
-https://github.com/falsandtru/spica/runs/6743280573
+https://github.com/falsandtru/spica/runs/6751777283
 
 ## API
 
@@ -116,6 +116,7 @@ export namespace Cache {
   export interface Options<K, V = undefined> {
     readonly space?: number;
     readonly age?: number;
+    readonly earlyExpiring?: boolean;
     readonly limit?: number;
     readonly disposer?: (value: V, key: K) => void;
     readonly capture?: {
@@ -127,10 +128,10 @@ export namespace Cache {
 export class Cache<K, V = undefined> {
   constructor(capacity: number, opts?: Cache.Options<K, V>);
   constructor(opts: Cache.Options<K, V>);
-  put(key: K, value: V, size?: number, age?: number): boolean;
-  put(this: Cache<K, undefined>, key: K, value?: V, size?: number, age?: number): boolean;
-  set(key: K, value: V, size?: number, age?: number): this;
-  set(this: Cache<K, undefined>, key: K, value?: V, size?: number, age?: number): this;
+  put(key: K, value: V, opts?: { size?: number; age?: number; }): boolean;
+  put(this: Cache<K, undefined>, key: K, value?: V, opts?: { size?: number; age?: number; }): boolean;
+  set(key: K, value: V, opts?: { size?: number; age?: number; }): this;
+  set(this: Cache<K, undefined>, key: K, value?: V, opts?: { size?: number; age?: number; }): this;
   get(key: K): V | undefined;
   has(key: K): boolean;
   delete(key: K): boolean;
