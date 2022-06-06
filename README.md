@@ -12,7 +12,7 @@ https://github.com/falsandtru/spica
 
 ## Extra keys
 
-Some algorithms require extra memory space to retain evicted keys.
+Some cache algorithms require extra memory space to retain evicted keys.
 
 |Algorithm|Key size|
 |:-------:|:-:|
@@ -27,7 +27,7 @@ https://github.com/ben-manes/caffeine/wiki/Efficiency
 
 ### Hit rate
 
-Higher x1.1-4.3 hit rate of LRU.
++7.0-14.7% hit rate of LRU.
 
 ```
 S3 100,000
@@ -36,11 +36,11 @@ DWC hit rate 10.1%
 DWC - LRU hit rate delta 7.8%
 DWC / LRU hit rate ratio 435%
 
-S3 500,000
-LRU hit rate 22.7%
-DWC hit rate 37.4%
-DWC - LRU hit rate delta 14.7%
-DWC / LRU hit rate ratio 164%
+S3 400,000
+LRU hit rate 12.0%
+DWC hit rate 29.3%
+DWC - LRU hit rate delta 17.3%
+DWC / LRU hit rate ratio 243%
 
 S3 800,000
 LRU hit rate 56.5%
@@ -83,7 +83,7 @@ https://github.com/falsandtru/spica/runs/5132776032
 
 #### Comparison with [lru-cache](https://www.npmjs.com/package/lru-cache)@7 (optimized implementation using an indexed list).
 
-Slower x2.0.
+About 50% throughput.
 
 ```
 'LRUCache simulation 100 x 5,161,510 ops/sec ±2.47% (58 runs sampled)'

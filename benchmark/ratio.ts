@@ -12,7 +12,7 @@ describe('Benchmark: Package', async function () {
     }),
   };
 
-  for (const capacity of [100000, 500000, 800000]) {
+  for (const capacity of [100000, 400000, 800000]) {
     const data = WL.S3;
     const dwc = new Cache<string, 1>(capacity);
     const lru = new LRU<string, 1>({ max: capacity });
