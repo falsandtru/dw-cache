@@ -14,12 +14,12 @@ https://github.com/falsandtru/spica
 
 Some cache algorithms require extra memory space to retain evicted keys.
 
-|Algorithm|Key size|
-|:-------:|:-:|
-|LRU      |x1|
-|DWC      |x1|
-|ARC      |x2|
-|LIRS     |x3|
+|Algorithm|Key size|Lists|
+|:-------:|:------:|:---:|
+| LRU     |   x1   |  1  |
+| DWC     |   x1   |  2  |
+| ARC     |   x2   |  4  |
+| LIRS    |   x3   |  2  |
 
 https://github.com/ben-manes/caffeine/wiki/Efficiency
 
@@ -27,7 +27,7 @@ https://github.com/ben-manes/caffeine/wiki/Efficiency
 
 ### Hit rate
 
-+7.0-14.7% hit rate of LRU.
++7.0-17.3% hit rate of LRU.
 
 ```
 S3 100,000
