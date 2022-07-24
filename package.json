@@ -1,6 +1,6 @@
 {
   "name": "dw-cache",
-  "version": "0.0.37",
+  "version": "0.0.38",
   "description": "Dual window cache adaptively coordinates the ratio of LRU to LFU using the two sliding windows.",
   "private": true,
   "homepage": "https://github.com/falsandtru/dw-cache",
