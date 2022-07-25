@@ -114,6 +114,9 @@ https://github.com/falsandtru/spica/runs/6751777283
 ```ts
 export namespace Cache {
   export interface Options<K, V = undefined> {
+    readonly window?: number;
+    readonly resolution?: number;
+    readonly capacity?: number;
     readonly space?: number;
     readonly age?: number;
     readonly earlyExpiring?: boolean;
