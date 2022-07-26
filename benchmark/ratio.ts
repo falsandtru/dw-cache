@@ -4,24 +4,9 @@ import LRU from 'lru-cache';
 describe('Benchmark: Package', async function () {
   const WL = {
     // データが違うようだが比較にはなるので暫定使用
-    LOOP: await new Promise<string>(resolve => {
-      const xhr = new XMLHttpRequest();
-      xhr.addEventListener("load", () => resolve(xhr.responseText));
-      xhr.open("GET", "/base/benchmark/loop.trc");
-      xhr.send();
-    }),
-    OLTP: await new Promise<string>(resolve => {
-      const xhr = new XMLHttpRequest();
-      xhr.addEventListener("load", () => resolve(xhr.responseText));
-      xhr.open("GET", "/base/benchmark/oltp.arc");
-      xhr.send();
-    }),
-    S3: await new Promise<string>(resolve => {
-      const xhr = new XMLHttpRequest();
-      xhr.addEventListener("load", () => resolve(xhr.responseText));
-      xhr.open("GET", "/base/benchmark/s3.arc");
-      xhr.send();
-    }),
+    LOOP: await (await fetch('/base/benchmark/loop.trc')).text(),
+    OLTP: await (await fetch('/base/benchmark/oltp.arc')).text(),
+    S3: await (await fetch('/base/benchmark/s3.arc')).text(),
   };
 
   for (const capacity of [100, 250, 500, 750, 1000, 1250]) {
