@@ -27,7 +27,7 @@ https://github.com/ben-manes/caffeine/wiki/Efficiency
 
 ### Hit rate
 
-+7.0-17.3% hit rate of LRU.
+#### S3
 
 ```
 S3 100,000
@@ -49,7 +49,29 @@ DWC - LRU hit rate delta 7.0%
 DWC / LRU hit rate ratio 112%
 ```
 
-https://github.com/dgraph-io/ristretto#search
+#### OLTP
+
+```
+OLTP 250
+LRU hit rate 16.4%
+DWC hit rate 17.3%
+DWC - LRU hit rate delta 0.9%
+DWC / LRU hit rate ratio 105%
+
+OLTP 1,000
+LRU hit rate 32.8%
+DWC hit rate 37.9%
+DWC - LRU hit rate delta 5.0%
+DWC / LRU hit rate ratio 115%
+
+OLTP 2,000
+LRU hit rate 42.4%
+DWC hit rate 44.4%
+DWC - LRU hit rate delta 1.9%
+DWC / LRU hit rate ratio 104%
+```
+
+https://github.com/dgraph-io/ristretto
 
 ### Throughput
 
