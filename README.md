@@ -54,21 +54,61 @@ DWC / LRU hit rate ratio 112%
 ```
 OLTP 250
 LRU hit rate 16.4%
-DWC hit rate 17.3%
-DWC - LRU hit rate delta 0.9%
-DWC / LRU hit rate ratio 105%
+DWC hit rate 17.7%
+DWC - LRU hit rate delta 1.2%
+DWC / LRU hit rate ratio 107%
 
 OLTP 1,000
 LRU hit rate 32.8%
-DWC hit rate 37.9%
-DWC - LRU hit rate delta 5.0%
+DWC hit rate 38.0%
+DWC - LRU hit rate delta 5.2%
 DWC / LRU hit rate ratio 115%
 
 OLTP 2,000
 LRU hit rate 42.4%
-DWC hit rate 44.4%
-DWC - LRU hit rate delta 1.9%
+DWC hit rate 44.5%
+DWC - LRU hit rate delta 2.0%
 DWC / LRU hit rate ratio 104%
+```
+
+#### LOOP
+
+```
+LOOP 100
+LRU hit rate 0%
+DWC hit rate 3.8%
+DWC - LRU hit rate delta 3.8%
+DWC / LRU hit rate ratio Infinity
+
+LOOP 250
+LRU hit rate 0%
+DWC hit rate 11.2%
+DWC - LRU hit rate delta 11.2%
+DWC / LRU hit rate ratio Infinity
+
+LOOP 500
+LRU hit rate 0%
+DWC hit rate 23.5%
+DWC - LRU hit rate delta 23.5%
+DWC / LRU hit rate ratio Infinity
+
+LOOP 750
+LRU hit rate 0%
+DWC hit rate 37.1%
+DWC - LRU hit rate delta 37.1%
+DWC / LRU hit rate ratio Infinity
+
+LOOP 1,000
+LRU hit rate 0%
+DWC hit rate 95.3%
+DWC - LRU hit rate delta 95.3%
+DWC / LRU hit rate ratio Infinity
+
+LOOP 1,250
+LRU hit rate 99.8%
+DWC hit rate 99.8%
+DWC - LRU hit rate delta 0%
+DWC / LRU hit rate ratio 100%
 ```
 
 https://github.com/dgraph-io/ristretto
