@@ -116,6 +116,7 @@ export namespace Cache {
   export interface Options<K, V = undefined> {
     readonly window?: number;
     readonly resolution?: number;
+    readonly offset?: number;
     readonly capacity?: number;
     readonly space?: number;
     readonly age?: number;
