@@ -54,9 +54,9 @@ DWC / LRU hit rate ratio 112%
 ```
 OLTP 250
 LRU hit rate 16.4%
-DWC hit rate 18.0%
-DWC - LRU hit rate delta 1.5%
-DWC / LRU hit rate ratio 109%
+DWC hit rate 18.1%
+DWC - LRU hit rate delta 1.6%
+DWC / LRU hit rate ratio 110%
 
 OLTP 1,000
 LRU hit rate 32.8%
@@ -76,26 +76,26 @@ DWC / LRU hit rate ratio 104%
 ```
 LOOP 100
 LRU hit rate 0%
-DWC hit rate 9.6%
-DWC - LRU hit rate delta 9.6%
+DWC hit rate 0.7%
+DWC - LRU hit rate delta 0.7%
 DWC / LRU hit rate ratio Infinity
 
 LOOP 250
 LRU hit rate 0%
-DWC hit rate 23.8%
-DWC - LRU hit rate delta 23.8%
+DWC hit rate 19.8%
+DWC - LRU hit rate delta 19.8%
 DWC / LRU hit rate ratio Infinity
 
 LOOP 500
 LRU hit rate 0%
-DWC hit rate 47.5%
-DWC - LRU hit rate delta 47.5%
+DWC hit rate 46.9%
+DWC - LRU hit rate delta 46.9%
 DWC / LRU hit rate ratio Infinity
 
 LOOP 750
 LRU hit rate 0%
-DWC hit rate 70.9%
-DWC - LRU hit rate delta 70.9%
+DWC hit rate 70.8%
+DWC - LRU hit rate delta 70.8%
 DWC / LRU hit rate ratio Infinity
 
 LOOP 1,000
@@ -183,6 +183,7 @@ export namespace Cache {
     readonly space?: number;
     readonly age?: number;
     readonly earlyExpiring?: boolean;
+    readonly interval?: number;
     readonly limit?: number;
     readonly disposer?: (value: V, key: K) => void;
     readonly capture?: {
