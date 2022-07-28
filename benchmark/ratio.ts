@@ -31,7 +31,7 @@ describe('Benchmark: Package', async function () {
     console.log('DWC / LRU hit rate ratio', `${result.dwc / result.lru * 100}%`);
   }
 
-  for (const capacity of [250, 1000, 2000]) {
+  for (const capacity of [250, 500, 750, 1000, 2000]) {
     const data = WL.OLTP;
     const dwc = new Cache<string, 1>(capacity);
     const lru = new LRU<string, 1>({ max: capacity });
