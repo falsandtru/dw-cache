@@ -11,8 +11,8 @@ describe('Benchmark: Package', async function () {
 
   for (const capacity of [100, 250, 500, 750, 1000, 1250]) {
     const data = WL.LOOP;
-    const dwc = new Cache<string, 1>(capacity);
-    const lru = new LRU<string, 1>({ max: capacity });
+    const dwc = new Cache<number, 1>(capacity);
+    const lru = new LRU<number, 1>({ max: capacity });
     const result = {
       count: 0,
       dwc: 0,
@@ -20,7 +20,7 @@ describe('Benchmark: Package', async function () {
     };
     for (let i = 0; 0 <= i && i < data.length; i = data.indexOf('\n', i + 1) + 1) {
       ++result.count;
-      const key = data.slice(i, data.indexOf('\n', i)).trim().split(/\s/)[0];
+      const key = +data.slice(i, data.indexOf('\n', i)).trim().split(/\s/)[0];
       result.dwc += dwc.get(key) ?? +dwc.put(key, 1) & 0;
       result.lru += lru.get(key) ?? +lru.set(key, 1) & 0;
     }
@@ -33,8 +33,8 @@ describe('Benchmark: Package', async function () {
 
   for (const capacity of [250, 500, 750, 1000, 2000]) {
     const data = WL.OLTP;
-    const dwc = new Cache<string, 1>(capacity);
-    const lru = new LRU<string, 1>({ max: capacity });
+    const dwc = new Cache<number, 1>(capacity);
+    const lru = new LRU<number, 1>({ max: capacity });
     const result = {
       count: 0,
       dwc: 0,
@@ -42,7 +42,7 @@ describe('Benchmark: Package', async function () {
     };
     for (let i = 0; 0 <= i && i < data.length; i = data.indexOf('\n', i + 1) + 1) {
       ++result.count;
-      const key = data.slice(i, data.indexOf('\n', i)).trim().split(/\s/)[0];
+      const key = +data.slice(i, data.indexOf('\n', i)).trim().split(/\s/)[0];
       result.dwc += dwc.get(key) ?? +dwc.put(key, 1) & 0;
       result.lru += lru.get(key) ?? +lru.set(key, 1) & 0;
     }
@@ -55,8 +55,8 @@ describe('Benchmark: Package', async function () {
 
   for (const capacity of [100000, 400000, 800000]) {
     const data = WL.S3;
-    const dwc = new Cache<string, 1>(capacity);
-    const lru = new LRU<string, 1>({ max: capacity });
+    const dwc = new Cache<number, 1>(capacity);
+    const lru = new LRU<number, 1>({ max: capacity });
     const result = {
       count: 0,
       dwc: 0,
@@ -65,10 +65,11 @@ describe('Benchmark: Package', async function () {
     for (let i = 0; 0 <= i && i < data.length; i = data.indexOf('\n', i + 1) + 1) {
       ++result.count;
       const fields = data.slice(i, data.indexOf('\n', i)).trim().split(/\s/).slice(0, 2);
-      const key = fields[0];
-      for (let i = +fields[1]; i--;) {
-        result.dwc += dwc.get(key) ?? +dwc.put(key, 1) & 0;
-        result.lru += lru.get(key) ?? +lru.set(key, 1) & 0;
+      const key = +fields[0];
+      const cnt = +fields[1];
+      for (let i = 0; i < cnt; ++i) {
+        result.dwc += dwc.get(key + i) ?? +dwc.put(key + i, 1) & 0;
+        result.lru += lru.get(key + i) ?? +lru.set(key + i, 1) & 0;
       }
     }
     console.log(`S3 ${capacity.toLocaleString('en')}`);
