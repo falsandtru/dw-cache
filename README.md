@@ -123,7 +123,8 @@ DWC - LRU hit rate delta 0%
 DWC / LRU hit rate ratio 100%
 ```
 
-https://github.com/dgraph-io/ristretto
+https://github.com/dgraph-io/ristretto<br>
+https://github.com/dgraph-io/benchmarks
 
 ### Throughput
 
