@@ -10,16 +10,16 @@ This repository is maintained on the following source repository.
 
 https://github.com/falsandtru/spica
 
-## Extra keys
+## Efficiency and Resistance
 
-Some cache algorithms require extra memory space to retain evicted keys.
+Some different cache algorithms require extra memory space to retain evicted keys.
 
-|Algorithm|Key size|Lists|
-|:-------:|:------:|:---:|
-| LRU     |   x1   |  1  |
-| DWC     |   x1   |  2  |
-| ARC     |   x2   |  4  |
-| LIRS    |   x3   |  2  |
+|Algorithm|Key size|Lists|Scan resistance|Loop resistance|
+|:-------:|:------:|:---:|:-------------:|:-------------:|
+| LRU     |   x1   |  1  |       -       |       -       |
+| DWC     |   x1   |  2  |       O       |       O       |
+| ARC     |   x2   |  4  |       O       |       -       |
+| LIRS    |   x3   |  2  |       O       |       O       |
 
 https://github.com/ben-manes/caffeine/wiki/Efficiency
 
