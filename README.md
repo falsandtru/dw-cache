@@ -73,7 +73,7 @@ DWC / LRU hit rate ratio 122%
 OLTP 1,000
 LRU hit rate 32.8%
 DWC hit rate 38.0%
-DWC - LRU hit rate delta 5.2%
+DWC - LRU hit rate delta 5.1%
 DWC / LRU hit rate ratio 115%
 
 OLTP 2,000
@@ -131,45 +131,45 @@ DWC / LRU hit rate ratio 120%
 GLI 2,000
 LRU hit rate 57.4%
 DWC hit rate 57.4%
-DWC - LRU hit rate delta 0
+DWC - LRU hit rate delta 0.0%
 DWC / LRU hit rate ratio 100%
 ```
 
 ```
 LOOP 100
-LRU hit rate 0%
+LRU hit rate 0.0%
 DWC hit rate 5.1%
 DWC - LRU hit rate delta 5.1%
-DWC / LRU hit rate ratio Infinity
+DWC / LRU hit rate ratio Infinity%
 
 LOOP 250
-LRU hit rate 0%
+LRU hit rate 0.0%
 DWC hit rate 19.7%
 DWC - LRU hit rate delta 19.7%
-DWC / LRU hit rate ratio Infinity
+DWC / LRU hit rate ratio Infinity%
 
 LOOP 500
-LRU hit rate 0%
+LRU hit rate 0.0%
 DWC hit rate 46.4%
 DWC - LRU hit rate delta 46.4%
-DWC / LRU hit rate ratio Infinity
+DWC / LRU hit rate ratio Infinity%
 
 LOOP 750
-LRU hit rate 0%
+LRU hit rate 0.0%
 DWC hit rate 70.3%
 DWC - LRU hit rate delta 70.3%
-DWC / LRU hit rate ratio Infinity
+DWC / LRU hit rate ratio Infinity%
 
 LOOP 1,000
-LRU hit rate 0%
+LRU hit rate 0.0%
 DWC hit rate 95.1%
 DWC - LRU hit rate delta 95.1%
-DWC / LRU hit rate ratio Infinity
+DWC / LRU hit rate ratio Infinity%
 
 LOOP 1,250
 LRU hit rate 99.8%
 DWC hit rate 99.8%
-DWC - LRU hit rate delta 0%
+DWC - LRU hit rate delta 0.0%
 DWC / LRU hit rate ratio 100%
 ```
 

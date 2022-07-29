@@ -4,7 +4,7 @@ module.exports = function (config) {
     frameworks: ['mocha', 'power-assert'],
     files: [
       { pattern: 'dist/**/*.{js,map}', watched: true, served: true, included: true },
-      { pattern: 'benchmark/*', watched: false, served: true, included: false },
+      { pattern: 'benchmark/trace/*', watched: false, served: true, included: false },
     ],
     reporters: ['dots'],
     preprocessors: {
