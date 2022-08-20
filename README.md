@@ -6,7 +6,7 @@ Dual window cache adaptively coordinates the ratio of LRU to LFU using the two s
 
 ## Maintenance
 
-This repository is maintained on the following source repository.
+The source code is maintained on the next source repository.
 
 https://github.com/falsandtru/spica
 
@@ -54,7 +54,7 @@ DWC / LRU hit rate ratio 112%
 ```
 OLTP 250
 LRU hit rate 16.4%
-DWC hit rate 18.2%
+DWC hit rate 18.1%
 DWC - LRU hit rate delta 1.7%
 DWC / LRU hit rate ratio 110%
 
@@ -88,15 +88,15 @@ DWC / LRU hit rate ratio 104%
 ```
 GLI 250
 LRU hit rate 0.9%
-DWC hit rate 11.8%
-DWC - LRU hit rate delta 10.8%
-DWC / LRU hit rate ratio 1269%
+DWC hit rate 13.5%
+DWC - LRU hit rate delta 12.6%
+DWC / LRU hit rate ratio 1458%
 
 GLI 500
 LRU hit rate 0.9%
-DWC hit rate 24.8%
-DWC - LRU hit rate delta 23.8%
-DWC / LRU hit rate ratio 2577%
+DWC hit rate 24.6%
+DWC - LRU hit rate delta 23.7%
+DWC / LRU hit rate ratio 2558%
 
 GLI 750
 LRU hit rate 1.1%
@@ -138,20 +138,20 @@ DWC / LRU hit rate ratio 100%
 ```
 LOOP 100
 LRU hit rate 0.0%
-DWC hit rate 4.9%
-DWC - LRU hit rate delta 4.9%
+DWC hit rate 4.7%
+DWC - LRU hit rate delta 4.7%
 DWC / LRU hit rate ratio Infinity%
 
 LOOP 250
 LRU hit rate 0.0%
-DWC hit rate 21.2%
-DWC - LRU hit rate delta 21.2%
+DWC hit rate 18.7%
+DWC - LRU hit rate delta 18.7%
 DWC / LRU hit rate ratio Infinity%
 
 LOOP 500
 LRU hit rate 0.0%
-DWC hit rate 44.5%
-DWC - LRU hit rate delta 44.5%
+DWC hit rate 45.9%
+DWC - LRU hit rate delta 45.9%
 DWC / LRU hit rate ratio Infinity%
 
 LOOP 750
@@ -241,7 +241,6 @@ export namespace Cache {
   export interface Options<K, V = undefined> {
     readonly window?: number;
     readonly capacity?: number;
-    readonly space?: number;
     readonly age?: number;
     readonly earlyExpiring?: boolean;
     readonly disposer?: (value: V, key: K) => void;
