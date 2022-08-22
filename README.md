@@ -19,9 +19,10 @@ Some different cache algorithms require extra memory space to retain evicted key
 | LRU     |   x1   |  1  |       -       |       -       |
 | DWC     |   x1   |  2  |       O       |       O       |
 | ARC     |   x2   |  4  |       O       |       -       |
-| LIRS    |   x3   |  2  |       O       |       O       |
+| LIRS    | x3-2500|  2  |       O       |       O       |
 
-https://github.com/ben-manes/caffeine/wiki/Efficiency
+https://github.com/ben-manes/caffeine/wiki/Efficiency<br>
+https://github.com/zhongch4g/LIRS2/blob/master/src/replace_lirs_base.cc
 
 ## Benchmark
 
@@ -267,6 +268,7 @@ export class Cache<K, V = undefined> {
   has(key: K): boolean;
   delete(key: K): boolean;
   clear(): void;
+  resize(capacity: number): void;
   readonly length: number;
   readonly size: number;
   [Symbol.iterator](): Iterator<[K, V], undefined, undefined>;
