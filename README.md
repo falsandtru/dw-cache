@@ -16,10 +16,10 @@ Some different cache algorithms require extra memory space to retain evicted key
 
 |Algorithm|Key size|Lists|Scan resistance|Loop resistance|
 |:-------:|:------:|:---:|:-------------:|:-------------:|
-| LRU     |   x1   |  1  |       -       |       -       |
-| DWC     |   x1   |  2  |       O       |       O       |
-| ARC     |   x2   |  4  |       O       |       -       |
-| LIRS    | x3-2500|  2  |       O       |       O       |
+| LRU     |   1x   |  1  |       -       |       -       |
+| DWC     |   1x   |  2  |       O       |       O       |
+| ARC     |   2x   |  4  |       O       |       -       |
+| LIRS    | 3-2500x|  2  |       O       |       O       |
 
 https://github.com/ben-manes/caffeine/wiki/Efficiency<br>
 https://github.com/zhongch4g/LIRS2/blob/master/src/replace_lirs_base.cc
