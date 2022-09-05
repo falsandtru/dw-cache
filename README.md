@@ -240,16 +240,17 @@ https://github.com/falsandtru/spica/runs/7560221542
 ```ts
 export namespace Cache {
   export interface Options<K, V = undefined> {
-    readonly window?: number;
     readonly capacity?: number;
     readonly age?: number;
     readonly earlyExpiring?: boolean;
+    readonly round?: number;
     readonly disposer?: (value: V, key: K) => void;
     readonly capture?: {
       readonly delete?: boolean;
       readonly clear?: boolean;
     };
     // Mainly for experiments.
+    readonly window?: number;
     readonly resolution?: number;
     readonly offset?: number;
     readonly block?: number;
