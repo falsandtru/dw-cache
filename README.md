@@ -243,7 +243,6 @@ export namespace Cache {
     readonly capacity?: number;
     readonly age?: number;
     readonly earlyExpiring?: boolean;
-    readonly round?: number;
     readonly disposer?: (value: V, key: K) => void;
     readonly capture?: {
       readonly delete?: boolean;
