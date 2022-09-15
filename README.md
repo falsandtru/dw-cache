@@ -209,31 +209,31 @@ https://github.com/falsandtru/spica/runs/5132776032
 
 #### Comparison with [lru-cache](https://www.npmjs.com/package/lru-cache)@7 (optimized implementation using an indexed list).
 
-About 50% throughput.
+About 60-80% throughput.
 
 ```
-'LRUCache simulation 100 x 7,864,193 ops/sec ±0.44% (67 runs sampled)'
+'LRUCache simulation 100 x 6,317,251 ops/sec ±1.32% (117 runs sampled)'
 
-'DW-Cache simulation 100 x 4,833,508 ops/sec ±0.32% (68 runs sampled)'
+'DW-Cache simulation 100 x 3,902,751 ops/sec ±1.44% (119 runs sampled)'
 
-'LRUCache simulation 1,000 x 7,407,931 ops/sec ±0.46% (66 runs sampled)'
+'LRUCache simulation 1,000 x 5,676,940 ops/sec ±1.21% (119 runs sampled)'
 
-'DW-Cache simulation 1,000 x 4,204,219 ops/sec ±0.33% (63 runs sampled)'
+'DW-Cache simulation 1,000 x 3,311,979 ops/sec ±1.45% (120 runs sampled)'
 
-'LRUCache simulation 10,000 x 6,872,077 ops/sec ±1.96% (62 runs sampled)'
+'LRUCache simulation 10,000 x 4,926,009 ops/sec ±1.09% (120 runs sampled)'
 
-'DW-Cache simulation 10,000 x 3,734,782 ops/sec ±1.99% (62 runs sampled)'
+'DW-Cache simulation 10,000 x 3,124,337 ops/sec ±1.18% (115 runs sampled)'
 
-'LRUCache simulation 100,000 x 3,004,533 ops/sec ±1.48% (57 runs sampled)'
+'LRUCache simulation 100,000 x 2,383,465 ops/sec ±1.72% (113 runs sampled)'
 
-'DW-Cache simulation 100,000 x 1,531,634 ops/sec ±2.91% (59 runs sampled)'
+'DW-Cache simulation 100,000 x 1,839,701 ops/sec ±2.06% (115 runs sampled)'
 
-'LRUCache simulation 1,000,000 x 1,738,064 ops/sec ±3.55% (52 runs sampled)'
+'LRUCache simulation 1,000,000 x 1,109,460 ops/sec ±3.18% (99 runs sampled)'
 
-'DW-Cache simulation 1,000,000 x 1,003,836 ops/sec ±7.02% (52 runs sampled)'
+'DW-Cache simulation 1,000,000 x 866,607 ops/sec ±6.13% (108 runs sampled)'
 ```
 
-https://github.com/falsandtru/spica/runs/7560221542
+https://github.com/falsandtru/spica/actions/runs/3058062147/jobs/4933883972
 
 ## API
 
