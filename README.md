@@ -212,28 +212,28 @@ https://github.com/falsandtru/spica/runs/5132776032
 About 60-80% throughput.
 
 ```
-'LRUCache simulation 100 x 6,317,251 ops/sec ±1.32% (117 runs sampled)'
+'LRUCache simulation 100 x 7,764,079 ops/sec ±1.88% (119 runs sampled)'
 
-'DW-Cache simulation 100 x 3,902,751 ops/sec ±1.44% (119 runs sampled)'
+'DW-Cache simulation 100 x 6,129,520 ops/sec ±1.82% (122 runs sampled)'
 
-'LRUCache simulation 1,000 x 5,676,940 ops/sec ±1.21% (119 runs sampled)'
+'LRUCache simulation 1,000 x 7,085,966 ops/sec ±2.00% (120 runs sampled)'
 
-'DW-Cache simulation 1,000 x 3,311,979 ops/sec ±1.45% (120 runs sampled)'
+'DW-Cache simulation 1,000 x 4,630,651 ops/sec ±2.28% (118 runs sampled)'
 
-'LRUCache simulation 10,000 x 4,926,009 ops/sec ±1.09% (120 runs sampled)'
+'LRUCache simulation 10,000 x 6,680,949 ops/sec ±1.81% (121 runs sampled)'
 
-'DW-Cache simulation 10,000 x 3,124,337 ops/sec ±1.18% (115 runs sampled)'
+'DW-Cache simulation 10,000 x 4,241,119 ops/sec ±1.42% (119 runs sampled)'
 
-'LRUCache simulation 100,000 x 2,383,465 ops/sec ±1.72% (113 runs sampled)'
+'LRUCache simulation 100,000 x 4,149,673 ops/sec ±1.42% (117 runs sampled)'
 
-'DW-Cache simulation 100,000 x 1,839,701 ops/sec ±2.06% (115 runs sampled)'
+'DW-Cache simulation 100,000 x 2,857,708 ops/sec ±1.94% (116 runs sampled)'
 
-'LRUCache simulation 1,000,000 x 1,109,460 ops/sec ±3.18% (99 runs sampled)'
+'LRUCache simulation 1,000,000 x 2,150,350 ops/sec ±3.24% (101 runs sampled)'
 
-'DW-Cache simulation 1,000,000 x 866,607 ops/sec ±6.13% (108 runs sampled)'
+'DW-Cache simulation 1,000,000 x 1,292,624 ops/sec ±3.76% (111 runs sampled)'
 ```
 
-https://github.com/falsandtru/spica/actions/runs/3058062147/jobs/4933883972
+https://github.com/falsandtru/spica/actions/runs/3117354357/jobs/5055969776
 
 ## API
 
@@ -241,6 +241,7 @@ https://github.com/falsandtru/spica/actions/runs/3058062147/jobs/4933883972
 export namespace Cache {
   export interface Options<K, V = undefined> {
     readonly capacity?: number;
+    readonly window?: number;
     readonly age?: number;
     readonly earlyExpiring?: boolean;
     readonly disposer?: (value: V, key: K) => void;
@@ -249,12 +250,11 @@ export namespace Cache {
       readonly clear?: boolean;
     };
     // Mainly for experiments.
-    readonly window?: number;
     readonly resolution?: number;
     readonly offset?: number;
-    readonly block?: number;
+    readonly entrance?: number;
+    readonly threshold?: number;
     readonly sweep?: number;
-    readonly limit?: number;
   }
 }
 export class Cache<K, V = undefined> {
