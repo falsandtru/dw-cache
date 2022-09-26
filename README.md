@@ -55,8 +55,8 @@ DWC / LRU hit rate ratio 112%
 ```
 OLTP 250
 LRU hit rate 16.4%
-DWC hit rate 18.2%
-DWC - LRU hit rate delta 1.7%
+DWC hit rate 18.1%
+DWC - LRU hit rate delta 1.6%
 DWC / LRU hit rate ratio 110%
 
 OLTP 500
@@ -89,15 +89,15 @@ DWC / LRU hit rate ratio 104%
 ```
 GLI 250
 LRU hit rate 0.9%
-DWC hit rate 11.8%
-DWC - LRU hit rate delta 10.8%
-DWC / LRU hit rate ratio 1269%
+DWC hit rate 11.9%
+DWC - LRU hit rate delta 10.9%
+DWC / LRU hit rate ratio 1278%
 
 GLI 500
 LRU hit rate 0.9%
 DWC hit rate 24.8%
 DWC - LRU hit rate delta 23.8%
-DWC / LRU hit rate ratio 2577%
+DWC / LRU hit rate ratio 2574%
 
 GLI 750
 LRU hit rate 1.1%
@@ -212,28 +212,28 @@ https://github.com/falsandtru/spica/runs/5132776032
 About 60-80% throughput.
 
 ```
-'LRUCache simulation 100 x 7,764,079 ops/sec ±1.88% (119 runs sampled)'
+'LRUCache simulation 100 x 7,737,318 ops/sec ±1.85% (119 runs sampled)'
 
-'DW-Cache simulation 100 x 6,129,520 ops/sec ±1.82% (122 runs sampled)'
+'DW-Cache simulation 100 x 6,060,826 ops/sec ±1.92% (122 runs sampled)'
 
-'LRUCache simulation 1,000 x 7,085,966 ops/sec ±2.00% (120 runs sampled)'
+'LRUCache simulation 1,000 x 6,989,810 ops/sec ±1.99% (118 runs sampled)'
 
-'DW-Cache simulation 1,000 x 4,630,651 ops/sec ±2.28% (118 runs sampled)'
+'DW-Cache simulation 1,000 x 5,425,982 ops/sec ±2.13% (121 runs sampled)'
 
-'LRUCache simulation 10,000 x 6,680,949 ops/sec ±1.81% (121 runs sampled)'
+'LRUCache simulation 10,000 x 6,670,558 ops/sec ±1.67% (122 runs sampled)'
 
-'DW-Cache simulation 10,000 x 4,241,119 ops/sec ±1.42% (119 runs sampled)'
+'DW-Cache simulation 10,000 x 4,253,639 ops/sec ±1.52% (119 runs sampled)'
 
-'LRUCache simulation 100,000 x 4,149,673 ops/sec ±1.42% (117 runs sampled)'
+'LRUCache simulation 100,000 x 4,150,865 ops/sec ±1.32% (116 runs sampled)'
 
-'DW-Cache simulation 100,000 x 2,857,708 ops/sec ±1.94% (116 runs sampled)'
+'DW-Cache simulation 100,000 x 2,980,400 ops/sec ±2.17% (113 runs sampled)'
 
-'LRUCache simulation 1,000,000 x 2,150,350 ops/sec ±3.24% (101 runs sampled)'
+'LRUCache simulation 1,000,000 x 1,993,941 ops/sec ±3.19% (102 runs sampled)'
 
-'DW-Cache simulation 1,000,000 x 1,292,624 ops/sec ±3.76% (111 runs sampled)'
+'DW-Cache simulation 1,000,000 x 1,248,598 ops/sec ±4.53% (110 runs sampled)'
 ```
 
-https://github.com/falsandtru/spica/actions/runs/3117354357/jobs/5055969776
+https://github.com/falsandtru/spica/actions/runs/3129806243/jobs/5079396724
 
 ## API
 
