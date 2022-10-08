@@ -179,35 +179,31 @@ https://github.com/dgraph-io/benchmarks
 
 ### Throughput
 
-70-90% of [lru-cache](https://www.npmjs.com/package/lru-cache).
+75-95% of [lru-cache](https://www.npmjs.com/package/lru-cache).
 
 ```
-'LRUCache simulation 100 x 7,645,008 ops/sec ±2.39% (117 runs sampled)'
+'LRUCache simulation 100 x 7,888,492 ops/sec ±1.84% (120 runs sampled)'
 
-'DW-Cache simulation 100 x 6,197,392 ops/sec ±2.36% (120 runs sampled)'
+'DW-Cache simulation 100 x 7,618,681 ops/sec ±1.79% (121 runs sampled)'
 
-'LRUCache simulation 1,000 x 6,715,408 ops/sec ±2.65% (115 runs sampled)'
+'LRUCache simulation 1,000 x 7,288,355 ops/sec ±1.94% (118 runs sampled)'
 
-'DW-Cache simulation 1,000 x 6,563,279 ops/sec ±2.54% (117 runs sampled)'
+'DW-Cache simulation 1,000 x 7,023,296 ops/sec ±1.75% (121 runs sampled)'
 
-'LRUCache simulation 10,000 x 6,308,729 ops/sec ±2.55% (117 runs sampled)'
+'LRUCache simulation 10,000 x 6,555,185 ops/sec ±1.91% (120 runs sampled)'
 
-'DW-Cache simulation 10,000 x 5,926,108 ops/sec ±2.35% (119 runs sampled)'
+'DW-Cache simulation 10,000 x 6,112,268 ops/sec ±1.46% (122 runs sampled)'
 
-'LRUCache simulation 100,000 x 3,572,099 ops/sec ±2.18% (110 runs sampled)'
+'LRUCache simulation 100,000 x 3,075,301 ops/sec ±1.49% (111 runs sampled)'
 
-'DW-Cache simulation 100,000 x 3,032,548 ops/sec ±2.37% (112 runs sampled)'
+'DW-Cache simulation 100,000 x 2,149,032 ops/sec ±1.54% (114 runs sampled)'
 
-'LRUCache simulation 1,000,000 x 1,737,940 ops/sec ±4.75% (98 runs sampled)'
+'LRUCache simulation 1,000,000 x 1,654,276 ops/sec ±2.63% (101 runs sampled)'
 
-'DW-Cache simulation 1,000,000 x 1,229,843 ops/sec ±6.62% (111 runs sampled)'
-
-'LRUCache simulation 10,000,000 x 1,774,905 ops/sec ±3.37% (104 runs sampled)'
-
-'DW-Cache simulation 10,000,000 x 1,102,449 ops/sec ±2.39% (119 runs sampled)'
+'DW-Cache simulation 1,000,000 x 1,264,237 ops/sec ±2.03% (117 runs sampled)'
 ```
 
-https://github.com/falsandtru/spica/actions/runs/3209968465/jobs/5247151674
+https://github.com/falsandtru/spica/actions/runs/3211226103/jobs/5249262213
 
 ## API
 
