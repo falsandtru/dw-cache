@@ -14,12 +14,13 @@ https://github.com/falsandtru/spica
 
 Some different cache algorithms require extra memory space to retain evicted keys.
 
-|Algorithm|Key size|Lists|Scan resistance|Loop resistance|
-|:-------:|:------:|:---:|:-------------:|:-------------:|
-| LRU     |   1x   |  1  |               |               |
-| DWC     |   1x   |  2  |       ✓       |       ✓      |
-| ARC     |   2x   |  4  |       ✓       |               |
-| LIRS    | 3-2500x|  2  |       ✓       |       ✓      |
+|Algorithm|Type |Key size|Lists|Scan resistance|Loop resistance|No batch|
+|:-------:|:---:|:------:|:---:|:-------------:|:-------------:|:------:|
+| LRU     |Evict|   1x   |  1  |               |               |   ✓   |
+| DWC     |Evict|   1x   |  2  |       ✓       |       ✓      |   ✓   |
+| ARC     |Evict|   2x   |  4  |       ✓       |               |   ✓   |
+| LIRS    |Evict| 3-2500x|  2  |       ✓       |       ✓      |        |
+| TinyLFU |Admit|   0    | 4-5 |       ✓       |       ✓      |        |
 
 https://github.com/ben-manes/caffeine/wiki/Efficiency<br>
 https://github.com/zhongch4g/LIRS2/blob/master/src/replace_lirs_base.cc
@@ -27,6 +28,58 @@ https://github.com/zhongch4g/LIRS2/blob/master/src/replace_lirs_base.cc
 ## Benchmark
 
 ### Hit rate
+
+#### DS1
+
+```
+DS1 1,000,000
+LRU hit rate 3.0%
+DWC hit rate 6.4%
+DWC - LRU hit rate delta 3.3%
+DWC / LRU hit rate ratio 207%
+
+DS1 2,000,000
+LRU hit rate 10.7%
+DWC hit rate 19.0%
+DWC - LRU hit rate delta 8.3%
+DWC / LRU hit rate ratio 177%
+
+DS1 3,000,000
+LRU hit rate 18.5%
+DWC hit rate 30.5%
+DWC - LRU hit rate delta 11.9%
+DWC / LRU hit rate ratio 164%
+
+DS1 4,000,000
+LRU hit rate 20.2%
+DWC hit rate 35.1%
+DWC - LRU hit rate delta 14.8%
+DWC / LRU hit rate ratio 173%
+
+DS1 5,000,000
+LRU hit rate 21.0%
+DWC hit rate 40.1%
+DWC - LRU hit rate delta 19.1%
+DWC / LRU hit rate ratio 191%
+
+DS1 6,000,000
+LRU hit rate 33.9%
+DWC hit rate 45.7%
+DWC - LRU hit rate delta 11.7%
+DWC / LRU hit rate ratio 134%
+
+DS1 7,000,000
+LRU hit rate 38.8%
+DWC hit rate 51.5%
+DWC - LRU hit rate delta 12.6%
+DWC / LRU hit rate ratio 132%
+
+DS1 8,000,000
+LRU hit rate 43.0%
+DWC hit rate 60.0%
+DWC - LRU hit rate delta 17.0%
+DWC / LRU hit rate ratio 139%
+```
 
 #### S3
 
@@ -37,11 +90,41 @@ DWC hit rate 10.1%
 DWC - LRU hit rate delta 7.8%
 DWC / LRU hit rate ratio 435%
 
+S3 200,000
+LRU hit rate 4.6%
+DWC hit rate 17.9%
+DWC - LRU hit rate delta 13.2%
+DWC / LRU hit rate ratio 387%
+
+S3 300,000
+LRU hit rate 7.5%
+DWC hit rate 23.9%
+DWC - LRU hit rate delta 16.3%
+DWC / LRU hit rate ratio 315%
+
 S3 400,000
 LRU hit rate 12.0%
 DWC hit rate 29.3%
 DWC - LRU hit rate delta 17.3%
 DWC / LRU hit rate ratio 243%
+
+S3 500,000
+LRU hit rate 22.7%
+DWC hit rate 37.4%
+DWC - LRU hit rate delta 14.7%
+DWC / LRU hit rate ratio 164%
+
+S3 600,000
+LRU hit rate 34.6%
+DWC hit rate 46.1%
+DWC - LRU hit rate delta 11.4%
+DWC / LRU hit rate ratio 133%
+
+S3 700,000
+LRU hit rate 46.0%
+DWC hit rate 55.2%
+DWC - LRU hit rate delta 9.2%
+DWC / LRU hit rate ratio 120%
 
 S3 800,000
 LRU hit rate 56.5%
@@ -179,7 +262,7 @@ https://github.com/dgraph-io/benchmarks
 
 ### Throughput
 
-75-95% of [lru-cache](https://www.npmjs.com/package/lru-cache).
+95-75% of [lru-cache](https://www.npmjs.com/package/lru-cache).
 
 ```
 'LRUCache simulation 100 x 7,888,492 ops/sec ±1.84% (120 runs sampled)'

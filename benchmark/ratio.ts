@@ -8,6 +8,7 @@ describe('Benchmark: Package', async function () {
     GLI: await load('/base/benchmark/trace/gli.trc'),
     OLTP: await load('/base/benchmark/trace/oltp.arc'),
     S3: await load('/base/benchmark/trace/s3.arc'),
+    DS1: await load('/base/benchmark/trace/ds1.arc'),
   } as const;
 
   function* parse(data: string): Iterable<number> {
@@ -81,7 +82,7 @@ describe('Benchmark: Package', async function () {
     print(`OLTP ${capacity.toLocaleString('en')}`, stats);
   }
 
-  for (const capacity of [100000, 400000, 800000]) {
+  for (const capacity of [...Array(8)].map((_, i) => ++i * 100000)) {
     const dwc = new Cache<number, 1>(capacity);
     const lru = new LRU<number, 1>({ max: capacity });
     const stats = {
@@ -95,6 +96,22 @@ describe('Benchmark: Package', async function () {
       stats.lru += lru.get(key) ?? +lru.set(key, 1) & 0;
     }
     print(`S3 ${capacity.toLocaleString('en')}`, stats);
+  }
+
+  for (const capacity of [...Array(8)].map((_, i) => ++i * 1000000)) {
+    const dwc = new Cache<number, 1>(capacity);
+    const lru = new LRU<number, 1>({ max: capacity });
+    const stats = {
+      count: 0,
+      dwc: 0,
+      lru: 0,
+    };
+    for (const key of parse(WL.DS1)) {
+      ++stats.count;
+      stats.dwc += dwc.get(key) ?? +dwc.put(key, 1) & 0;
+      stats.lru += lru.get(key) ?? +lru.set(key, 1) & 0;
+    }
+    print(`DS1 ${capacity.toLocaleString('en')}`, stats);
   }
 
 });
