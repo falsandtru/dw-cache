@@ -7,8 +7,8 @@ describe('Benchmark: Package', async function () {
     LOOP: await load('/base/benchmark/trace/loop.trc'),
     GLI: await load('/base/benchmark/trace/gli.trc'),
     OLTP: await load('/base/benchmark/trace/oltp.arc'),
-    S3: await load('/base/benchmark/trace/s3.arc'),
     DS1: await load('/base/benchmark/trace/ds1.arc'),
+    S3: await load('/base/benchmark/trace/s3.arc'),
   } as const;
 
   function* parse(data: string): Iterable<number> {
@@ -24,10 +24,10 @@ describe('Benchmark: Package', async function () {
   }
   function print(label: string, stats: { count: number; dwc: number; lru: number; }): void {
     console.log(label);
-    console.log('LRU hit rate', `${format(stats.lru * 100 / stats.count, 1)}%`);
-    console.log('DWC hit rate', `${format(stats.dwc * 100 / stats.count, 1)}%`);
-    console.log('DWC - LRU hit rate delta', `${format((stats.dwc - stats.lru) * 100 / stats.count, 1)}%`);
-    console.log('DWC / LRU hit rate ratio', `${format(stats.dwc / stats.lru * 100, 0)}%`);
+    console.log('LRU hit ratio', `${format(stats.lru * 100 / stats.count, 1)}%`);
+    console.log('DWC hit ratio', `${format(stats.dwc * 100 / stats.count, 1)}%`);
+    console.log('DWC - LRU hit ratio delta', `${format((stats.dwc - stats.lru) * 100 / stats.count, 1)}%`);
+    console.log('DWC / LRU hit ratio rate ', `${format(stats.dwc / stats.lru * 100, 0)}%`);
     console.log('');
   }
   function format(n: number, u: number): string {
@@ -66,7 +66,7 @@ describe('Benchmark: Package', async function () {
     print(`GLI ${capacity.toLocaleString('en')}`, stats);
   }
 
-  for (const capacity of [250, 500, 750, 1000, 2000]) {
+  for (const capacity of [250, 500, 750, 1000, 1250, 1500, 1750, 2000]) {
     const dwc = new Cache<number, 1>(capacity);
     const lru = new LRU<number, 1>({ max: capacity });
     const stats = {
@@ -80,22 +80,6 @@ describe('Benchmark: Package', async function () {
       stats.lru += lru.get(key) ?? +lru.set(key, 1) & 0;
     }
     print(`OLTP ${capacity.toLocaleString('en')}`, stats);
-  }
-
-  for (const capacity of [...Array(8)].map((_, i) => ++i * 100000)) {
-    const dwc = new Cache<number, 1>(capacity);
-    const lru = new LRU<number, 1>({ max: capacity });
-    const stats = {
-      count: 0,
-      dwc: 0,
-      lru: 0,
-    };
-    for (const key of parse(WL.S3)) {
-      ++stats.count;
-      stats.dwc += dwc.get(key) ?? +dwc.put(key, 1) & 0;
-      stats.lru += lru.get(key) ?? +lru.set(key, 1) & 0;
-    }
-    print(`S3 ${capacity.toLocaleString('en')}`, stats);
   }
 
   for (const capacity of [...Array(8)].map((_, i) => ++i * 1000000)) {
@@ -112,6 +96,22 @@ describe('Benchmark: Package', async function () {
       stats.lru += lru.get(key) ?? +lru.set(key, 1) & 0;
     }
     print(`DS1 ${capacity.toLocaleString('en')}`, stats);
+  }
+
+  for (const capacity of [...Array(8)].map((_, i) => ++i * 100000)) {
+    const dwc = new Cache<number, 1>(capacity);
+    const lru = new LRU<number, 1>({ max: capacity });
+    const stats = {
+      count: 0,
+      dwc: 0,
+      lru: 0,
+    };
+    for (const key of parse(WL.S3)) {
+      ++stats.count;
+      stats.dwc += dwc.get(key) ?? +dwc.put(key, 1) & 0;
+      stats.lru += lru.get(key) ?? +lru.set(key, 1) & 0;
+    }
+    print(`S3 ${capacity.toLocaleString('en')}`, stats);
   }
 
 });

@@ -1,11 +1,6 @@
 {
   "compilerOptions": {
     "target": "ES2021",
-    "lib": [
-      "ES2021",
-      "DOM",
-      "DOM.Iterable"
-    ],
     "outDir": "dist",
     "module": "commonjs",
     "moduleResolution": "node",
