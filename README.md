@@ -20,9 +20,12 @@ Generally superior and almost flawless.
 
 - High performance
   - High hit ratio
+    - Highest hit ratio among all the eviction algorithms.
+    - Highest hit ratio among all the constant complexity algorithms.
     - Near ARC (S3, OLTP).
     - Significantly higher than ARC (DS1, GLI, LOOP).
   - Low overhead (High throughput)
+    - Constant time complexity overhead decreasing in linear time.
     - Use of only two lists.
   - Low latency
     - Constant extra time complexity (meaning excluding key search).
@@ -106,7 +109,7 @@ Note that LIRS and TinyLFU are not practical cache algorithms.
       - https://issues.redhat.com/browse/ISPN-7246
 - TinyLFU
   - Unreliable performance
-    - Burst access degrades the performance.
+    - *Burst access degrades the performance.*
     - Lower hit ratio than LRU at OLTP.
     - Many major benchmarks are lacking in the paper despite the performance of TinyLFU is significantly worse than W-TinyLFU.
   - Latency spikes
@@ -114,10 +117,10 @@ Note that LIRS and TinyLFU are not practical cache algorithms.
   - Vulnerable algorithm
     - *Burst access saturates Bloom filters.*
 - W-TinyLFU
-  - Middle throughput
-    - Constrained by LRU window placed before Bloom filters.
   - Latency spikes
     - **Whole reset of Bloom filters takes linear time.**
+  - (Essentially high overhead)
+    - Would not to be convertible to CLOCK.
 
 ## Hit ratio
 
@@ -428,7 +431,7 @@ https://github.com/falsandtru/spica/actions/runs/3247690934/jobs/5328013465
 
 ### Resistance
 
-|Level       |Algorithms        |
+|Rank        |Algorithms        |
 |:-----------|:-----------------|
 |Total-high  |W-TinyLFU > (LIRS)|
 |Total-middle|(TinyLFU) >= DWC  |
@@ -437,7 +440,7 @@ https://github.com/falsandtru/spica/actions/runs/3247690934/jobs/5328013465
 
 ### Throughput
 
-|Level                       |Algorithms        |
+|Class                       |Algorithms        |
 |:---------------------------|:-----------------|
 |Bloom filter + Static list  |(TinyLFU)         |
 |Multiple lists (Lock-free)  |DWC > (LIRS) > ARC|
@@ -454,7 +457,7 @@ https://github.com/falsandtru/spica/actions/runs/3247690934/jobs/5328013465
 
 ### Vulnerability
 
-|Level  |Algorithms|
+|Class  |Algorithms|
 |:------|:---------|
 |Degrade|(TinyLFU) |
 |Crush  |(LIRS)    |
