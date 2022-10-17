@@ -385,7 +385,22 @@ https://github.com/dgraph-io/benchmarks
 
 100-80% of [lru-cache](https://www.npmjs.com/package/lru-cache).
 
+No result with 10,000,000 because lru-cache crushes with the next error on the next machine of GitHub Actions.
+It is verified that the error was thrown also when benchmarks only lru-cache.
+Of course it is verified that DWC works fine under the same condition.
+
+> Error: Uncaught RangeError: Map maximum size exceeded
+
+> System:<br>
+  OS: Linux 5.15 Ubuntu 20.04.5 LTS (Focal Fossa)<br>
+  CPU: (2) x64 Intel(R) Xeon(R) Platinum 8370C CPU @ 2.80GHz<br>
+  Memory: 5.88 GB / 6.78 GB
+
 ```
+'LRUCache new x 82,642 ops/sec ±0.75% (121 runs sampled)'
+
+'DW-Cache new x 6,390,636 ops/sec ±1.25% (123 runs sampled)'
+
 'LRUCache simulation 100 x 8,026,811 ops/sec ±1.94% (120 runs sampled)'
 
 'DW-Cache simulation 100 x 7,159,318 ops/sec ±1.73% (121 runs sampled)'
