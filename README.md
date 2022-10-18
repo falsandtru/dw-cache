@@ -12,7 +12,7 @@ https://github.com/falsandtru/spica
 
 ## Abstract
 
-The highest performance constant complexity cache algorithm among the ones taking no large tradeoffs.
+The highest performance constant complexity cache algorithm.
 
 ## Properties
 
@@ -20,7 +20,7 @@ Generally superior and almost flawless.
 
 - High performance
   - High hit ratio
-    - Highest hit ratio among all the eviction algorithms.
+    - Highest hit ratio among all the eviction algorithms in the major benchmarks (DS1, S3, OLTP, GLI).
     - Highest hit ratio among all the constant complexity algorithms.
     - Near ARC (S3, OLTP).
     - Significantly higher than ARC (DS1, GLI, LOOP).
@@ -38,14 +38,24 @@ Generally superior and almost flawless.
     - Retain only keys of resident entries (No history).
 - Total resistance
   - Scan, loop, churn, and burst resistance
-- CLOCK suitable
-  - Lower overhead than CAR
-    - CDW (CLOCK with DWC) has no lists.
-  - Higher resistance than CAR and CLOCK-Pro
-    - CAR and CLOCK-Pro have no or a few loop resistance.
 - Few tradeoffs
   - Not the highest hit-ratio level
   - Substantially no tradeoffs
+- Compatible with ARC
+  - Comprehensively higher performance
+- Upward compatible with Segmented LRU
+  - Totally higher performance
+  - Suitable for TinyLFU
+    - Better for (W-)TinyLFU's eviction algorithm
+- CLOCK adaptive
+  - Low overhead
+    - CDW (CLOCK with DWC) requires no lists (for history).
+  - High resistance
+    - CAR has no loop resistance.
+    - CLOCK-Pro would have no churn resistance.
+  - Possibly better than CLOCK-Pro
+    - CDW may be better for strict requirements.
+    - Comprehensive comparison of CDW and CLOCK-Pro is uncertain.
 
 ## Efficiency
 
@@ -81,7 +91,7 @@ LIRS's burst resistance means resistance to continuous cache miss.
 
 ## Tradeoffs
 
-Note that LIRS and TinyLFU are not practical cache algorithms.
+Note that LIRS and TinyLFU are risky cache algorithms.
 
 - LRU
   - Low performance
@@ -107,6 +117,7 @@ Note that LIRS and TinyLFU are not practical cache algorithms.
     - ***Continuous cache miss explodes key size.***
       - https://issues.redhat.com/browse/ISPN-7171
       - https://issues.redhat.com/browse/ISPN-7246
+      - https://clojure.atlassian.net/browse/CCACHE-32
 - TinyLFU
   - Unreliable performance
     - *Burst access degrades the performance.*
@@ -127,6 +138,10 @@ Note that LIRS and TinyLFU are not practical cache algorithms.
 ### DS1
 
 W-TinyLFU > (LIRS) > DWC > (TinyLFU) > ARC > LRU
+
+- In 4,000,000 to 5,000,000, LIRS and ARC have stopped increasing, but DWC has increased steadily.
+- At 5,000,000, DWC slightly better than LIRS.
+- At 8,000,000, DWC significantly better than ARC and TinyLFU.
 
 ```
 DS1 1,000,000
@@ -182,6 +197,8 @@ DWC / LRU hit ratio rate  139%
 
 W-TinyLFU, (TinyLFU) > (LIRS) > ARC, DWC > LRU
 
+- DWC is an approximation of ARC.
+
 ```
 S3 100,000
 LRU hit ratio 2.3%
@@ -236,6 +253,8 @@ DWC / LRU hit ratio rate  112%
 
 W-TinyLFU > ARC, DWC > (LIRS) > LRU > (TinyLFU)
 
+- DWC is an approximation of ARC.
+
 ```
 OLTP 250
 LRU hit ratio 16.4%
@@ -289,6 +308,8 @@ DWC / LRU hit ratio rate  104%
 ### LOOP
 
 W-TinyLFU, (LIRS) > (TinyLFU) >= DWC >> ARC > LRU
+
+- DWC is almost the same as TinyLFU.
 
 ```
 GLI 250
@@ -386,7 +407,7 @@ https://github.com/dgraph-io/benchmarks
 100-80% of [lru-cache](https://www.npmjs.com/package/lru-cache).
 
 No result with 10,000,000 because lru-cache crushes with the next error on the next machine of GitHub Actions.
-It is verified that the error was thrown also when benchmarks only lru-cache.
+It is verified that the error was thrown also when benchmarking only lru-cache.
 Of course it is verified that DWC works fine under the same condition.
 
 > Error: Uncaught RangeError: Map maximum size exceeded
