@@ -12,9 +12,9 @@ describe('Benchmark: Package', async function () {
     const stats = new Stats();
     for (let keys = parse(data), i = 0; i < keys.length; ++i) {
       const key = keys[i];
-      ++stats.count;
-      stats.dwc += dwc.get(key) ?? +dwc.put(key, 1) & 0;
-      stats.lru += lru.get(key) ?? +lru.set(key, 1) & 0;
+      ++stats.total;
+      stats.dwc += dwc.get(key) ?? (dwc.set(key, 1), 0);
+      stats.lru += lru.get(key) ?? (lru.set(key, 1), 0);
     }
     print(`${label} ${capacity.toLocaleString('en')}`, stats);
   }
@@ -31,11 +31,11 @@ describe('Benchmark: Package', async function () {
     }
     return acc;
   }
-  function print(label: string, stats: { count: number; dwc: number; lru: number; }): void {
+  function print(label: string, stats: Stats): void {
     console.log(label);
-    console.log('LRU hit ratio', `${format(stats.lru * 100 / stats.count, 1)}%`);
-    console.log('DWC hit ratio', `${format(stats.dwc * 100 / stats.count, 1)}%`);
-    console.log('DWC - LRU hit ratio delta', `${format((stats.dwc - stats.lru) * 100 / stats.count, 1)}%`);
+    console.log('LRU hit ratio', `${format(stats.lru * 100 / stats.total, 1)}%`);
+    console.log('DWC hit ratio', `${format(stats.dwc * 100 / stats.total, 1)}%`);
+    console.log('DWC - LRU hit ratio delta', `${format((stats.dwc - stats.lru) * 100 / stats.total, 1)}%`);
     console.log('DWC / LRU hit ratio rate ', `${format(stats.dwc / stats.lru * 100, 0)}%`);
     console.log('');
   }
@@ -43,7 +43,7 @@ describe('Benchmark: Package', async function () {
     return `${n}`.replace(/(\.\d+)?$/, s => u ? `.${s.slice(1, 1 + u).padEnd(u, '0')}` : '');
   }
   class Stats {
-    count = 0;
+    total = 0;
     dwc = 0;
     lru = 0;
   }
