@@ -258,14 +258,14 @@ W-TinyLFU > ARC, DWC > (LIRS) > LRU > (TinyLFU)
 ```
 OLTP 250
 LRU hit ratio 16.47%
-DWC hit ratio 18.23%
-DWC - LRU hit ratio delta 1.76%
+DWC hit ratio 18.24%
+DWC - LRU hit ratio delta 1.77%
 DWC / LRU hit ratio rate  110%
 
 OLTP 500
 LRU hit ratio 23.44%
-DWC hit ratio 28.92%
-DWC - LRU hit ratio delta 5.47%
+DWC hit ratio 28.99%
+DWC - LRU hit ratio delta 5.55%
 DWC / LRU hit ratio rate  123%
 
 OLTP 750
@@ -314,15 +314,15 @@ W-TinyLFU, (LIRS) > (TinyLFU) >= DWC >> ARC > LRU
 ```
 GLI 250
 LRU hit ratio 0.93%
-DWC hit ratio 13.54%
-DWC - LRU hit ratio delta 12.61%
-DWC / LRU hit ratio rate  1455%
+DWC hit ratio 13.84%
+DWC - LRU hit ratio delta 12.91%
+DWC / LRU hit ratio rate  1487%
 
 GLI 500
 LRU hit ratio 0.96%
-DWC hit ratio 23.65%
-DWC - LRU hit ratio delta 22.68%
-DWC / LRU hit ratio rate  2453%
+DWC hit ratio 25.03%
+DWC - LRU hit ratio delta 24.06%
+DWC / LRU hit ratio rate  2596%
 
 GLI 750
 LRU hit ratio 1.16%
@@ -370,14 +370,14 @@ DWC / LRU hit ratio rate  Infinity%
 
 LOOP 250
 LRU hit ratio 0.00%
-DWC hit ratio 18.86%
-DWC - LRU hit ratio delta 18.86%
+DWC hit ratio 24.06%
+DWC - LRU hit ratio delta 24.06%
 DWC / LRU hit ratio rate  Infinity%
 
 LOOP 500
 LRU hit ratio 0.00%
-DWC hit ratio 49.01%
-DWC - LRU hit ratio delta 49.01%
+DWC hit ratio 49.03%
+DWC - LRU hit ratio delta 49.03%
 DWC / LRU hit ratio rate  Infinity%
 
 LOOP 750
