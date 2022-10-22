@@ -14,16 +14,22 @@ https://github.com/falsandtru/spica
 
 The highest performance constant complexity cache algorithm.
 
+## Strategies
+
+- Dynamic partition
+- Sliding window
+- Transitive wide MRU with round replacement
+
 ## Properties
 
 Generally superior and almost flawless.
 
 - High performance
-  - High hit ratio
-    - Highest hit ratio among all the eviction algorithms in the major benchmarks (DS1, S3, OLTP, GLI).
+  - High hit ratio (DS1, S3, OLTP, GLI)
+    - Highest hit ratio among all the eviction algorithms taking no large tradeoffs.
     - Highest hit ratio among all the constant complexity algorithms.
     - Near ARC (S3, OLTP).
-    - Significantly higher than ARC (DS1, GLI, LOOP).
+    - Significantly higher than ARC (DS1, GLI).
   - Low overhead (High throughput)
     - Constant time complexity overhead decreasing in linear time.
     - Use of only two lists.
@@ -111,7 +117,7 @@ Note that LIRS and TinyLFU are risky cache algorithms.
 - LIRS
   - Extremely inefficient
     - ***3-2500x key size.***
-  - Latency spikes
+  - Spike latency
     - ***Bulk deletion of low-frequency entries takes linear time.***
   - Vulnerable algorithm
     - ***Continuous cache miss explodes key size.***
@@ -123,25 +129,28 @@ Note that LIRS and TinyLFU are risky cache algorithms.
     - *Burst access degrades the performance.*
     - Lower hit ratio than LRU at OLTP.
     - Many major benchmarks are lacking in the paper despite the performance of TinyLFU is significantly worse than W-TinyLFU.
-  - Latency spikes
+  - Spike latency
     - **Whole reset of Bloom filters takes linear time.**
   - Vulnerable algorithm
     - *Burst access saturates Bloom filters.*
 - W-TinyLFU
-  - Latency spikes
+  - Spike latency
     - **Whole reset of Bloom filters takes linear time.**
   - (Essentially high overhead)
     - Would not to be convertible to CLOCK.
 
 ## Hit ratio
 
+Note that another cache algorithm sometimes changes the parameter values per workload to get a favorite result as the paper of TinyLFU has changed the window size of W-TinyLFU.
+All the results of DWC are measured by the same default parameter values.
+
 ### DS1
 
 W-TinyLFU > (LIRS) > DWC > (TinyLFU) > ARC > LRU
 
-- In 4,000,000 to 5,000,000, LIRS and ARC have stopped increasing, but DWC has increased steadily.
-- At 5,000,000, DWC slightly better than LIRS.
-- At 8,000,000, DWC significantly better than ARC and TinyLFU.
+- In 4,000,000 to 5,000,000, LIRS and ARC have stopped increasing, but DWC has consistently increased.
+- At 5,000,000, DWC is slightly better than LIRS.
+- At 8,000,000, DWC is significantly better than ARC and TinyLFU.
 
 ```
 DS1 1,000,000
@@ -476,12 +485,12 @@ https://github.com/falsandtru/spica/actions/runs/3266826046/jobs/5371240053
 
 ### Throughput
 
-|Class                       |Algorithms        |
-|:---------------------------|:-----------------|
-|Bloom filter + Static list  |(TinyLFU)         |
-|Multiple lists (Lock-free)  |DWC > (LIRS) > ARC|
-|Adaptive list + Bloom filter|W-TinyLFU         |
-|Static list                 |LRU               |
+|Class                      |Algorithms        |
+|:--------------------------|:-----------------|
+|Bloom filter + Static list |(TinyLFU)         |
+|Multiple lists (Lock-free) |DWC > (LIRS) > ARC|
+|Dynamic list + Bloom filter|W-TinyLFU         |
+|Static list                |LRU               |
 
 ### Latency
 
