@@ -33,9 +33,9 @@ describe('Benchmark: Package', async function () {
   }
   function print(label: string, stats: Stats): void {
     console.log(label);
-    console.log('LRU hit ratio', `${format(stats.lru * 100 / stats.total, 1)}%`);
-    console.log('DWC hit ratio', `${format(stats.dwc * 100 / stats.total, 1)}%`);
-    console.log('DWC - LRU hit ratio delta', `${format((stats.dwc - stats.lru) * 100 / stats.total, 1)}%`);
+    console.log('LRU hit ratio', `${format(stats.lru * 100 / stats.total, 2)}%`);
+    console.log('DWC hit ratio', `${format(stats.dwc * 100 / stats.total, 2)}%`);
+    console.log('DWC - LRU hit ratio delta', `${format((stats.dwc - stats.lru) * 100 / stats.total, 2)}%`);
     console.log('DWC / LRU hit ratio rate ', `${format(stats.dwc / stats.lru * 100, 0)}%`);
     console.log('');
   }
