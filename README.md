@@ -26,15 +26,14 @@ Generally superior and almost flawless.
 
 - High performance
   - High hit ratio (DS1, S3, OLTP, GLI)
-    - Highest hit ratio among all the eviction algorithms taking no large tradeoffs.
-    - Highest hit ratio among all the constant complexity algorithms.
+    - Highest hit ratio among all the general-purpose cache algorithms.
     - Near ARC (S3, OLTP).
     - Significantly higher than ARC (DS1, GLI).
   - Low overhead (High throughput)
     - Constant time complexity overhead decreasing in linear time.
     - Use of only two lists.
   - Low latency
-    - Constant extra time complexity (meaning excluding key search).
+    - Constant time complexity.
     - No batch processing like LIRS and TinyLFU.
   - Parallel suitable
     - Separated lists are suitable for lock-free processing.
@@ -42,40 +41,40 @@ Generally superior and almost flawless.
   - Low memory usage
     - Constant extra space complexity.
     - Retain only keys of resident entries (No history).
+  - Immediate release of evicted keys
+    - Primary standard cache library have to be possible to release memory immediately.
 - High resistance
   - Scan, loop, and burst resistance
 - Few tradeoffs
-  - Not the highest hit-ratio level
+  - Not the highest hit ratio
   - Substantially no tradeoffs
+    - Namely the highest baseline of cache algorithms.
 - Compatible with ARC
   - Comprehensively higher performance
 - Upward compatible with Segmented LRU
   - Totally higher performance
   - Suitable for TinyLFU
-    - Better for (W-)TinyLFU's eviction algorithm
+    - Better for (W-)TinyLFU's eviction algorithm.
 - CLOCK adaptive
   - Low overhead
     - CDW (CLOCK with DWC) requires no lists (for history).
   - High resistance
     - CAR has no loop resistance.
-  - Possibly better than CLOCK-Pro
-    - CDW may be better for strict requirements.
-    - Comprehensive comparison of CDW and CLOCK-Pro is uncertain.
 
 ## Efficiency
 
 Some different cache algorithms require extra memory space to retain evicted keys.
-Extra linear time complexity indicates the existence of batch processing.
+Linear time complexity indicates the existence of batch processing.
 Note that admission algorithm doesn't work without eviction algorithm.
 
-|Algorithm|Type |Time complexity<br>(Extra, Worst case)|Space complexity<br>(Extra)|Key size|Data structures|
-|:-------:|:---:|:------:|:------:|:---------:|:----------------:|
-| LRU     |Evict|Constant|Constant|    1x     |1 list            |
-| DWC     |Evict|Constant|Constant|    1x     |2 lists           |
-| ARC     |Evict|Constant|Linear  |    2x     |4 lists           |
-| LIRS    |Evict|Linear  |Linear  |**3-2500x**|2 lists           |
-| TinyLFU |Admit|Linear  |Linear  |    0      |5 arrays          |
-|W-TinyLFU|Admit|Linear  |Linear  |    0      |1 list<br>4 arrays|
+|Algorithm|Type |Time complexity<br>(Worst case)|Space complexity<br>(Extra)|Key size|Data structures|
+|:-------:|:---:|:------:|:------:|:---------:|:-----:|
+| LRU     |Evict|Constant|Constant|    1x     |1 list |
+| DWC     |Evict|Constant|Constant|    1x     |2 lists|
+| ARC     |Evict|Constant|Linear  |    2x     |4 lists|
+| LIRS    |Evict|Linear  |Linear  |**3-2500x**|2 lists|
+| TinyLFU |Admit|Linear  |Linear  |8bit * 10N * 4|5 arrays|
+|W-TinyLFU|Admit|Linear  |Linear  |8bit * 10N * 4|1 list<br>4 arrays|
 
 https://github.com/ben-manes/caffeine/wiki/Efficiency<br>
 https://github.com/zhongch4g/LIRS2/blob/master/src/replace_lirs_base.cc
@@ -102,7 +101,7 @@ Note that LIRS and TinyLFU are risky cache algorithms.
   - No resistance
     - **Scan access clears all entries.**
 - DWC
-  - Not the highest hit-ratio level
+  - Not the highest hit ratio
   - Substantially no tradeoffs
 - ARC
   - Middle performance
@@ -121,28 +120,32 @@ Note that LIRS and TinyLFU are risky cache algorithms.
     - ***Continuous cache miss explodes key size.***
       - https://issues.redhat.com/browse/ISPN-7171
       - https://issues.redhat.com/browse/ISPN-7246
-      - https://clojure.atlassian.net/browse/CCACHE-32
 - TinyLFU
   - Unreliable performance
-    - *Burst access degrades the performance.*
+    - *Burst access degrades performance.*
     - Lower hit ratio than LRU at OLTP.
-    - Many major benchmarks are lacking in the paper despite the performance of TinyLFU is significantly worse than W-TinyLFU.
+    - Many major benchmarks are lacking in the paper despite performance of TinyLFU is significantly worse than W-TinyLFU.
+  - Restricted delete operation
+    - Bloom filters don't support delete operation.
+    - *Frequent delete operation degrades performance.*
   - Spike latency
     - **Whole reset of Bloom filters takes linear time.**
   - Vulnerable algorithm
     - *Burst access saturates Bloom filters.*
 - W-TinyLFU
+  - Restricted delete operation
+    - Bloom filters don't support delete operation.
+    - *Frequent delete operation degrades performance.*
   - Spike latency
     - **Whole reset of Bloom filters takes linear time.**
-  - (Essentially high overhead)
-    - Would not to be convertible to CLOCK.
 
 ## Hit ratio
 
 Note that another cache algorithm sometimes changes the parameter values per workload to get a favorite result as the paper of TinyLFU has changed the window size of W-TinyLFU.
 All the results of DWC are measured by the same default parameter values.
+Graphs are approximate.
 
-1. Put the datasets in `./benchmark/trace` (See `./benchmark/ratio.ts`).
+1. Set the datasets to `./benchmark/trace` (See `./benchmark/ratio.ts`).
 2. Run `npm i`
 3. Run `npm run bench`
 4. Click the DEBUG button to open a debug tab.
@@ -150,12 +153,81 @@ All the results of DWC are measured by the same default parameter values.
 6. Press F12 key to open devtools.
 7. Select the console tab.
 
+https://github.com/ben-manes/caffeine/wiki/Efficiency<br>
+https://github.com/dgraph-io/ristretto<br>
+https://github.com/dgraph-io/benchmarks
+
+<!--
+// https://www.chartjs.org/docs/latest/charts/line.html
+
+const config = {
+  type: 'line',
+  data: data,
+  options: {
+    scales: {
+        y: {
+            min: 0,
+        },
+    },
+    plugins: {
+      title: {
+        display: true,
+        text: 'WL'
+      }
+    }
+  },
+};
+-->
+
 ### DS1
 
-W-TinyLFU > (LIRS) > DWC > (TinyLFU) > ARC > LRU
+W-TinyLFU > (LIRS) > DWC, (TinyLFU) > ARC > LRU
 
-- At 5,000,000, DWC is slightly better than LIRS.
-- At 8,000,000, DWC is significantly better than ARC and TinyLFU.
+- DWC is significantly better than ARC.
+
+<!--
+const data = {
+  labels: [1000000, 2000000, 3000000, 4000000, 5000000, 6000000, 7000000, 8000000],
+  datasets: [
+    {
+      label: 'Optimal',
+      data: [20, 31, 41, 48, 55, 62, 69, 76],
+    },
+    {
+      label: 'LRU',
+      data: [3, 11, 19, 20, 21, 34, 39, 43],
+      borderColor: Utils.color(0),
+    },
+    {
+      label: 'ARC',
+      data: [5, 22, 23, 29, 28, 36, 46, 50],
+      borderColor: Utils.color(6),
+    },
+    {
+      label: 'DWC',
+      data: [6, 23, 37, 39, 41, 46, 52, 60],
+      borderColor: Utils.color(2),
+    },
+    {
+      label: 'LIRS',
+      data: [13, 25, 38, 38, 38, 47, 60, 71],
+      borderColor: Utils.color(3),
+    },
+    {
+      label: 'TinyLFU',
+      data: [11, 25, 32, 38, 44, 48, 52, 55],
+      borderColor: Utils.color(4),
+    },
+    {
+      label: 'W-TinyLFU',
+      data: [15, 27, 40, 45, 51, 58, 64, 70],
+      borderColor: Utils.color(8),
+    },
+  ]
+};
+-->
+
+![image](https://user-images.githubusercontent.com/3143368/200041495-e8941ed5-b6dc-430c-8a03-c2654b9ac776.png)
 
 ```
 DS1 1,000,000
@@ -213,6 +285,50 @@ W-TinyLFU, (TinyLFU) > (LIRS) > ARC, DWC > LRU
 
 - DWC is an approximation of ARC.
 
+<!--
+const data = {
+  labels: [100000, 200000, 300000, 400000, 500000, 600000, 700000, 800000],
+  datasets: [
+    {
+      label: 'Optimal',
+      data: [25, 38, 51, 60, 67, 73, 77, 80],
+    },
+    {
+      label: 'LRU',
+      data: [2, 5, 8, 12, 23, 35, 46, 57],
+      borderColor: Utils.color(0),
+    },
+    {
+      label: 'ARC',
+      data: [12, 22, 27, 30, 37, 45, 52, 59],
+      borderColor: Utils.color(6),
+    },
+    {
+      label: 'DWC',
+      data: [10, 18, 24, 29, 38, 46, 55, 64],
+      borderColor: Utils.color(2),
+    },
+    {
+      label: 'LIRS',
+      data: [12, 15, 25, 35, 44, 53, 60, 66],
+      borderColor: Utils.color(3),
+    },
+    {
+      label: 'TinyLFU',
+      data: [6, 18, 27, 37, 48, 56, 62, 68],
+      borderColor: Utils.color(4),
+    },
+    {
+      label: 'W-TinyLFU',
+      data: [12, 23, 33, 42, 51, 59, 65, 70],
+      borderColor: Utils.color(8),
+    },
+  ]
+};
+-->
+
+![image](https://user-images.githubusercontent.com/3143368/200155166-9c003b80-1fff-4292-8f4c-9bd41e4dcacc.png)
+
 ```
 S3 100,000
 LRU hit ratio 2.32%
@@ -269,6 +385,50 @@ W-TinyLFU > ARC, DWC > (LIRS) > LRU > (TinyLFU)
 
 - DWC is an approximation of ARC.
 
+<!--
+const data = {
+  labels: [250, 500, 750, 1000, 1250, 1500, 1750, 2000],
+  datasets: [
+    {
+      label: 'Optimal',
+      data: [39, 45, 50, 52, 54, 56, 58, 60],
+    },
+    {
+      label: 'LRU',
+      data: [17, 23, 28, 33, 36, 39, 41, 43],
+      borderColor: Utils.color(0),
+    },
+    {
+      label: 'ARC',
+      data: [22, 30, 35, 40, 41, 43, 44, 45],
+      borderColor: Utils.color(6),
+    },
+    {
+      label: 'DWC',
+      data: [18, 29, 35, 38, 40, 42, 43, 45],
+      borderColor: Utils.color(2),
+    },
+    {
+      label: 'LIRS',
+      data: [19, 25, 30, 35, 37, 39, 41, 43],
+      borderColor: Utils.color(3),
+    },
+    {
+      label: 'TinyLFU',
+      data: [16, 22, 23, 26, 29, 29, 31, 32],
+      borderColor: Utils.color(4),
+    },
+    {
+      label: 'W-TinyLFU',
+      data: [25, 32, 37, 40, 42, 43, 44, 45],
+      borderColor: Utils.color(8),
+    },
+  ]
+};
+-->
+
+![image](https://user-images.githubusercontent.com/3143368/200042285-0e42a9a5-daac-40c9-9e6e-39e355f3755d.png)
+
 ```
 OLTP 250
 LRU hit ratio 16.47%
@@ -319,11 +479,55 @@ DWC - LRU hit ratio delta 2.08%
 DWC / LRU hit ratio rate  104%
 ```
 
-### LOOP
+### GLI
 
-W-TinyLFU, (LIRS) > (TinyLFU) >= DWC >> ARC > LRU
+W-TinyLFU, (LIRS) > DWC, (TinyLFU) >> ARC > LRU
 
 - DWC is almost the same as TinyLFU.
+
+<!--
+const data = {
+  labels: [250, 500, 750, 1000, 1250, 1500, 1750, 2000],
+  datasets: [
+    {
+      label: 'Optimal',
+      data: [18, 35, 46, 53, 57, 57, 57, 57],
+    },
+    {
+      label: 'LRU',
+      data: [1, 1, 1, 11, 21, 37, 45, 57],
+      borderColor: Utils.color(0),
+    },
+    {
+      label: 'ARC',
+      data: [1, 1, 1, 20, 35, 50, 55, 57],
+      borderColor: Utils.color(6),
+    },
+    {
+      label: 'DWC',
+      data: [16, 27, 42, 47, 52, 54, 55, 57],
+      borderColor: Utils.color(2),
+    },
+    {
+      label: 'LIRS',
+      data: [16, 34, 44, 51, 52, 54, 55, 57],
+      borderColor: Utils.color(3),
+    },
+    {
+      label: 'TinyLFU',
+      data: [18, 26, 40, 46, 51, 54, 55, 57],
+      borderColor: Utils.color(4),
+    },
+    {
+      label: 'W-TinyLFU',
+      data: [16, 34, 44, 51, 52, 54, 55, 57],
+      borderColor: Utils.color(8),
+    },
+  ]
+};
+-->
+
+![image](https://user-images.githubusercontent.com/3143368/200044553-1a0c442c-64cb-40b9-8359-8f2d1a92c9c0.png)
 
 ```
 GLI 250
@@ -375,6 +579,8 @@ DWC - LRU hit ratio delta 0.00%
 DWC / LRU hit ratio rate  100%
 ```
 
+### LOOP
+
 ```
 LOOP 100
 LRU hit ratio 0.00%
@@ -412,9 +618,6 @@ DWC hit ratio 99.80%
 DWC - LRU hit ratio delta 0.00%
 DWC / LRU hit ratio rate  100%
 ```
-
-https://github.com/dgraph-io/ristretto<br>
-https://github.com/dgraph-io/benchmarks
 
 ## Throughput
 
@@ -504,7 +707,7 @@ cache.get(key) ?? cache.set(key, {});
 
 ### Latency
 
-|Extra time  |Algorithms           |
+|Time        |Algorithms           |
 |:-----------|:--------------------|
 |Constant    |LRU, DWC, ARC        |
 |Linear (1)  |W-TinyLFU > (TinyLFU)|
