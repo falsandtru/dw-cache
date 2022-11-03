@@ -1,16 +1,17 @@
 import { Cache } from '../index';
 import LRU from 'lru-cache';
+import { memoize } from 'spica/memoize';
 import { wait } from 'spica/timer';
 
 describe('Benchmark: Package', async function () {
   await wait(3000);
 
   async function run(label: string, source: string, capacity: number) {
-    const data = await (await fetch(source, { cache: 'force-cache' })).text();
     const dwc = new Cache<number, 1>(capacity);
     const lru = new LRU<number, 1>({ max: capacity });
     const stats = new Stats();
-    for (let keys = parse(data), i = 0; i < keys.length; ++i) {
+    const keys = await parse(source);
+    for (let i = 0; i < keys.length; ++i) {
       const key = keys[i];
       ++stats.total;
       stats.dwc += dwc.get(key) ?? (dwc.set(key, 1), 0);
@@ -18,7 +19,8 @@ describe('Benchmark: Package', async function () {
     }
     print(`${label} ${capacity.toLocaleString('en')}`, stats);
   }
-  function parse(data: string): number[] {
+  const parse = memoize(async function (source: string): Promise<readonly number[]> {
+    const data = await (await fetch(source)).text();
     const acc = [];
     for (let i = 0; i < data.length; i = data.indexOf('\n', i + 1) + 1 || data.length) {
       const fields = data.slice(i, data.indexOf('\n', i)).trim().split(/\s/).slice(0, 2);
@@ -30,7 +32,7 @@ describe('Benchmark: Package', async function () {
       }
     }
     return acc;
-  }
+  });
   function print(label: string, stats: Stats): void {
     console.log(label);
     console.log('LRU hit ratio', `${format(stats.lru * 100 / stats.total, 2)}%`);
