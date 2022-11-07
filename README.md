@@ -725,8 +725,10 @@ cache.get(key) ?? cache.set(key, {});
 ```ts
 export namespace Cache {
   export interface Options<K, V = undefined> {
+    // Max length.
     readonly capacity?: number;
     readonly window?: number;
+    readonly resource?: number;
     readonly age?: number;
     readonly earlyExpiring?: boolean;
     readonly disposer?: (value: V, key: K) => void;
@@ -756,7 +758,7 @@ export class Cache<K, V = undefined> {
   has(key: K): boolean;
   delete(key: K): boolean;
   clear(): void;
-  resize(capacity: number): void;
+  resize(capacity: number, resource?: number): void;
   readonly length: number;
   readonly size: number;
   [Symbol.iterator](): Iterator<[K, V], undefined, undefined>;
