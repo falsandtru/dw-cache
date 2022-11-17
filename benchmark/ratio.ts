@@ -23,10 +23,15 @@ describe('Benchmark: Package', async function () {
     const data = await (await fetch(source)).text();
     const acc = [];
     for (let i = 0; i < data.length; i = data.indexOf('\n', i + 1) + 1 || data.length) {
-      const fields = data.slice(i, data.indexOf('\n', i)).trim().split(/\s/).slice(0, 2);
+      const line = data.slice(i, data.indexOf('\n', i)).trim();
+      const fields = line.includes(',')
+        ? line.split(',').slice(1, 4)
+        : line.split(/\s/).slice(0, 2);
       if (fields.length === 0) break;
       const key = +fields[0];
-      const cnt = +fields[1] || 1;
+      const cnt = line.includes(',')
+        ? fields[2].toLowerCase() === 'r' ? Math.ceil(+fields[1] / 512) : 0
+        : +fields[1] || 1;
       for (let i = 0; i < cnt; ++i) {
         acc.push(key + i);
       }

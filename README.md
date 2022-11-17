@@ -47,19 +47,13 @@ Generally superior and almost flawless.
   - Scan, loop, and burst resistance
 - Few tradeoffs
   - Not the highest hit ratio
-  - Substantially no tradeoffs
-    - Namely the highest baseline of cache algorithms.
+  - Significantly small cache size degrades hit ratio
 - Compatible with ARC
   - Comprehensively higher performance
 - Upward compatible with Segmented LRU
   - Totally higher performance
   - Suitable for TinyLFU
     - Better for (W-)TinyLFU's eviction algorithm.
-- CLOCK adaptive
-  - Low overhead
-    - CDW (CLOCK with DWC) requires no lists (for history).
-  - High resistance
-    - CAR has no loop resistance.
 
 ## Efficiency
 
@@ -102,7 +96,7 @@ Note that LIRS and TinyLFU are risky cache algorithms.
     - **Scan access clears all entries.**
 - DWC
   - Not the highest hit ratio
-  - Substantially no tradeoffs
+  - Significantly small cache size degrades hit ratio
 - ARC
   - Middle performance
   - Inefficient
@@ -117,7 +111,7 @@ Note that LIRS and TinyLFU are risky cache algorithms.
   - Spike latency
     - ***Bulk deletion of low-frequency entries takes linear time.***
   - Vulnerable algorithm
-    - ***Continuous cache miss explodes key size.***
+    - ***Continuous cache misses at the last of LIR explode key size.***
       - https://issues.redhat.com/browse/ISPN-7171
       - https://issues.redhat.com/browse/ISPN-7246
 - TinyLFU
@@ -619,7 +613,7 @@ DWC / LRU hit ratio rate  100%
 
 ## Throughput
 
-80-100% of [lru-cache](https://www.npmjs.com/package/lru-cache).
+75-90% of [lru-cache](https://www.npmjs.com/package/lru-cache).
 
 Note that the number of trials per capacity for simulation 1,000,000 is insufficient.
 
@@ -635,33 +629,33 @@ Of course it is verified that DWC works fine under the same condition.
   Memory: 5.88 GB / 6.78 GB
 
 ```
-'LRUCache new x 10,892 ops/sec ±1.67% (114 runs sampled)'
+'LRUCache new x 10,395 ops/sec ±3.03% (111 runs sampled)'
 
-'DW-Cache new x 6,180,273 ops/sec ±0.89% (123 runs sampled)'
+'DW-Cache new x 4,576,566 ops/sec ±3.38% (122 runs sampled)'
 
-'LRUCache simulation 10 x 8,625,515 ops/sec ±1.05% (123 runs sampled)'
+'LRUCache simulation 10 x 7,793,225 ops/sec ±2.05% (118 runs sampled)'
 
-'DW-Cache simulation 10 x 7,665,021 ops/sec ±1.35% (122 runs sampled)'
+'DW-Cache simulation 10 x 7,191,135 ops/sec ±1.93% (120 runs sampled)'
 
-'LRUCache simulation 100 x 8,939,202 ops/sec ±0.88% (123 runs sampled)'
+'LRUCache simulation 100 x 8,039,009 ops/sec ±2.14% (119 runs sampled)'
 
-'DW-Cache simulation 100 x 7,280,351 ops/sec ±0.78% (123 runs sampled)'
+'DW-Cache simulation 100 x 6,079,217 ops/sec ±2.06% (120 runs sampled)'
 
-'LRUCache simulation 1,000 x 7,964,882 ops/sec ±0.44% (124 runs sampled)'
+'LRUCache simulation 1,000 x 7,089,730 ops/sec ±2.06% (118 runs sampled)'
 
-'DW-Cache simulation 1,000 x 7,436,336 ops/sec ±1.30% (123 runs sampled)'
+'DW-Cache simulation 1,000 x 6,239,714 ops/sec ±2.32% (120 runs sampled)'
 
-'LRUCache simulation 10,000 x 6,896,531 ops/sec ±1.77% (121 runs sampled)'
+'LRUCache simulation 10,000 x 6,075,071 ops/sec ±2.05% (119 runs sampled)'
 
-'DW-Cache simulation 10,000 x 6,568,404 ops/sec ±1.64% (121 runs sampled)'
+'DW-Cache simulation 10,000 x 5,000,182 ops/sec ±1.76% (121 runs sampled)'
 
-'LRUCache simulation 100,000 x 3,841,058 ops/sec ±1.38% (112 runs sampled)'
+'LRUCache simulation 100,000 x 2,398,306 ops/sec ±1.55% (113 runs sampled)'
 
-'DW-Cache simulation 100,000 x 3,778,800 ops/sec ±2.25% (110 runs sampled)'
+'DW-Cache simulation 100,000 x 2,119,292 ops/sec ±2.87% (108 runs sampled)'
 
-'LRUCache simulation 1,000,000 x 1,921,274 ops/sec ±3.02% (103 runs sampled)'
+'LRUCache simulation 1,000,000 x 1,226,698 ops/sec ±3.70% (103 runs sampled)'
 
-'DW-Cache simulation 1,000,000 x 1,572,905 ops/sec ±2.17% (111 runs sampled)'
+'DW-Cache simulation 1,000,000 x 1,118,352 ops/sec ±2.45% (113 runs sampled)'
 ```
 
 ```ts
