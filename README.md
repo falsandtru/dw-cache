@@ -19,6 +19,9 @@ The highest performance constant complexity cache algorithm.
 - Dynamic partition
 - Sliding window
 - Transitive wide MRU with cyclic replacement
+  - Not required if loop resistance is unnecessary.
+- Weighted aging
+  - Not required if low inter-reference accesses are present.
 
 ## Properties
 
@@ -426,9 +429,9 @@ const data = {
 ```
 OLTP 250
 LRU hit ratio 16.47%
-DWC hit ratio 17.47%
-DWC - LRU hit ratio delta 1.00%
-DWC / LRU hit ratio rate  106%
+DWC hit ratio 18.12%
+DWC - LRU hit ratio delta 1.65%
+DWC / LRU hit ratio rate  110%
 
 OLTP 500
 LRU hit ratio 23.44%
@@ -477,6 +480,8 @@ DWC / LRU hit ratio rate  104%
 
 W-TinyLFU, (LIRS) > DWC > (TinyLFU) >> ARC > LRU
 
+- DWC is significantly better than ARC.
+
 <!--
 const data = {
   labels: [250, 500, 750, 1000, 1250, 1500, 1750, 2000],
@@ -497,7 +502,7 @@ const data = {
     },
     {
       label: 'DWC',
-      data: [16, 31, 42, 50, 52, 54, 55, 57],
+      data: [16, 32, 42, 50, 52, 54, 55, 57],
       borderColor: Utils.color(2),
     },
     {
@@ -519,20 +524,20 @@ const data = {
 };
 -->
 
-![image](https://user-images.githubusercontent.com/3143368/201696229-b6f34a7c-cd7a-4d60-8c67-4888a33217f0.png)
+![image](https://user-images.githubusercontent.com/3143368/202870810-b8b4c1c6-8b1b-4368-a1d1-018e0b85f0fb.png)
 
 ```
 GLI 250
 LRU hit ratio 0.93%
-DWC hit ratio 15.77%
-DWC - LRU hit ratio delta 14.84%
-DWC / LRU hit ratio rate  1694%
+DWC hit ratio 15.89%
+DWC - LRU hit ratio delta 14.96%
+DWC / LRU hit ratio rate  1707%
 
 GLI 500
 LRU hit ratio 0.96%
-DWC hit ratio 31.43%
-DWC - LRU hit ratio delta 30.46%
-DWC / LRU hit ratio rate  3260%
+DWC hit ratio 31.48%
+DWC - LRU hit ratio delta 30.51%
+DWC / LRU hit ratio rate  3265%
 
 GLI 750
 LRU hit ratio 1.16%
@@ -613,7 +618,7 @@ DWC / LRU hit ratio rate  100%
 
 ## Throughput
 
-75-95% of [lru-cache](https://www.npmjs.com/package/lru-cache).
+70-85% of [lru-cache](https://www.npmjs.com/package/lru-cache).
 
 Note that the number of trials per capacity for simulation 1,000,000 is insufficient.
 
@@ -629,33 +634,33 @@ Of course it is verified that DWC works fine under the same condition.
   Memory: 5.88 GB / 6.78 GB
 
 ```
-'LRUCache new x 10,395 ops/sec ±3.03% (111 runs sampled)'
+'LRUCache new x 10,919 ops/sec ±1.67% (114 runs sampled)'
 
-'DW-Cache new x 4,576,566 ops/sec ±3.38% (122 runs sampled)'
+'DW-Cache new x 5,907,995 ops/sec ±0.69% (123 runs sampled)'
 
-'LRUCache simulation 10 x 7,793,225 ops/sec ±2.05% (118 runs sampled)'
+'LRUCache simulation 10 x 8,589,630 ops/sec ±1.08% (123 runs sampled)'
 
-'DW-Cache simulation 10 x 7,191,135 ops/sec ±1.93% (120 runs sampled)'
+'DW-Cache simulation 10 x 7,088,696 ops/sec ±0.31% (122 runs sampled)'
 
-'LRUCache simulation 100 x 8,039,009 ops/sec ±2.14% (119 runs sampled)'
+'LRUCache simulation 100 x 8,974,195 ops/sec ±0.56% (122 runs sampled)'
 
-'DW-Cache simulation 100 x 6,079,217 ops/sec ±2.06% (120 runs sampled)'
+'DW-Cache simulation 100 x 6,261,227 ops/sec ±1.15% (121 runs sampled)'
 
-'LRUCache simulation 1,000 x 7,089,730 ops/sec ±2.06% (118 runs sampled)'
+'LRUCache simulation 1,000 x 7,942,931 ops/sec ±0.69% (123 runs sampled)'
 
-'DW-Cache simulation 1,000 x 6,239,714 ops/sec ±2.32% (120 runs sampled)'
+'DW-Cache simulation 1,000 x 5,982,914 ops/sec ±1.35% (122 runs sampled)'
 
-'LRUCache simulation 10,000 x 6,075,071 ops/sec ±2.05% (119 runs sampled)'
+'LRUCache simulation 10,000 x 7,018,158 ops/sec ±1.29% (121 runs sampled)'
 
-'DW-Cache simulation 10,000 x 5,000,182 ops/sec ±1.76% (121 runs sampled)'
+'DW-Cache simulation 10,000 x 5,269,636 ops/sec ±1.59% (121 runs sampled)'
 
-'LRUCache simulation 100,000 x 2,398,306 ops/sec ±1.55% (113 runs sampled)'
+'LRUCache simulation 100,000 x 4,001,962 ops/sec ±1.41% (114 runs sampled)'
 
-'DW-Cache simulation 100,000 x 2,119,292 ops/sec ±2.87% (108 runs sampled)'
+'DW-Cache simulation 100,000 x 3,486,851 ops/sec ±1.71% (114 runs sampled)'
 
-'LRUCache simulation 1,000,000 x 1,226,698 ops/sec ±3.70% (103 runs sampled)'
+'LRUCache simulation 1,000,000 x 2,036,892 ops/sec ±2.66% (102 runs sampled)'
 
-'DW-Cache simulation 1,000,000 x 1,118,352 ops/sec ±2.45% (113 runs sampled)'
+'DW-Cache simulation 1,000,000 x 1,442,923 ops/sec ±1.82% (111 runs sampled)'
 ```
 
 ```ts
@@ -743,6 +748,10 @@ export namespace Cache {
       readonly window?: number;
       readonly range?: number;
       readonly shift?: number;
+    };
+    readonly life?: {
+      readonly LRU: number;
+      readonly LFU: number;
     };
   }
 }
