@@ -47,8 +47,8 @@ Generally superior and almost flawless.
   - Scan, loop, and burst resistance
 - Few tradeoffs
   - Not the highest hit ratio
-  - Significantly small cache size degrades hit ratio
-- Compatible with ARC
+  - Significantly small cache size can degrade hit ratio
+- Upward compatible with ARC
   - Comprehensively higher performance
 - Upward compatible with Segmented LRU
   - Totally higher performance
@@ -96,7 +96,7 @@ Note that LIRS and TinyLFU are risky cache algorithms.
     - **Scan access clears all entries.**
 - DWC
   - Not the highest hit ratio
-  - Significantly small cache size degrades hit ratio
+  - Significantly small cache size can degrade hit ratio
 - ARC
   - Middle performance
   - Inefficient
@@ -111,7 +111,7 @@ Note that LIRS and TinyLFU are risky cache algorithms.
   - Spike latency
     - ***Bulk deletion of low-frequency entries takes linear time.***
   - Vulnerable algorithm
-    - ***Continuous cache misses at the last of LIR explode key size.***
+    - ***Continuous cache misses at the last of LIR and of HIR entries explode key size.***
       - https://issues.redhat.com/browse/ISPN-7171
       - https://issues.redhat.com/browse/ISPN-7246
 - TinyLFU
@@ -613,7 +613,7 @@ DWC / LRU hit ratio rate  100%
 
 ## Throughput
 
-75-90% of [lru-cache](https://www.npmjs.com/package/lru-cache).
+75-95% of [lru-cache](https://www.npmjs.com/package/lru-cache).
 
 Note that the number of trials per capacity for simulation 1,000,000 is insufficient.
 
