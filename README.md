@@ -19,9 +19,9 @@ The highest performance constant complexity cache algorithm.
 - Dynamic partition
 - Sliding window
 - Transitive wide MRU with cyclic replacement
-  - Not required if loop resistance is unnecessary.
+  - Omittable if loop resistance is unnecessary.
 - Weighted aging
-  - Not required if low inter-reference accesses are present.
+  - Omittable if low inter-reference accesses are present.
 
 ## Properties
 
@@ -45,7 +45,7 @@ Generally superior and almost flawless.
     - Constant extra space complexity.
     - Retain only keys of resident entries (No history).
   - Immediate release of evicted keys
-    - Primary standard cache library have to be possible to release memory immediately.
+    - Primary cache algorithm in the standard library must release memory immediately.
 - High resistance
   - Scan, loop, and burst resistance
 - Few tradeoffs
@@ -618,7 +618,7 @@ DWC / LRU hit ratio rate  100%
 
 ## Throughput
 
-70-95% of [lru-cache](https://www.npmjs.com/package/lru-cache).
+75-95% of [lru-cache](https://www.npmjs.com/package/lru-cache).
 
 Note that the number of trials per capacity for simulation 1,000,000 is insufficient.
 
@@ -634,33 +634,33 @@ Of course it is verified that DWC works fine under the same condition.
   Memory: 5.88 GB / 6.78 GB
 
 ```
-'LRUCache new x 10,866 ops/sec ±3.04% (112 runs sampled)'
+'LRUCache new x 11,379 ops/sec ±0.63% (68 runs sampled)'
 
-'DW-Cache new x 4,537,562 ops/sec ±2.87% (121 runs sampled)'
+'DW-Cache new x 4,731,010 ops/sec ±0.34% (68 runs sampled)'
 
-'LRUCache simulation 10 x 7,875,849 ops/sec ±2.08% (119 runs sampled)'
+'LRUCache simulation 10 x 8,215,381 ops/sec ±0.31% (68 runs sampled)'
 
-'DW-Cache simulation 10 x 6,426,972 ops/sec ±2.15% (119 runs sampled)'
+'DW-Cache simulation 10 x 6,723,681 ops/sec ±0.54% (68 runs sampled)'
 
-'LRUCache simulation 100 x 8,133,377 ops/sec ±2.07% (119 runs sampled)'
+'LRUCache simulation 100 x 8,376,085 ops/sec ±0.43% (68 runs sampled)'
 
-'DW-Cache simulation 100 x 5,932,888 ops/sec ±2.03% (120 runs sampled)'
+'DW-Cache simulation 100 x 6,178,399 ops/sec ±0.29% (68 runs sampled)'
 
-'LRUCache simulation 1,000 x 7,198,875 ops/sec ±1.98% (119 runs sampled)'
+'LRUCache simulation 1,000 x 7,448,487 ops/sec ±0.42% (68 runs sampled)'
 
-'DW-Cache simulation 1,000 x 6,530,435 ops/sec ±1.95% (120 runs sampled)'
+'DW-Cache simulation 1,000 x 5,965,094 ops/sec ±0.42% (68 runs sampled)'
 
-'LRUCache simulation 10,000 x 6,344,435 ops/sec ±1.91% (120 runs sampled)'
+'LRUCache simulation 10,000 x 6,671,862 ops/sec ±0.38% (68 runs sampled)'
 
-'DW-Cache simulation 10,000 x 5,605,890 ops/sec ±1.72% (120 runs sampled)'
+'DW-Cache simulation 10,000 x 5,214,870 ops/sec ±0.60% (68 runs sampled)'
 
-'LRUCache simulation 100,000 x 2,805,174 ops/sec ±1.72% (112 runs sampled)'
+'LRUCache simulation 100,000 x 3,229,658 ops/sec ±0.84% (67 runs sampled)'
 
-'DW-Cache simulation 100,000 x 2,636,850 ops/sec ±3.34% (106 runs sampled)'
+'DW-Cache simulation 100,000 x 2,973,754 ops/sec ±1.56% (67 runs sampled)'
 
-'LRUCache simulation 1,000,000 x 1,659,850 ops/sec ±3.17% (107 runs sampled)'
+'LRUCache simulation 1,000,000 x 1,506,821 ops/sec ±1.38% (66 runs sampled)'
 
-'DW-Cache simulation 1,000,000 x 1,326,635 ops/sec ±2.35% (113 runs sampled)'
+'DW-Cache simulation 1,000,000 x 1,348,542 ops/sec ±1.84% (67 runs sampled)'
 ```
 
 ```ts
@@ -728,7 +728,7 @@ cache.get(key) ?? cache.set(key, {});
 ```ts
 export namespace Cache {
   export interface Options<K, V = undefined> {
-    // Max length.
+    // Max entries.
     readonly capacity?: number;
     readonly window?: number;
     readonly resource?: number;
