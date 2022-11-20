@@ -634,33 +634,33 @@ Of course it is verified that DWC works fine under the same condition.
   Memory: 5.88 GB / 6.78 GB
 
 ```
-'LRUCache new x 11,661 ops/sec ±1.70% (118 runs sampled)'
+'LRUCache new x 10,819 ops/sec ±1.11% (120 runs sampled)'
 
-'DW-Cache new x 4,652,638 ops/sec ±1.58% (124 runs sampled)'
+'DW-Cache new x 4,381,322 ops/sec ±4.02% (121 runs sampled)'
 
-'LRUCache simulation 10 x 8,050,337 ops/sec ±1.77% (120 runs sampled)'
+'LRUCache simulation 10 x 7,763,556 ops/sec ±2.14% (119 runs sampled)'
 
-'DW-Cache simulation 10 x 6,710,942 ops/sec ±1.63% (120 runs sampled)'
+'DW-Cache simulation 10 x 6,656,759 ops/sec ±1.89% (120 runs sampled)'
 
-'LRUCache simulation 100 x 8,164,125 ops/sec ±1.99% (119 runs sampled)'
+'LRUCache simulation 100 x 8,057,796 ops/sec ±2.19% (119 runs sampled)'
 
-'DW-Cache simulation 100 x 5,490,218 ops/sec ±1.93% (121 runs sampled)'
+'DW-Cache simulation 100 x 5,905,965 ops/sec ±1.91% (119 runs sampled)'
 
-'LRUCache simulation 1,000 x 7,235,839 ops/sec ±2.05% (119 runs sampled)'
+'LRUCache simulation 1,000 x 7,084,194 ops/sec ±2.15% (118 runs sampled)'
 
-'DW-Cache simulation 1,000 x 5,884,598 ops/sec ±2.12% (121 runs sampled)'
+'DW-Cache simulation 1,000 x 6,416,383 ops/sec ±2.03% (120 runs sampled)'
 
-'LRUCache simulation 10,000 x 6,531,732 ops/sec ±1.97% (121 runs sampled)'
+'LRUCache simulation 10,000 x 6,185,703 ops/sec ±1.99% (119 runs sampled)'
 
-'DW-Cache simulation 10,000 x 5,490,438 ops/sec ±1.71% (120 runs sampled)'
+'DW-Cache simulation 10,000 x 5,394,210 ops/sec ±1.72% (121 runs sampled)'
 
-'LRUCache simulation 100,000 x 3,711,646 ops/sec ±1.38% (114 runs sampled)'
+'LRUCache simulation 100,000 x 2,536,503 ops/sec ±1.78% (108 runs sampled)'
 
-'DW-Cache simulation 100,000 x 3,207,537 ops/sec ±1.52% (115 runs sampled)'
+'DW-Cache simulation 100,000 x 2,117,919 ops/sec ±2.79% (110 runs sampled)'
 
-'LRUCache simulation 1,000,000 x 1,811,364 ops/sec ±2.59% (99 runs sampled)'
+'LRUCache simulation 1,000,000 x 1,272,477 ops/sec ±3.51% (106 runs sampled)'
 
-'DW-Cache simulation 1,000,000 x 1,440,382 ops/sec ±2.25% (107 runs sampled)'
+'DW-Cache simulation 1,000,000 x 1,046,930 ops/sec ±2.32% (109 runs sampled)'
 ```
 
 ```ts
