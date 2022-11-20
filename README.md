@@ -78,7 +78,7 @@ https://github.com/zhongch4g/LIRS2/blob/master/src/replace_lirs_base.cc
 
 ## Resistance
 
-LIRS's burst resistance means resistance to continuous cache miss.
+LIRS's burst resistance means resistance to continuous cache misses.
 
 |Algorithm|Type |Scan|Loop|Burst|
 |:-------:|:---:|:--:|:--:|:---:|
@@ -121,7 +121,7 @@ Note that LIRS and TinyLFU are risky cache algorithms.
   - Unreliable performance
     - *Burst access degrades performance.*
     - Lower hit ratio than LRU at OLTP.
-    - Many major benchmarks are lacking in the paper despite performance of TinyLFU is significantly worse than W-TinyLFU.
+    - Many major benchmarks are lacking in the paper despite the performance of TinyLFU is worse than LRU in theory.
   - Restricted delete operation
     - Bloom filters don't support delete operation.
     - *Frequent delete operations degrade performance.*
@@ -178,7 +178,7 @@ const config = {
 
 ### DS1
 
-W-TinyLFU > (LIRS) > DWC > (TinyLFU) > ARC > LRU
+W-TinyLFU > DWC, (LIRS) > (TinyLFU) > ARC > LRU
 
 - DWC is significantly better than ARC.
 
@@ -278,7 +278,7 @@ DWC / LRU hit ratio rate  148%
 
 ### S3
 
-W-TinyLFU > (TinyLFU) > (LIRS) > ARC, DWC > LRU
+W-TinyLFU > (TinyLFU) > (LIRS) > DWC, ARC > LRU
 
 - DWC is an approximation of ARC.
 
@@ -674,10 +674,10 @@ cache.get(key) ?? cache.set(key, {});
 
 ### Hit ratio
 
-|Rank     |Algorithms    |
+|Class    |Algorithms    |
 |:--------|:-------------|
 |Very high|W-TinyLFU     |
-|Hight    |(LIRS) > DWC  |
+|Hight    |DWC, (LIRS)   |
 |Middle   |ARC, (TinyLFU)|
 |Low      |LRU           |
 
@@ -692,12 +692,12 @@ cache.get(key) ?? cache.set(key, {});
 
 ### Resistance
 
-|Rank  |Algorithms        |
-|:-----|:-----------------|
-|High  |W-TinyLFU > (LIRS)|
-|Middle|(TinyLFU) >= DWC  |
-|Low   |ARC               |
-|None  |LRU               |
+|Class|Effect|Algorithms       |
+|:----|:-----|:----------------|
+|Total|High  |W-TinyLFU, DWC   |
+|Most |High  |(TinyLFU), (LIRS)|
+|Few  |Low   |ARC              |
+|None |None  |LRU              |
 
 ### Throughput
 
