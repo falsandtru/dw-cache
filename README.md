@@ -329,15 +329,15 @@ const data = {
 ```
 S3 100,000
 LRU hit ratio 2.32%
-DWC hit ratio 10.53%
-DWC - LRU hit ratio delta 8.21%
-DWC / LRU hit ratio rate  452%
+DWC hit ratio 10.56%
+DWC - LRU hit ratio delta 8.23%
+DWC / LRU hit ratio rate  453%
 
 S3 200,000
 LRU hit ratio 4.63%
-DWC hit ratio 18.88%
-DWC - LRU hit ratio delta 14.24%
-DWC / LRU hit ratio rate  407%
+DWC hit ratio 18.91%
+DWC - LRU hit ratio delta 14.28%
+DWC / LRU hit ratio rate  408%
 
 S3 300,000
 LRU hit ratio 7.58%
@@ -353,8 +353,8 @@ DWC / LRU hit ratio rate  245%
 
 S3 500,000
 LRU hit ratio 22.76%
-DWC hit ratio 37.48%
-DWC - LRU hit ratio delta 14.71%
+DWC hit ratio 37.47%
+DWC - LRU hit ratio delta 14.70%
 DWC / LRU hit ratio rate  164%
 
 S3 600,000
@@ -365,8 +365,8 @@ DWC / LRU hit ratio rate  133%
 
 S3 700,000
 LRU hit ratio 46.04%
-DWC hit ratio 55.26%
-DWC - LRU hit ratio delta 9.22%
+DWC hit ratio 55.31%
+DWC - LRU hit ratio delta 9.27%
 DWC / LRU hit ratio rate  120%
 
 S3 800,000
@@ -529,21 +529,21 @@ const data = {
 ```
 GLI 250
 LRU hit ratio 0.93%
-DWC hit ratio 15.89%
-DWC - LRU hit ratio delta 14.96%
-DWC / LRU hit ratio rate  1707%
+DWC hit ratio 15.72%
+DWC - LRU hit ratio delta 14.79%
+DWC / LRU hit ratio rate  1689%
 
 GLI 500
 LRU hit ratio 0.96%
-DWC hit ratio 31.48%
-DWC - LRU hit ratio delta 30.51%
-DWC / LRU hit ratio rate  3265%
+DWC hit ratio 31.71%
+DWC - LRU hit ratio delta 30.75%
+DWC / LRU hit ratio rate  3289%
 
 GLI 750
 LRU hit ratio 1.16%
-DWC hit ratio 41.93%
-DWC - LRU hit ratio delta 40.77%
-DWC / LRU hit ratio rate  3604%
+DWC hit ratio 41.92%
+DWC - LRU hit ratio delta 40.75%
+DWC / LRU hit ratio rate  3602%
 
 GLI 1,000
 LRU hit ratio 11.22%
@@ -634,33 +634,33 @@ Of course it is verified that DWC works fine under the same condition.
   Memory: 5.88 GB / 6.78 GB
 
 ```
-'LRUCache new x 11,379 ops/sec ±0.63% (68 runs sampled)'
+'LRUCache new x 11,661 ops/sec ±1.70% (118 runs sampled)'
 
-'DW-Cache new x 4,731,010 ops/sec ±0.34% (68 runs sampled)'
+'DW-Cache new x 4,652,638 ops/sec ±1.58% (124 runs sampled)'
 
-'LRUCache simulation 10 x 8,215,381 ops/sec ±0.31% (68 runs sampled)'
+'LRUCache simulation 10 x 8,050,337 ops/sec ±1.77% (120 runs sampled)'
 
-'DW-Cache simulation 10 x 6,723,681 ops/sec ±0.54% (68 runs sampled)'
+'DW-Cache simulation 10 x 6,710,942 ops/sec ±1.63% (120 runs sampled)'
 
-'LRUCache simulation 100 x 8,376,085 ops/sec ±0.43% (68 runs sampled)'
+'LRUCache simulation 100 x 8,164,125 ops/sec ±1.99% (119 runs sampled)'
 
-'DW-Cache simulation 100 x 6,178,399 ops/sec ±0.29% (68 runs sampled)'
+'DW-Cache simulation 100 x 5,490,218 ops/sec ±1.93% (121 runs sampled)'
 
-'LRUCache simulation 1,000 x 7,448,487 ops/sec ±0.42% (68 runs sampled)'
+'LRUCache simulation 1,000 x 7,235,839 ops/sec ±2.05% (119 runs sampled)'
 
-'DW-Cache simulation 1,000 x 5,965,094 ops/sec ±0.42% (68 runs sampled)'
+'DW-Cache simulation 1,000 x 5,884,598 ops/sec ±2.12% (121 runs sampled)'
 
-'LRUCache simulation 10,000 x 6,671,862 ops/sec ±0.38% (68 runs sampled)'
+'LRUCache simulation 10,000 x 6,531,732 ops/sec ±1.97% (121 runs sampled)'
 
-'DW-Cache simulation 10,000 x 5,214,870 ops/sec ±0.60% (68 runs sampled)'
+'DW-Cache simulation 10,000 x 5,490,438 ops/sec ±1.71% (120 runs sampled)'
 
-'LRUCache simulation 100,000 x 3,229,658 ops/sec ±0.84% (67 runs sampled)'
+'LRUCache simulation 100,000 x 3,711,646 ops/sec ±1.38% (114 runs sampled)'
 
-'DW-Cache simulation 100,000 x 2,973,754 ops/sec ±1.56% (67 runs sampled)'
+'DW-Cache simulation 100,000 x 3,207,537 ops/sec ±1.52% (115 runs sampled)'
 
-'LRUCache simulation 1,000,000 x 1,506,821 ops/sec ±1.38% (66 runs sampled)'
+'LRUCache simulation 1,000,000 x 1,811,364 ops/sec ±2.59% (99 runs sampled)'
 
-'DW-Cache simulation 1,000,000 x 1,348,542 ops/sec ±1.84% (67 runs sampled)'
+'DW-Cache simulation 1,000,000 x 1,440,382 ops/sec ±2.25% (107 runs sampled)'
 ```
 
 ```ts
