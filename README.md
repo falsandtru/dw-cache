@@ -20,7 +20,7 @@ The highest performance constant complexity cache algorithm.
 - Sliding window
 - Transitive wide MRU with cyclic replacement
   - Omittable if loop resistance is unnecessary.
-- Weighted aging
+- Gap-weighted aging
   - Omittable if low inter-reference accesses are present.
 
 ## Properties
@@ -329,20 +329,20 @@ const data = {
 ```
 S3 100,000
 LRU hit ratio 2.32%
-DWC hit ratio 10.56%
-DWC - LRU hit ratio delta 8.23%
-DWC / LRU hit ratio rate  453%
+DWC hit ratio 10.58%
+DWC - LRU hit ratio delta 8.25%
+DWC / LRU hit ratio rate  454%
 
 S3 200,000
 LRU hit ratio 4.63%
-DWC hit ratio 18.91%
-DWC - LRU hit ratio delta 14.28%
-DWC / LRU hit ratio rate  408%
+DWC hit ratio 18.85%
+DWC - LRU hit ratio delta 14.22%
+DWC / LRU hit ratio rate  407%
 
 S3 300,000
 LRU hit ratio 7.58%
 DWC hit ratio 24.56%
-DWC - LRU hit ratio delta 16.97%
+DWC - LRU hit ratio delta 16.98%
 DWC / LRU hit ratio rate  323%
 
 S3 400,000
@@ -359,20 +359,20 @@ DWC / LRU hit ratio rate  164%
 
 S3 600,000
 LRU hit ratio 34.63%
-DWC hit ratio 46.12%
-DWC - LRU hit ratio delta 11.49%
+DWC hit ratio 46.16%
+DWC - LRU hit ratio delta 11.53%
 DWC / LRU hit ratio rate  133%
 
 S3 700,000
 LRU hit ratio 46.04%
-DWC hit ratio 55.31%
-DWC - LRU hit ratio delta 9.27%
+DWC hit ratio 55.29%
+DWC - LRU hit ratio delta 9.25%
 DWC / LRU hit ratio rate  120%
 
 S3 800,000
 LRU hit ratio 56.59%
-DWC hit ratio 63.74%
-DWC - LRU hit ratio delta 7.14%
+DWC hit ratio 63.73%
+DWC - LRU hit ratio delta 7.13%
 DWC / LRU hit ratio rate  112%
 ```
 
@@ -529,9 +529,9 @@ const data = {
 ```
 GLI 250
 LRU hit ratio 0.93%
-DWC hit ratio 15.72%
-DWC - LRU hit ratio delta 14.79%
-DWC / LRU hit ratio rate  1689%
+DWC hit ratio 15.89%
+DWC - LRU hit ratio delta 14.96%
+DWC / LRU hit ratio rate  1707%
 
 GLI 500
 LRU hit ratio 0.96%
@@ -541,9 +541,9 @@ DWC / LRU hit ratio rate  3289%
 
 GLI 750
 LRU hit ratio 1.16%
-DWC hit ratio 41.92%
-DWC - LRU hit ratio delta 40.75%
-DWC / LRU hit ratio rate  3602%
+DWC hit ratio 41.90%
+DWC - LRU hit ratio delta 40.74%
+DWC / LRU hit ratio rate  3601%
 
 GLI 1,000
 LRU hit ratio 11.22%
@@ -599,14 +599,14 @@ DWC / LRU hit ratio rate  Infinity%
 
 LOOP 750
 LRU hit ratio 0.00%
-DWC hit ratio 70.34%
-DWC - LRU hit ratio delta 70.34%
+DWC hit ratio 70.87%
+DWC - LRU hit ratio delta 70.87%
 DWC / LRU hit ratio rate  Infinity%
 
 LOOP 1,000
 LRU hit ratio 0.00%
-DWC hit ratio 95.14%
-DWC - LRU hit ratio delta 95.14%
+DWC hit ratio 97.52%
+DWC - LRU hit ratio delta 97.52%
 DWC / LRU hit ratio rate  Infinity%
 
 LOOP 1,250
