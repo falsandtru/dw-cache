@@ -397,7 +397,7 @@ const data = {
     },
     {
       label: 'ARC',
-      data: [22, 30, 35, 40, 41, 43, 44, 45],
+      data: [22, 30, 35, 40, 42, 43, 44, 45],
       borderColor: Utils.color(6),
     },
     {
@@ -417,14 +417,14 @@ const data = {
     },
     {
       label: 'W-TinyLFU',
-      data: [25, 32, 37, 40, 42, 43, 44, 45],
+      data: [25, 32, 37, 40, 43, 43, 44, 45],
       borderColor: Utils.color(8),
     },
   ]
 };
 -->
 
-![image](https://user-images.githubusercontent.com/3143368/200601395-55e379b1-d423-4fcb-9a04-29d2b4d7c3fc.png)
+![image](https://user-images.githubusercontent.com/3143368/203032024-87a99311-a578-4043-9af4-3a48ca445c59.png)
 
 ```
 OLTP 250
@@ -634,33 +634,33 @@ Of course it is verified that DWC works fine under the same condition.
   Memory: 5.88 GB / 6.78 GB
 
 ```
-'LRUCache new x 10,819 ops/sec ±1.11% (120 runs sampled)'
+'LRUCache new x 11,308 ops/sec ±1.04% (116 runs sampled)'
 
-'DW-Cache new x 4,381,322 ops/sec ±4.02% (121 runs sampled)'
+'DW-Cache new x 5,025,152 ops/sec ±1.21% (122 runs sampled)'
 
-'LRUCache simulation 10 x 7,763,556 ops/sec ±2.14% (119 runs sampled)'
+'LRUCache simulation 10 x 7,604,686 ops/sec ±1.96% (120 runs sampled)'
 
-'DW-Cache simulation 10 x 6,656,759 ops/sec ±1.89% (120 runs sampled)'
+'DW-Cache simulation 10 x 6,442,387 ops/sec ±1.65% (120 runs sampled)'
 
-'LRUCache simulation 100 x 8,057,796 ops/sec ±2.19% (119 runs sampled)'
+'LRUCache simulation 100 x 7,758,521 ops/sec ±2.06% (119 runs sampled)'
 
-'DW-Cache simulation 100 x 5,905,965 ops/sec ±1.91% (119 runs sampled)'
+'DW-Cache simulation 100 x 6,797,928 ops/sec ±1.76% (122 runs sampled)'
 
-'LRUCache simulation 1,000 x 7,084,194 ops/sec ±2.15% (118 runs sampled)'
+'LRUCache simulation 1,000 x 7,176,826 ops/sec ±2.02% (119 runs sampled)'
 
-'DW-Cache simulation 1,000 x 6,416,383 ops/sec ±2.03% (120 runs sampled)'
+'DW-Cache simulation 1,000 x 6,831,903 ops/sec ±1.75% (121 runs sampled)'
 
-'LRUCache simulation 10,000 x 6,185,703 ops/sec ±1.99% (119 runs sampled)'
+'LRUCache simulation 10,000 x 6,456,042 ops/sec ±1.93% (120 runs sampled)'
 
-'DW-Cache simulation 10,000 x 5,394,210 ops/sec ±1.72% (121 runs sampled)'
+'DW-Cache simulation 10,000 x 5,967,676 ops/sec ±1.50% (120 runs sampled)'
 
-'LRUCache simulation 100,000 x 2,536,503 ops/sec ±1.78% (108 runs sampled)'
+'LRUCache simulation 100,000 x 3,252,925 ops/sec ±1.59% (116 runs sampled)'
 
-'DW-Cache simulation 100,000 x 2,117,919 ops/sec ±2.79% (110 runs sampled)'
+'DW-Cache simulation 100,000 x 2,731,180 ops/sec ±1.72% (115 runs sampled)'
 
-'LRUCache simulation 1,000,000 x 1,272,477 ops/sec ±3.51% (106 runs sampled)'
+'LRUCache simulation 1,000,000 x 1,370,335 ops/sec ±3.20% (96 runs sampled)'
 
-'DW-Cache simulation 1,000,000 x 1,046,930 ops/sec ±2.32% (109 runs sampled)'
+'DW-Cache simulation 1,000,000 x 1,263,008 ops/sec ±2.33% (110 runs sampled)'
 ```
 
 ```ts
