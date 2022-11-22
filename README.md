@@ -329,26 +329,26 @@ const data = {
 ```
 S3 100,000
 LRU hit ratio 2.32%
-DWC hit ratio 10.58%
-DWC - LRU hit ratio delta 8.25%
-DWC / LRU hit ratio rate  454%
+DWC hit ratio 10.59%
+DWC - LRU hit ratio delta 8.26%
+DWC / LRU hit ratio rate  455%
 
 S3 200,000
 LRU hit ratio 4.63%
-DWC hit ratio 18.85%
-DWC - LRU hit ratio delta 14.22%
-DWC / LRU hit ratio rate  407%
+DWC hit ratio 18.81%
+DWC - LRU hit ratio delta 14.18%
+DWC / LRU hit ratio rate  406%
 
 S3 300,000
 LRU hit ratio 7.58%
-DWC hit ratio 24.56%
+DWC hit ratio 24.57%
 DWC - LRU hit ratio delta 16.98%
 DWC / LRU hit ratio rate  323%
 
 S3 400,000
 LRU hit ratio 12.03%
 DWC hit ratio 29.59%
-DWC - LRU hit ratio delta 17.55%
+DWC - LRU hit ratio delta 17.56%
 DWC / LRU hit ratio rate  245%
 
 S3 500,000
@@ -429,9 +429,9 @@ const data = {
 ```
 OLTP 250
 LRU hit ratio 16.47%
-DWC hit ratio 18.19%
-DWC - LRU hit ratio delta 1.72%
-DWC / LRU hit ratio rate  110%
+DWC hit ratio 18.10%
+DWC - LRU hit ratio delta 1.63%
+DWC / LRU hit ratio rate  109%
 
 OLTP 500
 LRU hit ratio 23.44%
