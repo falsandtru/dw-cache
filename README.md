@@ -431,9 +431,9 @@ const data = {
 ```
 OLTP 250
 LRU hit ratio 16.47%
-DWC hit ratio 18.09%
-DWC - LRU hit ratio delta 1.61%
-DWC / LRU hit ratio rate  109%
+DWC hit ratio 18.14%
+DWC - LRU hit ratio delta 1.67%
+DWC / LRU hit ratio rate  110%
 
 OLTP 500
 LRU hit ratio 23.44%
@@ -537,9 +537,9 @@ DWC / LRU hit ratio rate  1694%
 
 GLI 500
 LRU hit ratio 0.96%
-DWC hit ratio 31.34%
-DWC - LRU hit ratio delta 30.38%
-DWC / LRU hit ratio rate  3251%
+DWC hit ratio 31.36%
+DWC - LRU hit ratio delta 30.40%
+DWC / LRU hit ratio rate  3253%
 
 GLI 750
 LRU hit ratio 1.16%
@@ -589,14 +589,14 @@ DWC / LRU hit ratio rate  Infinity%
 
 LOOP 250
 LRU hit ratio 0.00%
-DWC hit ratio 22.55%
-DWC - LRU hit ratio delta 22.55%
+DWC hit ratio 22.71%
+DWC - LRU hit ratio delta 22.71%
 DWC / LRU hit ratio rate  Infinity%
 
 LOOP 500
 LRU hit ratio 0.00%
-DWC hit ratio 46.88%
-DWC - LRU hit ratio delta 46.88%
+DWC hit ratio 46.75%
+DWC - LRU hit ratio delta 46.75%
 DWC / LRU hit ratio rate  Infinity%
 
 LOOP 750
@@ -751,7 +751,7 @@ export namespace Cache {
       readonly range?: number;
       readonly shift?: number;
     };
-    readonly life?: {
+    readonly aging?: {
       readonly threshold?: number;
     };
   }
