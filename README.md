@@ -20,7 +20,7 @@ The highest performance constant complexity cache algorithm.
 - Sliding window
 - Transitive wide MRU with cyclic replacement
   - Omittable if loop resistance is unnecessary.
-- Gap-weighted aging
+- Aging
   - Omittable if low inter-reference accesses are present.
 
 ## Properties
@@ -150,9 +150,11 @@ Graphs are approximate.
 6. Press F12 key to open devtools.
 7. Select the console tab.
 
+https://github.com/dgraph-io/benchmarks<br>
 https://github.com/ben-manes/caffeine/wiki/Efficiency<br>
 https://github.com/dgraph-io/ristretto<br>
-https://github.com/dgraph-io/benchmarks
+https://github.com/jedisct1/rust-arc-cache/issues/1<br>
+https://docs.google.com/spreadsheets/d/1G3deNz1gJCoXBE2IuraUSwLE7H_EMn4Sn2GU0HTpI5Y
 
 <!--
 // https://www.chartjs.org/docs/latest/charts/line.html
@@ -188,26 +190,26 @@ const data = {
   datasets: [
     {
       label: 'Optimal',
-      data: [20, 31, 41, 48, 55, 62, 69, 76],
+      data: [20.19, 31.79, 41.23, 48.09, 54.96, 61.82, 68.69, 74.93],
     },
     {
       label: 'LRU',
-      data: [3, 11, 19, 20, 21, 34, 39, 43],
+      data: [3.09, 10.74, 18.59, 20.24, 21.03, 33.95, 38.9, 43.03],
       borderColor: Utils.color(0),
     },
     {
       label: 'ARC',
-      data: [5, 22, 23, 29, 28, 36, 46, 50],
+      data: [6.68, 21.99, 24.16, 29.6, 29.44, 36.04, 47.22, 50.89],
       borderColor: Utils.color(6),
     },
     {
       label: 'DWC',
-      data: [11, 26, 39, 43, 48, 56, 57, 64],
+      data: [11.32, 26.35, 38.5, 42.73, 48.16, 56.03, 57.15, 63.82],
       borderColor: Utils.color(2),
     },
     {
       label: 'LIRS',
-      data: [13, 25, 38, 38, 38, 47, 60, 71],
+      data: [12.98, 26.85, 38.02, 38.14, 38.18, 47.25, 59.89, 71.74],
       borderColor: Utils.color(3),
     },
     {
@@ -217,14 +219,14 @@ const data = {
     },
     {
       label: 'W-TinyLFU',
-      data: [15, 27, 40, 45, 51, 58, 64, 70],
+      data: [15, 28, 40, 45, 51, 58, 64, 70],
       borderColor: Utils.color(8),
     },
   ]
 };
 -->
 
-![image](https://user-images.githubusercontent.com/3143368/201688709-bc413ccb-e940-40dc-9107-141f889aa3bd.png)
+![image](https://user-images.githubusercontent.com/3143368/203526026-bd06769c-280d-429e-89c6-f2ac93932f6d.png)
 
 ```
 DS1 1,000,000
@@ -241,8 +243,8 @@ DWC / LRU hit ratio rate  245%
 
 DS1 3,000,000
 LRU hit ratio 18.59%
-DWC hit ratio 38.56%
-DWC - LRU hit ratio delta 19.97%
+DWC hit ratio 38.50%
+DWC - LRU hit ratio delta 19.91%
 DWC / LRU hit ratio rate  207%
 
 DS1 4,000,000
@@ -288,26 +290,26 @@ const data = {
   datasets: [
     {
       label: 'Optimal',
-      data: [25, 38, 51, 60, 67, 73, 77, 80],
+      data: [25.42, 39.79, 50.92, 59.96, 67.09, 72.97, 77.57, 81.27],
     },
     {
       label: 'LRU',
-      data: [2, 5, 8, 12, 23, 35, 46, 57],
+      data: [2.33, 4.63, 7.59, 12.04, 22.77, 34.63, 46.04, 56.6],
       borderColor: Utils.color(0),
     },
     {
       label: 'ARC',
-      data: [12, 22, 27, 30, 37, 45, 52, 59],
+      data: [12.18, 21.74, 27.64, 32, 38.44, 46.25, 52.52, 60.14],
       borderColor: Utils.color(6),
     },
     {
       label: 'DWC',
-      data: [11, 19, 25, 30, 38, 46, 55, 64],
+      data: [10.45, 18.88, 24.56, 29.59, 37.48, 46.12, 55.26, 63.74],
       borderColor: Utils.color(2),
     },
     {
       label: 'LIRS',
-      data: [12, 15, 25, 35, 44, 53, 60, 66],
+      data: [12.4, 15.55, 25.08, 34.69, 44.27, 53.15, 60.99, 67.64],
       borderColor: Utils.color(3),
     },
     {
@@ -317,62 +319,62 @@ const data = {
     },
     {
       label: 'W-TinyLFU',
-      data: [12, 23, 33, 42, 51, 59, 65, 70],
+      data: [12, 23, 34, 43, 51, 59, 65, 70],
       borderColor: Utils.color(8),
     },
   ]
 };
 -->
 
-![image](https://user-images.githubusercontent.com/3143368/201695558-14ac160a-81c1-43a3-9e0f-42c5eace35e5.png)
+![image](https://user-images.githubusercontent.com/3143368/203527467-03fae86f-5d42-4d89-bad1-97ef94fbe903.png)
 
 ```
 S3 100,000
 LRU hit ratio 2.32%
-DWC hit ratio 10.59%
-DWC - LRU hit ratio delta 8.26%
-DWC / LRU hit ratio rate  455%
+DWC hit ratio 10.45%
+DWC - LRU hit ratio delta 8.13%
+DWC / LRU hit ratio rate  449%
 
 S3 200,000
 LRU hit ratio 4.63%
-DWC hit ratio 18.81%
-DWC - LRU hit ratio delta 14.18%
-DWC / LRU hit ratio rate  406%
+DWC hit ratio 18.88%
+DWC - LRU hit ratio delta 14.24%
+DWC / LRU hit ratio rate  407%
 
 S3 300,000
 LRU hit ratio 7.58%
-DWC hit ratio 24.57%
-DWC - LRU hit ratio delta 16.98%
+DWC hit ratio 24.56%
+DWC - LRU hit ratio delta 16.97%
 DWC / LRU hit ratio rate  323%
 
 S3 400,000
 LRU hit ratio 12.03%
 DWC hit ratio 29.59%
-DWC - LRU hit ratio delta 17.56%
+DWC - LRU hit ratio delta 17.55%
 DWC / LRU hit ratio rate  245%
 
 S3 500,000
 LRU hit ratio 22.76%
-DWC hit ratio 37.47%
-DWC - LRU hit ratio delta 14.70%
+DWC hit ratio 37.48%
+DWC - LRU hit ratio delta 14.71%
 DWC / LRU hit ratio rate  164%
 
 S3 600,000
 LRU hit ratio 34.63%
-DWC hit ratio 46.16%
-DWC - LRU hit ratio delta 11.53%
+DWC hit ratio 46.12%
+DWC - LRU hit ratio delta 11.49%
 DWC / LRU hit ratio rate  133%
 
 S3 700,000
 LRU hit ratio 46.04%
-DWC hit ratio 55.29%
-DWC - LRU hit ratio delta 9.25%
+DWC hit ratio 55.26%
+DWC - LRU hit ratio delta 9.22%
 DWC / LRU hit ratio rate  120%
 
 S3 800,000
 LRU hit ratio 56.59%
-DWC hit ratio 63.73%
-DWC - LRU hit ratio delta 7.13%
+DWC hit ratio 63.74%
+DWC - LRU hit ratio delta 7.14%
 DWC / LRU hit ratio rate  112%
 ```
 
@@ -388,26 +390,26 @@ const data = {
   datasets: [
     {
       label: 'Optimal',
-      data: [39, 45, 50, 52, 54, 56, 58, 60],
+      data: [38.47, 46.43, 50.67, 53.62, 55.84, 57.62, 59.13, 60.4],
     },
     {
       label: 'LRU',
-      data: [17, 23, 28, 33, 36, 39, 41, 43],
+      data: [16.47, 23.45, 28.28, 32.83, 36.21, 38.7, 40.79, 42.47],
       borderColor: Utils.color(0),
     },
     {
       label: 'ARC',
-      data: [22, 30, 35, 40, 42, 43, 44, 45],
+      data: [21.46, 30.61, 36.04, 39.06, 41.34, 43.15, 44.77, 46.17],
       borderColor: Utils.color(6),
     },
     {
       label: 'DWC',
-      data: [18, 29, 35, 38, 40, 42, 43, 45],
+      data: [18.09, 28.78, 34.63, 37.98, 40.11, 41.79, 43.27, 44.55],
       borderColor: Utils.color(2),
     },
     {
       label: 'LIRS',
-      data: [19, 25, 30, 35, 37, 39, 41, 43],
+      data: [18.27, 26.87, 31.71, 34.82, 37.24, 39.2, 40.79, 42.52],
       borderColor: Utils.color(3),
     },
     {
@@ -417,20 +419,20 @@ const data = {
     },
     {
       label: 'W-TinyLFU',
-      data: [25, 32, 37, 40, 43, 43, 44, 45],
+      data: [24, 32, 37, 40, 43, 43, 45, 46],
       borderColor: Utils.color(8),
     },
   ]
 };
 -->
 
-![image](https://user-images.githubusercontent.com/3143368/203032024-87a99311-a578-4043-9af4-3a48ca445c59.png)
+![image](https://user-images.githubusercontent.com/3143368/203532114-06675276-8d31-41b1-8d97-f92391793a13.png)
 
 ```
 OLTP 250
 LRU hit ratio 16.47%
-DWC hit ratio 18.10%
-DWC - LRU hit ratio delta 1.63%
+DWC hit ratio 18.09%
+DWC - LRU hit ratio delta 1.61%
 DWC / LRU hit ratio rate  109%
 
 OLTP 500
@@ -488,26 +490,26 @@ const data = {
   datasets: [
     {
       label: 'Optimal',
-      data: [18, 35, 46, 53, 57, 58, 58, 58],
+      data: [17.71,34.33, 46.13, 53.15, 57.31, 57.96, 57.96, 57.96],
     },
     {
       label: 'LRU',
-      data: [1, 1, 1, 11, 21, 37, 45, 57],
+      data: [0.91, 0.95, 1.15, 11.21, 21.25, 36.56, 45.04, 57.41],
       borderColor: Utils.color(0),
     },
     {
       label: 'ARC',
-      data: [1, 1, 1, 20, 35, 50, 55, 57],
+      data: [1.38, 1.38, 1.41, 21.3, 34.43, 50.44, 55.06, 57.41],
       borderColor: Utils.color(6),
     },
     {
       label: 'DWC',
-      data: [16, 32, 42, 50, 52, 54, 55, 57],
+      data: [15.77, 31.34, 41.93, 48.90, 52.17, 53.93, 55.06, 57.41],
       borderColor: Utils.color(2),
     },
     {
       label: 'LIRS',
-      data: [16, 34, 44, 51, 52, 54, 56, 58],
+      data: [15.91, 33.6, 43.61, 50.56, 51.85, 53.55, 55.58, 57.96],
       borderColor: Utils.color(3),
     },
     {
@@ -524,26 +526,26 @@ const data = {
 };
 -->
 
-![image](https://user-images.githubusercontent.com/3143368/202870810-b8b4c1c6-8b1b-4368-a1d1-018e0b85f0fb.png)
+![image](https://user-images.githubusercontent.com/3143368/203533604-c84421e9-c781-4059-adcc-a2bce12573cb.png)
 
 ```
 GLI 250
 LRU hit ratio 0.93%
-DWC hit ratio 15.89%
-DWC - LRU hit ratio delta 14.96%
-DWC / LRU hit ratio rate  1707%
+DWC hit ratio 15.77%
+DWC - LRU hit ratio delta 14.84%
+DWC / LRU hit ratio rate  1694%
 
 GLI 500
 LRU hit ratio 0.96%
-DWC hit ratio 31.71%
-DWC - LRU hit ratio delta 30.75%
-DWC / LRU hit ratio rate  3289%
+DWC hit ratio 31.34%
+DWC - LRU hit ratio delta 30.38%
+DWC / LRU hit ratio rate  3251%
 
 GLI 750
 LRU hit ratio 1.16%
-DWC hit ratio 41.90%
-DWC - LRU hit ratio delta 40.74%
-DWC / LRU hit ratio rate  3601%
+DWC hit ratio 41.93%
+DWC - LRU hit ratio delta 40.77%
+DWC / LRU hit ratio rate  3604%
 
 GLI 1,000
 LRU hit ratio 11.22%
@@ -587,8 +589,8 @@ DWC / LRU hit ratio rate  Infinity%
 
 LOOP 250
 LRU hit ratio 0.00%
-DWC hit ratio 23.29%
-DWC - LRU hit ratio delta 23.29%
+DWC hit ratio 22.55%
+DWC - LRU hit ratio delta 22.55%
 DWC / LRU hit ratio rate  Infinity%
 
 LOOP 500
@@ -634,33 +636,33 @@ Of course it is verified that DWC works fine under the same condition.
   Memory: 5.88 GB / 6.78 GB
 
 ```
-'LRUCache new x 11,308 ops/sec ±1.04% (116 runs sampled)'
+'LRUCache new x 11,054 ops/sec ±1.62% (117 runs sampled)'
 
-'DW-Cache new x 5,025,152 ops/sec ±1.21% (122 runs sampled)'
+'DW-Cache new x 4,908,733 ops/sec ±0.25% (123 runs sampled)'
 
-'LRUCache simulation 10 x 7,604,686 ops/sec ±1.96% (120 runs sampled)'
+'LRUCache simulation 10 x 7,555,038 ops/sec ±2.11% (120 runs sampled)'
 
-'DW-Cache simulation 10 x 6,442,387 ops/sec ±1.65% (120 runs sampled)'
+'DW-Cache simulation 10 x 6,926,601 ops/sec ±1.66% (122 runs sampled)'
 
-'LRUCache simulation 100 x 7,758,521 ops/sec ±2.06% (119 runs sampled)'
+'LRUCache simulation 100 x 7,776,185 ops/sec ±2.06% (120 runs sampled)'
 
-'DW-Cache simulation 100 x 6,797,928 ops/sec ±1.76% (122 runs sampled)'
+'DW-Cache simulation 100 x 6,932,348 ops/sec ±1.81% (121 runs sampled)'
 
-'LRUCache simulation 1,000 x 7,176,826 ops/sec ±2.02% (119 runs sampled)'
+'LRUCache simulation 1,000 x 6,857,493 ops/sec ±2.02% (119 runs sampled)'
 
-'DW-Cache simulation 1,000 x 6,831,903 ops/sec ±1.75% (121 runs sampled)'
+'DW-Cache simulation 1,000 x 6,248,550 ops/sec ±1.85% (120 runs sampled)'
 
-'LRUCache simulation 10,000 x 6,456,042 ops/sec ±1.93% (120 runs sampled)'
+'LRUCache simulation 10,000 x 6,097,350 ops/sec ±2.00% (120 runs sampled)'
 
-'DW-Cache simulation 10,000 x 5,967,676 ops/sec ±1.50% (120 runs sampled)'
+'DW-Cache simulation 10,000 x 5,255,185 ops/sec ±1.68% (120 runs sampled)'
 
-'LRUCache simulation 100,000 x 3,252,925 ops/sec ±1.59% (116 runs sampled)'
+'LRUCache simulation 100,000 x 2,621,563 ops/sec ±1.49% (107 runs sampled)'
 
-'DW-Cache simulation 100,000 x 2,731,180 ops/sec ±1.72% (115 runs sampled)'
+'DW-Cache simulation 100,000 x 2,567,844 ops/sec ±2.65% (112 runs sampled)'
 
-'LRUCache simulation 1,000,000 x 1,370,335 ops/sec ±3.20% (96 runs sampled)'
+'LRUCache simulation 1,000,000 x 1,422,730 ops/sec ±2.91% (107 runs sampled)'
 
-'DW-Cache simulation 1,000,000 x 1,263,008 ops/sec ±2.33% (110 runs sampled)'
+'DW-Cache simulation 1,000,000 x 1,243,016 ops/sec ±2.40% (111 runs sampled)'
 ```
 
 ```ts
@@ -750,8 +752,7 @@ export namespace Cache {
       readonly shift?: number;
     };
     readonly life?: {
-      readonly LRU: number;
-      readonly LFU: number;
+      readonly threshold?: number;
     };
   }
 }
