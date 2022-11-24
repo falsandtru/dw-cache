@@ -19,9 +19,6 @@ The highest performance constant complexity cache algorithm.
 - Dynamic partition
 - Sliding window
 - Transitive wide MRU with cyclic replacement
-  - Omittable if loop resistance is unnecessary.
-- Aging
-  - Omittable if low inter-reference accesses are present.
 
 ## Properties
 
@@ -243,8 +240,8 @@ DWC / LRU hit ratio rate  245%
 
 DS1 3,000,000
 LRU hit ratio 18.59%
-DWC hit ratio 38.50%
-DWC - LRU hit ratio delta 19.91%
+DWC hit ratio 38.56%
+DWC - LRU hit ratio delta 19.97%
 DWC / LRU hit ratio rate  207%
 
 DS1 4,000,000
@@ -331,9 +328,9 @@ const data = {
 ```
 S3 100,000
 LRU hit ratio 2.32%
-DWC hit ratio 10.45%
-DWC - LRU hit ratio delta 8.13%
-DWC / LRU hit ratio rate  449%
+DWC hit ratio 10.53%
+DWC - LRU hit ratio delta 8.21%
+DWC / LRU hit ratio rate  452%
 
 S3 200,000
 LRU hit ratio 4.63%
@@ -431,9 +428,9 @@ const data = {
 ```
 OLTP 250
 LRU hit ratio 16.47%
-DWC hit ratio 18.14%
-DWC - LRU hit ratio delta 1.67%
-DWC / LRU hit ratio rate  110%
+DWC hit ratio 17.47%
+DWC - LRU hit ratio delta 1.00%
+DWC / LRU hit ratio rate  106%
 
 OLTP 500
 LRU hit ratio 23.44%
@@ -537,9 +534,9 @@ DWC / LRU hit ratio rate  1694%
 
 GLI 500
 LRU hit ratio 0.96%
-DWC hit ratio 31.36%
-DWC - LRU hit ratio delta 30.40%
-DWC / LRU hit ratio rate  3253%
+DWC hit ratio 31.43%
+DWC - LRU hit ratio delta 30.46%
+DWC / LRU hit ratio rate  3260%
 
 GLI 750
 LRU hit ratio 1.16%
@@ -589,26 +586,26 @@ DWC / LRU hit ratio rate  Infinity%
 
 LOOP 250
 LRU hit ratio 0.00%
-DWC hit ratio 22.71%
-DWC - LRU hit ratio delta 22.71%
+DWC hit ratio 23.29%
+DWC - LRU hit ratio delta 23.29%
 DWC / LRU hit ratio rate  Infinity%
 
 LOOP 500
 LRU hit ratio 0.00%
-DWC hit ratio 46.75%
-DWC - LRU hit ratio delta 46.75%
+DWC hit ratio 46.88%
+DWC - LRU hit ratio delta 46.88%
 DWC / LRU hit ratio rate  Infinity%
 
 LOOP 750
 LRU hit ratio 0.00%
-DWC hit ratio 70.87%
-DWC - LRU hit ratio delta 70.87%
+DWC hit ratio 70.34%
+DWC - LRU hit ratio delta 70.34%
 DWC / LRU hit ratio rate  Infinity%
 
 LOOP 1,000
 LRU hit ratio 0.00%
-DWC hit ratio 97.52%
-DWC - LRU hit ratio delta 97.52%
+DWC hit ratio 95.14%
+DWC - LRU hit ratio delta 95.14%
 DWC / LRU hit ratio rate  Infinity%
 
 LOOP 1,250
@@ -636,33 +633,33 @@ Of course it is verified that DWC works fine under the same condition.
   Memory: 5.88 GB / 6.78 GB
 
 ```
-'LRUCache new x 11,054 ops/sec ±1.62% (117 runs sampled)'
+'LRUCache new x 9,590 ops/sec ±1.86% (105 runs sampled)'
 
-'DW-Cache new x 4,908,733 ops/sec ±0.25% (123 runs sampled)'
+'DW-Cache new x 4,489,080 ops/sec ±3.13% (121 runs sampled)'
 
-'LRUCache simulation 10 x 7,555,038 ops/sec ±2.11% (120 runs sampled)'
+'LRUCache simulation 10 x 7,815,403 ops/sec ±2.15% (119 runs sampled)'
 
-'DW-Cache simulation 10 x 6,926,601 ops/sec ±1.66% (122 runs sampled)'
+'DW-Cache simulation 10 x 6,488,758 ops/sec ±1.99% (120 runs sampled)'
 
-'LRUCache simulation 100 x 7,776,185 ops/sec ±2.06% (120 runs sampled)'
+'LRUCache simulation 100 x 8,074,090 ops/sec ±2.25% (119 runs sampled)'
 
-'DW-Cache simulation 100 x 6,932,348 ops/sec ±1.81% (121 runs sampled)'
+'DW-Cache simulation 100 x 6,056,342 ops/sec ±1.98% (119 runs sampled)'
 
-'LRUCache simulation 1,000 x 6,857,493 ops/sec ±2.02% (119 runs sampled)'
+'LRUCache simulation 1,000 x 7,102,745 ops/sec ±2.12% (119 runs sampled)'
 
-'DW-Cache simulation 1,000 x 6,248,550 ops/sec ±1.85% (120 runs sampled)'
+'DW-Cache simulation 1,000 x 6,067,487 ops/sec ±2.20% (120 runs sampled)'
 
-'LRUCache simulation 10,000 x 6,097,350 ops/sec ±2.00% (120 runs sampled)'
+'LRUCache simulation 10,000 x 6,100,434 ops/sec ±1.98% (120 runs sampled)'
 
-'DW-Cache simulation 10,000 x 5,255,185 ops/sec ±1.68% (120 runs sampled)'
+'DW-Cache simulation 10,000 x 5,168,295 ops/sec ±1.80% (119 runs sampled)'
 
-'LRUCache simulation 100,000 x 2,621,563 ops/sec ±1.49% (107 runs sampled)'
+'LRUCache simulation 100,000 x 2,348,396 ops/sec ±1.54% (106 runs sampled)'
 
-'DW-Cache simulation 100,000 x 2,567,844 ops/sec ±2.65% (112 runs sampled)'
+'DW-Cache simulation 100,000 x 1,955,725 ops/sec ±2.15% (110 runs sampled)'
 
-'LRUCache simulation 1,000,000 x 1,422,730 ops/sec ±2.91% (107 runs sampled)'
+'LRUCache simulation 1,000,000 x 1,256,524 ops/sec ±3.46% (106 runs sampled)'
 
-'DW-Cache simulation 1,000,000 x 1,243,016 ops/sec ±2.40% (111 runs sampled)'
+'DW-Cache simulation 1,000,000 x 1,128,593 ops/sec ±2.45% (112 runs sampled)'
 ```
 
 ```ts
@@ -731,8 +728,16 @@ cache.get(key) ?? cache.set(key, {});
 export namespace Cache {
   export interface Options<K, V = undefined> {
     // Max entries.
+    // Range: 1-
     readonly capacity?: number;
+    // Window size ratio to measure hit ratios.
+    // Range: 1-100
     readonly window?: number;
+    // Min sample size ratio to measure hit density.
+    // Range: 1-100
+    readonly sample?: number;
+    // Max costs.
+    // Range: L-
     readonly resource?: number;
     readonly age?: number;
     readonly earlyExpiring?: boolean;
@@ -744,15 +749,11 @@ export namespace Cache {
     // Mainly for experiments.
     readonly resolution?: number;
     readonly offset?: number;
-    readonly entrance?: number;
     readonly sweep?: {
       readonly threshold?: number;
       readonly window?: number;
       readonly range?: number;
       readonly shift?: number;
-    };
-    readonly aging?: {
-      readonly threshold?: number;
     };
   }
 }
