@@ -1,23 +1,61 @@
 import { Cache } from '../index';
 import LRU from 'lru-cache';
+//import { ARC } from './arc';
 import { memoize } from 'spica/memoize';
 import { wait } from 'spica/timer';
 
 describe('Benchmark: Package', async function () {
   await wait(3000);
 
+  class Stats {
+    total = 0;
+    lru = 0;
+    arc = 0;
+    dwc = 0;
+    clear() {
+      this.total = 0;
+      this.lru = 0;
+      this.arc = 0;
+      this.dwc = 0;
+    }
+  }
   async function run(label: string, source: string, capacity: number) {
+    const keys = await parse(source);
     const dwc = new Cache<number, 1>(capacity);
     const lru = new LRU<number, 1>({ max: capacity });
+    //const arc = new ARC<number, 1>(capacity);
     const stats = new Stats();
-    const keys = await parse(source);
+    //for (let i = 0; i < capacity; ++i) {
+    //  //arc.set(-i, 1);
+    //  //arc.set(-i - 1 % capacity, 1);
+    //  //arc.get(-i);
+    //
+    //  dwc.set(-i, 1);
+    //  dwc.set(-i - 1 % capacity, 1);
+    //  dwc.get(-i);
+    //}
+    //for (const { key } of dwc['LFU']) {
+    //  //arc.get(key);
+    //  dwc.get(key);
+    //}
+    //for (let i = 0; i < keys.length; ++i) {
+    //  const key = keys[i];
+    //  ++stats.total;
+    //  stats.lru += lru.get(key) ?? (lru.set(key, 1), 0);
+    //  //stats.arc += arc.get(key) ?? (arc.set(key, 1), 0);
+    //  stats.dwc += dwc.get(key) ?? (dwc.set(key, 1), 0);
+    //}
+    //print(`${label} ${capacity.toLocaleString('en')}`, stats, dwc);
+    //
+    //stats.clear();
     for (let i = 0; i < keys.length; ++i) {
       const key = keys[i];
       ++stats.total;
-      stats.dwc += dwc.get(key) ?? (dwc.set(key, 1), 0);
       stats.lru += lru.get(key) ?? (lru.set(key, 1), 0);
+      //stats.arc += arc.get(key) ?? (arc.set(key, 1), 0);
+      stats.dwc += dwc.get(key) ?? (dwc.set(key, 1), 0);
     }
-    print(`${label} ${capacity.toLocaleString('en')}`, stats);
+    print(`${label} ${capacity.toLocaleString('en')}`, stats, dwc);
   }
   const parse = memoize(async function (source: string): Promise<readonly number[]> {
     const data = await (await fetch(source)).text();
@@ -38,21 +76,20 @@ describe('Benchmark: Package', async function () {
     }
     return acc;
   });
-  function print(label: string, stats: Stats): void {
+  function print(label: string, stats: Stats, dwc: Cache<unknown, unknown>): void {
     console.log(label);
     console.log('LRU hit ratio', `${format(stats.lru * 100 / stats.total, 2)}%`);
+    //console.log('ARC hit ratio', `${format(stats.arc * 100 / stats.total, 2)}%`);
     console.log('DWC hit ratio', `${format(stats.dwc * 100 / stats.total, 2)}%`);
     console.log('DWC - LRU hit ratio delta', `${format((stats.dwc - stats.lru) * 100 / stats.total, 2)}%`);
     console.log('DWC / LRU hit ratio rate ', `${format(stats.dwc / stats.lru * 100, 0)}%`);
+    console.log('DWC ratio', dwc['partition']! * 100 / dwc.length | 0, dwc['LFU'].length * 100 / dwc.length | 0);
+    console.log('DWC density', dwc['densityR'], dwc['densityF']);
+    console.log('DWC overlap', dwc['overlapLFU'] / dwc['LRU'].length * 100 | 0, dwc['overlapLRU'] / dwc['LFU'].length * 100 | 0);
     console.log('');
   }
   function format(n: number, u: number): string {
     return `${n}`.replace(/(\.\d+)?$/, s => u ? `.${s.slice(1, 1 + u).padEnd(u, '0')}` : '');
-  }
-  class Stats {
-    total = 0;
-    dwc = 0;
-    lru = 0;
   }
 
   for (const capacity of [100, 250, 500, 750, 1000, 1250]) {
