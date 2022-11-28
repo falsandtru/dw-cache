@@ -201,7 +201,7 @@ const data = {
     },
     {
       label: 'DWC',
-      data: [11.34, 25.76, 37.93, 41.59, 47.33, 54.65, 57.77, 64.64],
+      data: [11.59, 26.22, 38.18, 42.12, 47.15, 55.34, 57.03, 64.22],
       borderColor: Utils.color(2),
     },
     {
@@ -223,56 +223,56 @@ const data = {
 };
 -->
 
-![image](https://user-images.githubusercontent.com/3143368/204173168-bf3aba17-2c79-4332-8d57-f8efcfe7d6a1.png)
+![image](https://user-images.githubusercontent.com/3143368/204281007-6ea2d7b6-202f-4a09-a3b0-ed95c601dea8.png)
 
 ```
 DS1 1,000,000
 LRU hit ratio 3.08%
-DWC hit ratio 11.34%
-DWC - LRU hit ratio delta 8.25%
-DWC / LRU hit ratio rate  367%
+DWC hit ratio 11.59%
+DWC - LRU hit ratio delta 8.50%
+DWC / LRU hit ratio rate  375%
 
 DS1 2,000,000
 LRU hit ratio 10.74%
-DWC hit ratio 25.76%
-DWC - LRU hit ratio delta 15.02%
-DWC / LRU hit ratio rate  239%
+DWC hit ratio 26.22%
+DWC - LRU hit ratio delta 15.47%
+DWC / LRU hit ratio rate  244%
 
 DS1 3,000,000
 LRU hit ratio 18.59%
-DWC hit ratio 37.93%
-DWC - LRU hit ratio delta 19.34%
-DWC / LRU hit ratio rate  204%
+DWC hit ratio 38.18%
+DWC - LRU hit ratio delta 19.59%
+DWC / LRU hit ratio rate  205%
 
 DS1 4,000,000
 LRU hit ratio 20.24%
-DWC hit ratio 41.59%
-DWC - LRU hit ratio delta 21.34%
-DWC / LRU hit ratio rate  205%
+DWC hit ratio 42.12%
+DWC - LRU hit ratio delta 21.88%
+DWC / LRU hit ratio rate  208%
 
 DS1 5,000,000
 LRU hit ratio 21.03%
-DWC hit ratio 47.33%
-DWC - LRU hit ratio delta 26.30%
-DWC / LRU hit ratio rate  225%
+DWC hit ratio 47.15%
+DWC - LRU hit ratio delta 26.12%
+DWC / LRU hit ratio rate  224%
 
 DS1 6,000,000
 LRU hit ratio 33.95%
-DWC hit ratio 54.65%
-DWC - LRU hit ratio delta 20.70%
-DWC / LRU hit ratio rate  160%
+DWC hit ratio 55.34%
+DWC - LRU hit ratio delta 21.39%
+DWC / LRU hit ratio rate  163%
 
 DS1 7,000,000
 LRU hit ratio 38.89%
-DWC hit ratio 57.77%
-DWC - LRU hit ratio delta 18.87%
-DWC / LRU hit ratio rate  148%
+DWC hit ratio 57.03%
+DWC - LRU hit ratio delta 18.13%
+DWC / LRU hit ratio rate  146%
 
 DS1 8,000,000
 LRU hit ratio 43.03%
-DWC hit ratio 64.64%
-DWC - LRU hit ratio delta 21.61%
-DWC / LRU hit ratio rate  150%
+DWC hit ratio 64.22%
+DWC - LRU hit ratio delta 21.18%
+DWC / LRU hit ratio rate  149%
 ```
 
 ### S3
@@ -301,7 +301,7 @@ const data = {
     },
     {
       label: 'DWC',
-      data: [10.52, 18.87, 24.59, 29.62, 37.50, 46.28, 55.31, 63.38],
+      data: [10.62, 19.18, 25.37, 30.69, 38.65, 47.36, 56.24, 64.33],
       borderColor: Utils.color(2),
     },
     {
@@ -323,56 +323,56 @@ const data = {
 };
 -->
 
-![image](https://user-images.githubusercontent.com/3143368/204173424-74aa5fb9-25c8-4736-adfc-8d2a59861aa1.png)
+![image](https://user-images.githubusercontent.com/3143368/204281567-3a7ab37d-3ce3-4d93-8225-8c97aad053e3.png)
 
 ```
 S3 100,000
 LRU hit ratio 2.32%
-DWC hit ratio 10.52%
-DWC - LRU hit ratio delta 8.20%
-DWC / LRU hit ratio rate  452%
+DWC hit ratio 10.62%
+DWC - LRU hit ratio delta 8.29%
+DWC / LRU hit ratio rate  456%
 
 S3 200,000
 LRU hit ratio 4.63%
-DWC hit ratio 18.87%
-DWC - LRU hit ratio delta 14.24%
-DWC / LRU hit ratio rate  407%
+DWC hit ratio 19.18%
+DWC - LRU hit ratio delta 14.54%
+DWC / LRU hit ratio rate  414%
 
 S3 300,000
 LRU hit ratio 7.58%
-DWC hit ratio 24.59%
-DWC - LRU hit ratio delta 17.01%
-DWC / LRU hit ratio rate  324%
+DWC hit ratio 25.37%
+DWC - LRU hit ratio delta 17.78%
+DWC / LRU hit ratio rate  334%
 
 S3 400,000
 LRU hit ratio 12.03%
-DWC hit ratio 29.62%
-DWC - LRU hit ratio delta 17.58%
-DWC / LRU hit ratio rate  246%
+DWC hit ratio 30.69%
+DWC - LRU hit ratio delta 18.65%
+DWC / LRU hit ratio rate  254%
 
 S3 500,000
 LRU hit ratio 22.76%
-DWC hit ratio 37.50%
-DWC - LRU hit ratio delta 14.73%
-DWC / LRU hit ratio rate  164%
+DWC hit ratio 38.65%
+DWC - LRU hit ratio delta 15.88%
+DWC / LRU hit ratio rate  169%
 
 S3 600,000
 LRU hit ratio 34.63%
-DWC hit ratio 46.28%
-DWC - LRU hit ratio delta 11.65%
-DWC / LRU hit ratio rate  133%
+DWC hit ratio 47.36%
+DWC - LRU hit ratio delta 12.73%
+DWC / LRU hit ratio rate  136%
 
 S3 700,000
 LRU hit ratio 46.04%
-DWC hit ratio 55.31%
-DWC - LRU hit ratio delta 9.27%
-DWC / LRU hit ratio rate  120%
+DWC hit ratio 56.24%
+DWC - LRU hit ratio delta 10.20%
+DWC / LRU hit ratio rate  122%
 
 S3 800,000
 LRU hit ratio 56.59%
-DWC hit ratio 63.38%
-DWC - LRU hit ratio delta 6.78%
-DWC / LRU hit ratio rate  111%
+DWC hit ratio 64.33%
+DWC - LRU hit ratio delta 7.73%
+DWC / LRU hit ratio rate  113%
 ```
 
 ### OLTP
@@ -401,7 +401,7 @@ const data = {
     },
     {
       label: 'DWC',
-      data: [16.03, 27.14, 33.71, 37.57, 39.64, 41.34, 42.74, 44.11],
+      data: [16.60, 28.45, 34.37, 37.86, 39.88, 41.62, 43.01, 44.41],
       borderColor: Utils.color(2),
     },
     {
@@ -423,56 +423,56 @@ const data = {
 };
 -->
 
-![image](https://user-images.githubusercontent.com/3143368/204173940-ce565dba-6ae2-4f00-9962-b2600cd0cc84.png)
+![image](https://user-images.githubusercontent.com/3143368/204282225-3ac82d2c-62ad-4454-bd4a-6d29713bf4c2.png)
 
 ```
 OLTP 250
 LRU hit ratio 16.47%
-DWC hit ratio 16.03%
-DWC - LRU hit ratio delta -0.43%
-DWC / LRU hit ratio rate  97%
+DWC hit ratio 16.60%
+DWC - LRU hit ratio delta 0.13%
+DWC / LRU hit ratio rate  100%
 
 OLTP 500
 LRU hit ratio 23.44%
-DWC hit ratio 27.14%
-DWC - LRU hit ratio delta 3.69%
-DWC / LRU hit ratio rate  115%
+DWC hit ratio 28.45%
+DWC - LRU hit ratio delta 5.00%
+DWC / LRU hit ratio rate  121%
 
 OLTP 750
 LRU hit ratio 28.28%
-DWC hit ratio 33.71%
-DWC - LRU hit ratio delta 5.43%
-DWC / LRU hit ratio rate  119%
+DWC hit ratio 34.37%
+DWC - LRU hit ratio delta 6.09%
+DWC / LRU hit ratio rate  121%
 
 OLTP 1,000
 LRU hit ratio 32.83%
-DWC hit ratio 37.57%
-DWC - LRU hit ratio delta 4.74%
-DWC / LRU hit ratio rate  114%
+DWC hit ratio 37.86%
+DWC - LRU hit ratio delta 5.03%
+DWC / LRU hit ratio rate  115%
 
 OLTP 1,250
 LRU hit ratio 36.20%
-DWC hit ratio 39.64%
-DWC - LRU hit ratio delta 3.43%
-DWC / LRU hit ratio rate  109%
+DWC hit ratio 39.88%
+DWC - LRU hit ratio delta 3.67%
+DWC / LRU hit ratio rate  110%
 
 OLTP 1,500
 LRU hit ratio 38.69%
-DWC hit ratio 41.34%
-DWC - LRU hit ratio delta 2.65%
-DWC / LRU hit ratio rate  106%
+DWC hit ratio 41.62%
+DWC - LRU hit ratio delta 2.92%
+DWC / LRU hit ratio rate  107%
 
 OLTP 1,750
 LRU hit ratio 40.78%
-DWC hit ratio 42.74%
-DWC - LRU hit ratio delta 1.95%
-DWC / LRU hit ratio rate  104%
+DWC hit ratio 43.01%
+DWC - LRU hit ratio delta 2.22%
+DWC / LRU hit ratio rate  105%
 
 OLTP 2,000
 LRU hit ratio 42.46%
-DWC hit ratio 44.11%
-DWC - LRU hit ratio delta 1.65%
-DWC / LRU hit ratio rate  103%
+DWC hit ratio 44.41%
+DWC - LRU hit ratio delta 1.94%
+DWC / LRU hit ratio rate  104%
 ```
 
 ### GLI
@@ -501,7 +501,7 @@ const data = {
     },
     {
       label: 'DWC',
-      data: [15.25, 31.01, 41.75, 47.39, 52.87, 53.93, 55.10, 57.41],
+      data: [15.25, 30.85, 41.78, 47.82, 52.89, 54.02, 55.15, 57.43],
       borderColor: Utils.color(2),
     },
     {
@@ -523,55 +523,55 @@ const data = {
 };
 -->
 
-![image](https://user-images.githubusercontent.com/3143368/204174618-87e56bc5-63a7-431f-b9ee-89dab721b238.png)
+![image](https://user-images.githubusercontent.com/3143368/204283168-e4043732-ac61-41b0-b04a-d9b7b51e75a9.png)
 
 ```
 GLI 250
 LRU hit ratio 0.93%
-DWC hit ratio 15.25%
-DWC - LRU hit ratio delta 14.32%
-DWC / LRU hit ratio rate  1639%
+DWC hit ratio 15.10%
+DWC - LRU hit ratio delta 14.17%
+DWC / LRU hit ratio rate  1623%
 
 GLI 500
 LRU hit ratio 0.96%
-DWC hit ratio 31.01%
-DWC - LRU hit ratio delta 30.05%
-DWC / LRU hit ratio rate  3217%
+DWC hit ratio 30.85%
+DWC - LRU hit ratio delta 29.88%
+DWC / LRU hit ratio rate  3200%
 
 GLI 750
 LRU hit ratio 1.16%
-DWC hit ratio 41.75%
-DWC - LRU hit ratio delta 40.59%
-DWC / LRU hit ratio rate  3588%
+DWC hit ratio 41.78%
+DWC - LRU hit ratio delta 40.62%
+DWC / LRU hit ratio rate  3591%
 
 GLI 1,000
 LRU hit ratio 11.22%
-DWC hit ratio 47.39%
-DWC - LRU hit ratio delta 36.17%
-DWC / LRU hit ratio rate  422%
+DWC hit ratio 47.82%
+DWC - LRU hit ratio delta 36.60%
+DWC / LRU hit ratio rate  426%
 
 GLI 1,250
 LRU hit ratio 21.25%
-DWC hit ratio 52.87%
-DWC - LRU hit ratio delta 31.61%
+DWC hit ratio 52.89%
+DWC - LRU hit ratio delta 31.63%
 DWC / LRU hit ratio rate  248%
 
 GLI 1,500
 LRU hit ratio 36.56%
-DWC hit ratio 53.93%
-DWC - LRU hit ratio delta 17.37%
+DWC hit ratio 54.02%
+DWC - LRU hit ratio delta 17.45%
 DWC / LRU hit ratio rate  147%
 
 GLI 1,750
 LRU hit ratio 45.04%
-DWC hit ratio 55.10%
-DWC - LRU hit ratio delta 10.05%
+DWC hit ratio 55.15%
+DWC - LRU hit ratio delta 10.10%
 DWC / LRU hit ratio rate  122%
 
 GLI 2,000
 LRU hit ratio 57.41%
-DWC hit ratio 57.41%
-DWC - LRU hit ratio delta 0.00%
+DWC hit ratio 57.43%
+DWC - LRU hit ratio delta 0.01%
 DWC / LRU hit ratio rate  100%
 ```
 
@@ -580,32 +580,32 @@ DWC / LRU hit ratio rate  100%
 ```
 LOOP 100
 LRU hit ratio 0.00%
-DWC hit ratio 8.68%
-DWC - LRU hit ratio delta 8.68%
+DWC hit ratio 7.65%
+DWC - LRU hit ratio delta 7.65%
 DWC / LRU hit ratio rate  Infinity%
 
 LOOP 250
 LRU hit ratio 0.00%
-DWC hit ratio 21.82%
-DWC - LRU hit ratio delta 21.82%
+DWC hit ratio 19.38%
+DWC - LRU hit ratio delta 19.38%
 DWC / LRU hit ratio rate  Infinity%
 
 LOOP 500
 LRU hit ratio 0.00%
-DWC hit ratio 46.88%
-DWC - LRU hit ratio delta 46.88%
+DWC hit ratio 43.29%
+DWC - LRU hit ratio delta 43.29%
 DWC / LRU hit ratio rate  Infinity%
 
 LOOP 750
 LRU hit ratio 0.00%
-DWC hit ratio 64.00%
-DWC - LRU hit ratio delta 64.00%
+DWC hit ratio 67.90%
+DWC - LRU hit ratio delta 67.90%
 DWC / LRU hit ratio rate  Infinity%
 
 LOOP 1,000
 LRU hit ratio 0.00%
-DWC hit ratio 95.94%
-DWC - LRU hit ratio delta 95.94%
+DWC hit ratio 95.75%
+DWC - LRU hit ratio delta 95.75%
 DWC / LRU hit ratio rate  Infinity%
 
 LOOP 1,250
@@ -749,14 +749,9 @@ export namespace Cache {
     // Max entries.
     // Range: 1-
     readonly capacity?: number;
-    // Window size ratio to measure hit ratios.
+    // Window ratio to measure hit ratios.
     // Range: 1-100
     readonly window?: number;
-    // Min sample size ratio to measure hit density.
-    // Range: 1-100
-    readonly sample?: number;
-    // Max costs.
-    // Range: L-
     readonly resource?: number;
     readonly age?: number;
     readonly earlyExpiring?: boolean;
@@ -766,6 +761,14 @@ export namespace Cache {
       readonly clear?: boolean;
     };
     // Mainly for experiments.
+    // Min LRU ratio.
+    // Range: 1-100
+    readonly scope?: number;
+    // Sample ratio of LRU in LFU.
+    // Range: 0-100
+    readonly sample?: number;
+    // Max costs.
+    // Range: L-
     readonly resolution?: number;
     readonly offset?: number;
     readonly sweep?: {
