@@ -29,7 +29,6 @@ describe('Benchmark: Package', async function () {
     //  //arc.set(-i, 1);
     //  //arc.set(-i - 1 % capacity, 1);
     //  //arc.get(-i);
-    //
     //  dwc.set(-i, 1);
     //  dwc.set(-i - 1 % capacity, 1);
     //  dwc.get(-i);
@@ -46,8 +45,8 @@ describe('Benchmark: Package', async function () {
     //  stats.dwc += dwc.get(key) ?? (dwc.set(key, 1), 0);
     //}
     //print(`${label} ${capacity.toLocaleString('en')}`, stats, dwc);
-    //
     //stats.clear();
+
     for (let i = 0; i < keys.length; ++i) {
       const key = keys[i];
       ++stats.total;
