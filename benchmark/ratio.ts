@@ -1,5 +1,5 @@
 import { Cache } from '../index';
-import LRU from 'lru-cache';
+import { LRU } from 'spica/lru';
 //import { ARC } from './arc';
 import { memoize } from 'spica/memoize';
 import { wait } from 'spica/timer';
@@ -22,7 +22,7 @@ describe('Benchmark: Package', async function () {
   async function run(label: string, source: string, capacity: number) {
     const keys = await parse(source);
     const dwc = new Cache<number, 1>(capacity);
-    const lru = new LRU<number, 1>({ max: capacity });
+    const lru = new LRU<number, 1>(capacity);
     //const arc = new ARC<number, 1>(capacity);
     const stats = new Stats();
     //for (let i = 0; i < capacity; ++i) {
