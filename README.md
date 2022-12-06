@@ -19,7 +19,7 @@ The highest performance constant complexity cache algorithm.
 - Dynamic partition
 - Sliding window
 - Transitive wide MRU with cyclic replacement
-- Sampled history
+- Sampled history injection
 
 ## Properties
 
@@ -753,6 +753,7 @@ export namespace Cache {
     readonly resource?: number;
     readonly age?: number;
     readonly eagerExpiration?: boolean;
+    // WARNING: Don't add any new key in disposing.
     readonly disposer?: (value: V, key: K) => void;
     readonly capture?: {
       readonly delete?: boolean;
@@ -766,7 +767,6 @@ export namespace Cache {
     // Range: 0-100
     readonly sample?: number;
     readonly resolution?: number;
-    readonly offset?: number;
     readonly sweep?: {
       readonly threshold?: number;
       readonly window?: number;
