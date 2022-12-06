@@ -1,6 +1,6 @@
 {
   "name": "dw-cache",
-  "version": "0.0.93",
+  "version": "0.0.94",
   "description": "The highest performance constant complexity cache algorithm.",
   "private": true,
   "homepage": "https://github.com/falsandtru/dw-cache",
