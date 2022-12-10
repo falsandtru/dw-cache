@@ -185,7 +185,7 @@ W-TinyLFU > DWC, (LIRS) > (TinyLFU) > ARC > LRU
 
 <!--
 const data = {
-  labels: [1000000, 2000000, 3000000, 4000000, 5000000, 6000000, 7000000, 8000000],
+  labels: [1e6, 2e6, 3e6, 4e6, 5e6, 6e6, 7e6, 8e6],
   datasets: [
     {
       label: 'Optimal',
@@ -285,7 +285,7 @@ W-TinyLFU > (TinyLFU) > (LIRS) > DWC, ARC > LRU
 
 <!--
 const data = {
-  labels: [100000, 200000, 300000, 400000, 500000, 600000, 700000, 800000],
+  labels: [1e5, 2e5, 3e5, 4e5, 5e5, 6e5, 7e5, 8e5],
   datasets: [
     {
       label: 'Optimal',
