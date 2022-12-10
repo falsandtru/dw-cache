@@ -83,7 +83,6 @@ describe('Benchmark: Package', async function () {
     console.log('DWC - LRU hit ratio delta', `${format((stats.dwc - stats.lru) * 100 / stats.total, 2)}%`);
     console.log('DWC / LRU hit ratio rate ', `${format(stats.dwc / stats.lru * 100, 0)}%`);
     console.log('DWC ratio', dwc['partition']! * 100 / dwc.length | 0, dwc['LFU'].length * 100 / dwc.length | 0);
-    console.log('DWC density', dwc['densityR'], dwc['densityF']);
     console.log('DWC overlap', dwc['overlapLFU'] / dwc['LRU'].length * 100 | 0, dwc['overlapLRU'] / dwc['LFU'].length * 100 | 0);
     console.log('');
   }
