@@ -102,6 +102,10 @@ describe('Benchmark: Package', async function () {
     await run(`OLTP`, '/base/benchmark/trace/oltp.arc', capacity);
   }
 
+  for (const capacity of [2500, 5000, 7500, 10000, 12500, 15000, 17500, 20000]) {
+    await run(`F1`, '/base/benchmark/trace/Financial1.spc', capacity);
+  }
+
   for (const capacity of [1e5, 2e5, 3e5, 4e5, 5e5, 6e5, 7e5, 8e5]) {
     await run(`S3`, '/base/benchmark/trace/s3.arc', capacity);
   }
@@ -109,5 +113,9 @@ describe('Benchmark: Package', async function () {
   for (const capacity of [1e6, 2e6, 3e6, 4e6, 5e6, 6e6, 7e6, 8e6]) {
     await run(`DS1`, '/base/benchmark/trace/ds1.arc', capacity);
   }
+
+  //for (const capacity of [1e6, 2e6, 3e6, 4e6, 5e6, 6e6, 7e6, 8e6]) {
+  //  await run(`WS1`, '/base/benchmark/trace/WebSearch1.spc', capacity);
+  //}
 
 });
