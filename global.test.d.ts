@@ -1,4 +1,5 @@
 import assert from 'power-assert';
+import 'spica/module.test';
 
 declare namespace NS {
   export {
