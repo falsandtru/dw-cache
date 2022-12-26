@@ -784,6 +784,8 @@ export namespace Cache {
 export class Cache<K, V = undefined> {
   constructor(capacity: number, opts?: Cache.Options<K, V>);
   constructor(opts: Cache.Options<K, V>);
+  add(key: K, value: V, opts?: { size?: number; age?: number; }): boolean;
+  add(this: Cache<K, undefined>, key: K, value?: V, opts?: { size?: number; age?: number; }): boolean;
   put(key: K, value: V, opts?: { size?: number; age?: number; }): boolean;
   put(this: Cache<K, undefined>, key: K, value?: V, opts?: { size?: number; age?: number; }): boolean;
   set(key: K, value: V, opts?: { size?: number; age?: number; }): this;
