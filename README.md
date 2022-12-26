@@ -781,7 +781,7 @@ export namespace Cache {
     };
   }
 }
-export class Cache<K, V = undefined> {
+export class Cache<K, V> {
   constructor(capacity: number, opts?: Cache.Options<K, V>);
   constructor(opts: Cache.Options<K, V>);
   add(key: K, value: V, opts?: { size?: number; age?: number; }): boolean;

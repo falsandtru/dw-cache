@@ -6,7 +6,7 @@ You must read this notice before distributing any copies of files of this projec
 
 The source project is as follows:
 
-https://github.com/falsandtru/spica
+https://github.com/falsandtru/dw-cache
 
 ## License
 
