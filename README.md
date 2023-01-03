@@ -2,15 +2,13 @@
 
 ![CI](https://github.com/falsandtru/dw-cache/workflows/CI/badge.svg)
 
+The highest performance constant complexity cache algorithm.
+
 ## Maintenance
 
 The source code is maintained on the next source repository.
 
 https://github.com/falsandtru/spica
-
-## Abstract
-
-The highest performance constant complexity cache algorithm.
 
 ## Strategies
 
@@ -116,6 +114,8 @@ Note that LIRS and TinyLFU are risky cache algorithms.
     - *Burst access degrades performance.*
     - TinyLFU is worse than LRU in theory.
     - **TinyLFU is just an incomplete implementation of W-TinyLFU.**
+  - High overhead
+    - Read and write 40 array elements per access.
   - Restricted delete operation
     - Bloom filters don't support delete operation.
     - *Frequent delete operations degrade performance.*
@@ -124,6 +124,8 @@ Note that LIRS and TinyLFU are risky cache algorithms.
   - Vulnerable algorithm
     - *Burst access saturates Bloom filters.*
 - W-TinyLFU
+  - High overhead
+    - Read and write 40 array elements per access.
   - Restricted delete operation
     - Bloom filters don't support delete operation.
     - *Frequent delete operations degrade performance.*
