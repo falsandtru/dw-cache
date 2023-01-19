@@ -62,8 +62,8 @@ Note that admission algorithm doesn't work without eviction algorithm.
 | DWC     |Evict|Constant|Constant|    1x     |2 lists|
 | ARC     |Evict|Constant|Linear  |    2x     |4 lists|
 | LIRS    |Evict|Linear  |Linear  |**3-2500x**|2 lists|
-| TinyLFU |Admit|Linear  |Linear  |8bit * 10N * 4|5 arrays|
-|W-TinyLFU|Admit|Linear  |Linear  |8bit * 10N * 4|1 list<br>4 arrays|
+| TinyLFU |Admit|Linear  |Linear  |*~1-10x*<br>(8bit * 10N * 4)|5 arrays|
+|W-TinyLFU|Admit|Linear  |Linear  |*~1-10x*<br>(8bit * 10N * 4)|1 list<br>4 arrays|
 
 https://github.com/ben-manes/caffeine/wiki/Efficiency<br>
 https://github.com/zhongch4g/LIRS2/blob/master/src/replace_lirs_base.cc
