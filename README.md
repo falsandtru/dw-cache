@@ -575,6 +575,7 @@ DWC - LRU hit ratio delta 0.54%
 DWC / LRU hit ratio rate  100%
 ```
 
+<!--
 ### LOOP
 
 ```
@@ -614,6 +615,7 @@ DWC hit ratio 99.80%
 DWC - LRU hit ratio delta 0.00%
 DWC / LRU hit ratio rate  100%
 ```
+-->
 
 ## Throughput
 
