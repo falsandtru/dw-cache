@@ -704,7 +704,7 @@ cache.get(key) ?? cache.set(key, {});
 |Class    |Algorithms    |
 |:--------|:-------------|
 |Very high|W-TinyLFU     |
-|Hight    |DWC, (LIRS)   |
+|High     |DWC, (LIRS)   |
 |Middle   |ARC, (TinyLFU)|
 |Low      |LRU           |
 
