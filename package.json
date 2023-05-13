@@ -50,7 +50,7 @@
     "lru-cache": "^9.1.1",
     "mocha": "^10.2.0",
     "npm-check-updates": "^16.10.12",
-    "spica": "0.0.721",
+    "spica": "0.0.723",
     "ts-loader": "^9.4.2",
     "typescript": "5.0.4",
     "webpack": "^5.82.1",
