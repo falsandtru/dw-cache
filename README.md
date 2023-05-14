@@ -692,7 +692,7 @@ DW-Cache: spica/cache<br>
 ```
 
 ```ts
-const key = random() < 0.8
+const key = random() < 0.9
   ? random() * capacity * 1 | 0
   : random() * capacity * 9 + capacity | 0;
 cache.get(key) ?? cache.set(key, {});
@@ -729,12 +729,12 @@ cache.get(key) ?? cache.set(key, {});
 
 ### Throughput
 
-|Class                      |Algorithms        |
-|:--------------------------|:-----------------|
-|Bloom filter + Static list |(TinyLFU)         |
-|Multiple lists (Lock-free) |DWC > (LIRS) > ARC|
-|Dynamic list + Bloom filter|W-TinyLFU         |
-|Static list                |LRU               |
+|Class                       |Algorithms        |
+|:---------------------------|:-----------------|
+|Dynamic lists (Lock-free)   |DWC > (LIRS) > ARC|
+|Bloom filter + Dynamic lists|(TinyLFU)         |
+|Dynamic lists + Bloom filter|W-TinyLFU         |
+|Static list                 |LRU               |
 
 ### Latency
 
