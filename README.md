@@ -401,7 +401,7 @@ const data = {
     },
     {
       label: 'DWC',
-      data: [19.44, 27.92, 33.52, 37.52, 39.63, 41.41, 43.00, 44.21],
+      data: [19.36, 27.92, 33.54, 37.52, 39.63, 41.40, 43.00, 44.27],
       borderColor: Utils.color(2),
     },
     {
@@ -424,14 +424,14 @@ const data = {
 };
 -->
 
-![image](https://github.com/falsandtru/dw-cache/assets/3143368/37318114-2f50-43a6-8e1b-db9148b2243d)
+![image](https://github.com/falsandtru/dw-cache/assets/3143368/9d7926d4-1819-4620-8c2b-f49145e14eed)
 
 ```
 OLTP 250
 LRU hit ratio 16.47%
-DWC hit ratio 19.44%
-DWC - LRU hit ratio delta 2.96%
-DWC / LRU hit ratio rate  118%
+DWC hit ratio 19.36%
+DWC - LRU hit ratio delta 2.88%
+DWC / LRU hit ratio rate  117%
 
 OLTP 500
 LRU hit ratio 23.44%
@@ -441,8 +441,8 @@ DWC / LRU hit ratio rate  119%
 
 OLTP 750
 LRU hit ratio 28.28%
-DWC hit ratio 33.52%
-DWC - LRU hit ratio delta 5.24%
+DWC hit ratio 33.54%
+DWC - LRU hit ratio delta 5.26%
 DWC / LRU hit ratio rate  118%
 
 OLTP 1,000
@@ -459,7 +459,7 @@ DWC / LRU hit ratio rate  109%
 
 OLTP 1,500
 LRU hit ratio 38.69%
-DWC hit ratio 41.41%
+DWC hit ratio 41.40%
 DWC - LRU hit ratio delta 2.71%
 DWC / LRU hit ratio rate  107%
 
@@ -471,8 +471,8 @@ DWC / LRU hit ratio rate  105%
 
 OLTP 2,000
 LRU hit ratio 42.46%
-DWC hit ratio 44.21%
-DWC - LRU hit ratio delta 1.74%
+DWC hit ratio 44.27%
+DWC - LRU hit ratio delta 1.80%
 DWC / LRU hit ratio rate  104%
 ```
 
@@ -582,8 +582,8 @@ DWC / LRU hit ratio rate  100%
 ```
 LOOP 100
 LRU hit ratio 0.00%
-DWC hit ratio 8.21%
-DWC - LRU hit ratio delta 8.21%
+DWC hit ratio 7.66%
+DWC - LRU hit ratio delta 7.66%
 DWC / LRU hit ratio rate  Infinity%
 
 LOOP 250
@@ -594,20 +594,20 @@ DWC / LRU hit ratio rate  Infinity%
 
 LOOP 500
 LRU hit ratio 0.00%
-DWC hit ratio 46.12%
-DWC - LRU hit ratio delta 46.12%
+DWC hit ratio 46.02%
+DWC - LRU hit ratio delta 46.02%
 DWC / LRU hit ratio rate  Infinity%
 
 LOOP 750
 LRU hit ratio 0.00%
-DWC hit ratio 70.72%
-DWC - LRU hit ratio delta 70.72%
+DWC hit ratio 71.40%
+DWC - LRU hit ratio delta 71.40%
 DWC / LRU hit ratio rate  Infinity%
 
 LOOP 1,000
 LRU hit ratio 0.00%
-DWC hit ratio 96.97%
-DWC - LRU hit ratio delta 96.97%
+DWC hit ratio 96.94%
+DWC - LRU hit ratio delta 96.94%
 DWC / LRU hit ratio rate  Infinity%
 
 LOOP 1,250
