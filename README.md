@@ -10,23 +10,108 @@ The source code is maintained on the next source repository.
 
 https://github.com/falsandtru/spica
 
+## Efficiency
+
+### Mathematical efficiency
+
+Some different cache algorithms require extra memory space to retain evicted keys.
+Linear time complexity indicates the existence of batch processing.
+Note that admission algorithm doesn't work without eviction algorithm.
+
+|Algorithm|Type |Time complexity<br>(Worst case)|Space complexity<br>(Extra)|Key size|Data structures|
+|:-------:|:---:|:------:|:------:|:---------:|:-----:|
+|LRU      |Evict|Constant|Constant|    1x     |1 list |
+|DWC      |Evict|Constant|Constant|    1x     |2 lists|
+|ARC      |Evict|Constant|Linear  |    2x     |4 lists|
+|LIRS     |Evict|Linear  |Linear  |**3-2500x**|2 lists|
+|TinyLFU  |Admit|Linear  |Linear  |*~1-10x*<br>(8bit * 10N * 4)|5 arrays|
+|W-TinyLFU|Admit|Linear  |Linear  |*~1-10x*<br>(8bit * 10N * 4)|1 list<br>4 arrays|
+
+https://github.com/ben-manes/caffeine/wiki/Efficiency<br>
+https://github.com/zhongch4g/LIRS2/blob/master/src/replace_lirs_base.cc
+
+### Engineering efficiency
+
+A pointer is 8 bytes, bool and int8 are each 1 byte in C.
+
+#### 8 byte key and value (int64, float64, 8 chars)
+
+Memoize, etc.
+
+|Algorithm|Entry overhead|Key size|Total per entry|Attenuation coefficient|
+|:-------:|-------------:|-------:|--------------:|----------------------:|
+|LRU      |      16 bytes|      1x|       32 bytes|                100.00%|
+|ARC      |      18 bytes|      2x|       60 bytes|                 53.33%|
+|DWC      |      18 bytes|      1x|       34 bytes|                 94.11%|
+|(LIRS)   |      35 bytes|      3x|      137 bytes|                 23.35%|
+|(LIRS)   |      35 bytes|     10x|      438 bytes|                  7.30%|
+|(TinyLFU)|      56 bytes|      1x|       72 bytes|                 44.44%|
+|W-TinyLFU|      56 bytes|      1x|       72 bytes|                 44.44%|
+
+#### 128 byte key and 8 byte value (Session ID / ID, index)
+
+In-memory KVS, etc.
+
+|Algorithm|Entry overhead|Key size|Total per entry|Attenuation coefficient|
+|:-------:|-------------:|-------:|--------------:|----------------------:|
+|LRU      |      16 bytes|      1x|      152 bytes|                100.00%|
+|ARC      |      18 bytes|      2x|      300 bytes|                 50.66%|
+|DWC      |      18 bytes|      1x|      154 bytes|                 98.70%|
+|(LIRS)   |      35 bytes|      3x|      497 bytes|                 30.58%|
+|(LIRS)   |      35 bytes|     10x|    1,638 bytes|                  9.27%|
+|(TinyLFU)|      56 bytes|      1x|      192 bytes|                 79.16%|
+|W-TinyLFU|      56 bytes|      1x|      192 bytes|                 79.16%|
+
+#### 16 byte key and 512 byte value (Domain / DNS packet)
+
+DNS cache server, etc.
+
+|Algorithm|Entry overhead|Key size|Total per entry|Attenuation coefficient|
+|:-------:|-------------:|-------:|--------------:|----------------------:|
+|LRU      |      16 bytes|      1x|      544 bytes|                100.00%|
+|ARC      |      18 bytes|      2x|      580 bytes|                 93.37%|
+|DWC      |      18 bytes|      1x|      546 bytes|                 99.63%|
+|(LIRS)   |      35 bytes|      3x|      665 bytes|                 81.80%|
+|(LIRS)   |      35 bytes|     10x|    1,022 bytes|                 53.22%|
+|(TinyLFU)|      56 bytes|      1x|      584 bytes|                 93.15%|
+|W-TinyLFU|      56 bytes|      1x|      584 bytes|                 93.15%|
+
+## Resistance
+
+LIRS's burst resistance means the resistance to continuous cache misses.
+
+|Algorithm|Type |Scan|Loop|Burst|
+|:-------:|:---:|:--:|:--:|:---:|
+|LRU      |Evict|    |    |  ✓ |
+|DWC      |Evict| ✓ |  ✓ | ✓  |
+|ARC      |Evict| ✓ |     | ✓  |
+|LIRS     |Evict| ✓ |  ✓ |     |
+|TinyLFU  |Admit| ✓ |  ✓ |     |
+|W-TinyLFU|Admit| ✓ |  ✓ | ✓  |
+
 ## Strategies
 
 - Dynamic partition
-- Transitive wide MRU with cyclic replacement
 - Sampled history injection
+- Transitive wide MRU with cyclic replacement
 
 ## Properties
 
 Generally superior and almost flawless.
 
-- High performance
+- ***Highest performance***
   - High hit ratio (DS1, S3, OLTP, GLI)
-    - Highest hit ratio among all the general-purpose cache algorithms.
-    - Near ARC (S3, OLTP).
-    - Significantly higher than ARC (DS1, GLI).
-  - Low overhead (High throughput)
-    - Use of only two lists.
+    - ***Highest hit ratio among all the general-purpose cache algorithms.***
+      - Approximate to W-TinyLFU (DS1, GLI).
+      - Approximate to ARC (S3, OLTP).
+      - W-TinyLFU is a general-purpose cache algorithm **only when enabling dynamic window and incremental reset**.
+      - W-TinyLFU's benchmark settings are not described (Especially suspicious with OLTP).
+      - W-TinyLFU is difficult to implement without pointer addresses.
+    - ***Highest engineering hit ratio among all the general cache algorithms.***
+  - Highest memory efficiency
+    - ***Highest hits per memory size.***
+  - Low time overhead (High throughput)
+    - Use only two lists.
   - Low latency
     - Constant time complexity.
     - No batch processing like LIRS and TinyLFU.
@@ -38,48 +123,13 @@ Generally superior and almost flawless.
     - Retain only keys of resident entries (No history).
   - Immediate release of evicted keys
     - Primary cache algorithm in the standard library must release memory immediately.
+  - Low space overhead
+    - Add only two small fields to entries.
 - High resistance
   - Scan, loop, and burst resistance
 - Few tradeoffs
-  - Not the highest hit ratio
+  - Not the highest mathematical hit ratio
   - Very smaller cache size than sufficient can degrade hit ratio
-- Upward compatible with ARC
-  - Comprehensively higher performance
-- Upward compatible with Segmented LRU
-  - Totally higher performance
-  - Suitable for TinyLFU
-    - Better for (W-)TinyLFU's eviction algorithm.
-
-## Efficiency
-
-Some different cache algorithms require extra memory space to retain evicted keys.
-Linear time complexity indicates the existence of batch processing.
-Note that admission algorithm doesn't work without eviction algorithm.
-
-|Algorithm|Type |Time complexity<br>(Worst case)|Space complexity<br>(Extra)|Key size|Data structures|
-|:-------:|:---:|:------:|:------:|:---------:|:-----:|
-| LRU     |Evict|Constant|Constant|    1x     |1 list |
-| DWC     |Evict|Constant|Constant|    1x     |2 lists|
-| ARC     |Evict|Constant|Linear  |    2x     |4 lists|
-| LIRS    |Evict|Linear  |Linear  |**3-2500x**|2 lists|
-| TinyLFU |Admit|Linear  |Linear  |*~1-10x*<br>(8bit * 10N * 4)|5 arrays|
-|W-TinyLFU|Admit|Linear  |Linear  |*~1-10x*<br>(8bit * 10N * 4)|1 list<br>4 arrays|
-
-https://github.com/ben-manes/caffeine/wiki/Efficiency<br>
-https://github.com/zhongch4g/LIRS2/blob/master/src/replace_lirs_base.cc
-
-## Resistance
-
-LIRS's burst resistance means resistance to continuous cache misses.
-
-|Algorithm|Type |Scan|Loop|Burst|
-|:-------:|:---:|:--:|:--:|:---:|
-| LRU     |Evict|    |    |  ✓ |
-| DWC     |Evict| ✓ |  ✓ | ✓  |
-| ARC     |Evict| ✓ |     | ✓  |
-| LIRS    |Evict| ✓ |  ✓ |     |
-| TinyLFU |Admit| ✓ |  ✓ |     |
-|W-TinyLFU|Admit| ✓ |  ✓ | ✓  |
 
 ## Tradeoffs
 
@@ -90,7 +140,7 @@ Note that LIRS and TinyLFU are risky cache algorithms.
   - No resistance
     - **Scan access clears all entries.**
 - DWC
-  - Not the highest hit ratio
+  - Not the highest mathematical hit ratio
   - Very smaller cache size than sufficient can degrade hit ratio
 - ARC
   - Middle performance
@@ -115,33 +165,38 @@ Note that LIRS and TinyLFU are risky cache algorithms.
     - TinyLFU is worse than LRU in theory.
     - **TinyLFU is just an incomplete implementation of W-TinyLFU.**
   - High overhead
-    - Read and write 40 array elements per access.
+    - Read and write average 40 array elements per access.
   - Restricted delete operation
     - Bloom filters don't support delete operation.
     - *Frequent delete operations degrade performance.*
   - Spike latency
-    - **Whole reset of Bloom filters takes linear time.**
+    - ***Whole reset of Bloom filters takes linear time.***
   - Vulnerable algorithm
     - *Burst access saturates Bloom filters.*
 - W-TinyLFU
   - High overhead
-    - Read and write 40 array elements per access.
+    - Read and write average 40 array elements per access.
   - Restricted delete operation
     - Bloom filters don't support delete operation.
     - *Frequent delete operations degrade performance.*
   - Spike latency
-    - **Whole reset of Bloom filters takes linear time.**
+    - ***Whole reset of Bloom filters takes linear time.***
 
 ## Hit ratio
 
 Note that another cache algorithm sometimes changes the parameter values per workload to get a favorite result as the paper of TinyLFU has changed the window size of W-TinyLFU.
-All the results of DWC are measured by the same default parameter values.
-TinyLFU's results are traces of Ristretto.
-W-TinyLFU's results are traces of Caffeine.
+
+- DWC's results are measured by the same default parameter values.
+- TinyLFU's results are the traces of Ristretto.
+- W-TinyLFU's results are the traces of Caffeine.
+- Mathematical evaluation is the most common evaluation method.
+- Engineering evaluation is a corrected evaluation method based on hits per memory size.
+  - Current engineering hit ratios are calculated by simplified evaluation.
+  - Accurate last engineering hit ratios of W-TinyLFU are approx. +10%.
 
 1. Set the datasets to `./benchmark/trace` (See `./benchmark/ratio.ts`).
-2. Run `npm i`
-3. Run `npm run bench`
+2. Run `npm i`.
+3. Run `npm run bench`.
 4. Click the DEBUG button to open a debug tab.
 5. Close the previous tab.
 6. Press F12 key to open devtools.
@@ -150,8 +205,7 @@ W-TinyLFU's results are traces of Caffeine.
 https://github.com/dgraph-io/benchmarks<br>
 https://github.com/ben-manes/caffeine/wiki/Efficiency<br>
 https://github.com/dgraph-io/ristretto<br>
-https://docs.google.com/spreadsheets/d/1G3deNz1gJCoXBE2IuraUSwLE7H_EMn4Sn2GU0HTpI5Y<br>
-https://github.com/jedisct1/rust-arc-cache/issues/1<br>
+https://docs.google.com/spreadsheets/d/1G3deNz1gJCoXBE2IuraUSwLE7H_EMn4Sn2GU0HTpI5Y (https://github.com/jedisct1/rust-arc-cache/issues/1)<br>
 
 <!--
 // https://www.chartjs.org/docs/latest/charts/line.html
@@ -176,10 +230,6 @@ const config = {
 -->
 
 ### DS1
-
-W-TinyLFU > DWC > (LIRS) > (TinyLFU) > ARC > LRU
-
-- DWC is an approximation of W-TinyLFU.
 
 <!--
 const data = {
@@ -224,6 +274,10 @@ const data = {
 -->
 
 ![image](https://github.com/falsandtru/dw-cache/assets/3143368/c2c7667d-5482-4d9b-aacf-b9bb8078b9b0)
+
+W-TinyLFU > DWC > (LIRS) > (TinyLFU) > ARC > LRU
+
+- DWC is an approximation of W-TinyLFU.
 
 ```
 DS1 1,000,000
@@ -277,10 +331,6 @@ DWC / LRU hit ratio rate  159%
 
 ### S3
 
-W-TinyLFU > (TinyLFU) > (LIRS) > DWC, ARC > LRU
-
-- DWC is an approximation of ARC.
-
 <!--
 const data = {
   labels: [1e5, 2e5, 3e5, 4e5, 5e5, 6e5, 7e5, 8e5],
@@ -324,6 +374,10 @@ const data = {
 -->
 
 ![image](https://github.com/falsandtru/dw-cache/assets/3143368/f3aa8605-312b-409b-8da5-166af96e4e1a)
+
+W-TinyLFU > (TinyLFU) > (LIRS) > DWC, ARC > LRU
+
+- DWC is an approximation of ARC.
 
 ```
 S3 100,000
@@ -377,10 +431,6 @@ DWC / LRU hit ratio rate  113%
 
 ### OLTP
 
-W-TinyLFU > ARC > DWC > (LIRS) > LRU > (TinyLFU)
-
-- DWC is an approximation of ARC.
-
 <!--
 const data = {
   labels: [250, 500, 750, 1000, 1250, 1500, 1750, 2000],
@@ -425,6 +475,10 @@ const data = {
 -->
 
 ![image](https://github.com/falsandtru/dw-cache/assets/3143368/9d7926d4-1819-4620-8c2b-f49145e14eed)
+
+W-TinyLFU > ARC > DWC > (LIRS) > LRU > (TinyLFU)
+
+- DWC is an approximation of ARC.
 
 ```
 OLTP 250
@@ -478,10 +532,6 @@ DWC / LRU hit ratio rate  104%
 
 ### GLI
 
-W-TinyLFU, (LIRS) > DWC > (TinyLFU) >> ARC > LRU
-
-- DWC is an approximation of W-TinyLFU.
-
 <!--
 const data = {
   labels: [250, 500, 750, 1000, 1250, 1500, 1750, 2000],
@@ -525,6 +575,10 @@ const data = {
 -->
 
 ![image](https://github.com/falsandtru/dw-cache/assets/3143368/4f8551fd-b3aa-4f4e-ac20-aa48796ded84)
+
+W-TinyLFU, (LIRS) > DWC > (TinyLFU) >> ARC > LRU
+
+- DWC is an approximation of W-TinyLFU.
 
 ```
 GLI 250
@@ -702,6 +756,8 @@ cache.get(key) ?? cache.set(key, {});
 
 ### Hit ratio
 
+#### Mathematical
+
 |Class    |Algorithms    |
 |:--------|:-------------|
 |Very high|W-TinyLFU     |
@@ -709,14 +765,25 @@ cache.get(key) ?? cache.set(key, {});
 |Middle   |ARC, (TinyLFU)|
 |Low      |LRU           |
 
+#### Engineering
+
+|Class    |Algorithms    |
+|:--------|:-------------|
+|High     |DWC           |
+|Middle   |LRU           |
+|Low      |W-TinyLFU, (LIRS), ARC, (TinyLFU)|
+
 ### Efficiency
 
-|Extra space |Algorithms           |
-|:-----------|:--------------------|
-|Constant    |LRU, DWC             |
-|Linear (< 1)|W-TinyLFU > (TinyLFU)|
-|Linear (1)  |ARC                  |
-|Linear (> 1)|(LIRS)               |
+|Total per entry|Algorithm|Key size|
+|--------------:|:-------:|-------:|
+|       32 bytes|LRU      |      1x|
+|       34 bytes|DWC      |      1x|
+|       60 bytes|ARC      |      2x|
+|       72 bytes|W-TinyLFU|      1x|
+|       72 bytes|(TinyLFU)|      1x|
+|      137 bytes|(LIRS)   |      3x|
+|      438 bytes|(LIRS)   |     10x|
 
 ### Resistance
 
@@ -729,7 +796,7 @@ cache.get(key) ?? cache.set(key, {});
 
 ### Throughput
 
-|Class                       |Algorithms        |
+|Type                        |Algorithms        |
 |:---------------------------|:-----------------|
 |Dynamic lists (Lock-free)   |DWC > (LIRS) > ARC|
 |Bloom filter + Dynamic lists|(TinyLFU)         |
@@ -738,7 +805,7 @@ cache.get(key) ?? cache.set(key, {});
 
 ### Latency
 
-|Time        |Algorithms           |
+|Worst time  |Algorithms           |
 |:-----------|:--------------------|
 |Constant    |LRU, DWC, ARC        |
 |Linear (1)  |W-TinyLFU > (TinyLFU)|
@@ -746,7 +813,7 @@ cache.get(key) ?? cache.set(key, {});
 
 ### Vulnerability
 
-|Class  |Algorithms|
+|Type   |Algorithms|
 |:------|:---------|
 |Degrade|(TinyLFU) |
 |Crush  |(LIRS)    |
