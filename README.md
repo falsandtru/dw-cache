@@ -101,15 +101,15 @@ Generally superior and almost flawless.
 
 - ***Highest performance***
   - High hit ratio (DS1, S3, OLTP, GLI)
-    - ***Highest hit ratio among all the general-purpose cache algorithms.***
+    - ***Highest hit ratio of all the general-purpose cache algorithms.***
       - Approximate to W-TinyLFU (DS1, GLI).
       - Approximate to ARC (S3, OLTP).
-      - W-TinyLFU is a general-purpose cache algorithm **only when enabling dynamic window and incremental reset**.
-      - W-TinyLFU's benchmark settings are not described (Especially suspicious with OLTP).
-      - W-TinyLFU is difficult to implement without pointer addresses.
-    - ***Highest engineering hit ratio among all the general cache algorithms.***
-  - Highest memory efficiency
-    - ***Highest hits per memory size.***
+      - W-TinyLFU is basically not a general-purpose cache algorithm due to some problems.
+        - W-TinyLFU is not a general-purpose cache algorithm *without dynamic window and incremental reset*.
+        - W-TinyLFU is impossible to efficiently implement *without pointer addresses or fast hash functions*.
+        - W-TinyLFU's benchmark settings are not described (Especially suspicious with OLTP).
+    - ***Highest engineering hit ratio of all the general cache algorithms.***
+      - As a result of engineering efficiency.
   - Low time overhead (High throughput)
     - Use only two lists.
   - Low latency
@@ -119,17 +119,20 @@ Generally superior and almost flawless.
     - Separated lists are suitable for lock-free processing.
 - Efficient
   - Low memory usage
+    - Largest capacity per memory size of all the advanced cache algorithms.
     - Constant extra space complexity.
     - Retain only keys of resident entries (No history).
   - Immediate release of evicted keys
     - Primary cache algorithm in the standard library must release memory immediately.
   - Low space overhead
-    - Add only two small fields to entries.
+    - Add only two smallest fields to entries.
 - High resistance
   - Scan, loop, and burst resistance
 - Few tradeoffs
   - Not the highest mathematical hit ratio
-  - Very smaller cache size than sufficient can degrade hit ratio
+    - Highest hit ratio of each workload are resulted by W-TinyLFU or ARC.
+  - Statistical accuracy dependent
+    - Very smaller cache size than sufficient can degrade hit ratio.
 
 ## Tradeoffs
 
@@ -139,9 +142,6 @@ Note that LIRS and TinyLFU are risky cache algorithms.
   - Low performance
   - No resistance
     - **Scan access clears all entries.**
-- DWC
-  - Not the highest mathematical hit ratio
-  - Very smaller cache size than sufficient can degrade hit ratio
 - ARC
   - Middle performance
   - Inefficient
@@ -150,6 +150,9 @@ Note that LIRS and TinyLFU are risky cache algorithms.
     - 4 lists.
   - Few resistance
     - No loop resistance.
+- DWC
+  - Not the highest mathematical hit ratio
+  - Statistical accuracy dependent
 - LIRS
   - Extremely inefficient
     - ***3-2500x key size.***
@@ -161,9 +164,11 @@ Note that LIRS and TinyLFU are risky cache algorithms.
       - https://issues.redhat.com/browse/ISPN-7246
 - TinyLFU
   - Incomplete algorithm
-    - *Burst access degrades performance.*
+    - **TinyLFU is just a vulnerable incomplete base-algorithm of W-TinyLFU.**
+    - *Burst access saturates Bloom filters.*
     - TinyLFU is worse than LRU in theory.
-    - **TinyLFU is just an incomplete implementation of W-TinyLFU.**
+  - Language dependent
+    - *Impossible to efficiently implement without pointer addresses or fast hash functions.*
   - High overhead
     - Read and write average 40 array elements per access.
   - Restricted delete operation
@@ -172,8 +177,10 @@ Note that LIRS and TinyLFU are risky cache algorithms.
   - Spike latency
     - ***Whole reset of Bloom filters takes linear time.***
   - Vulnerable algorithm
-    - *Burst access saturates Bloom filters.*
+    - *Burst access degrades performance.*
 - W-TinyLFU
+  - Language dependent
+    - *Impossible to efficiently implement without pointer addresses or fast hash functions.*
   - High overhead
     - Read and write average 40 array elements per access.
   - Restricted delete operation
@@ -189,10 +196,6 @@ Note that another cache algorithm sometimes changes the parameter values per wor
 - DWC's results are measured by the same default parameter values.
 - TinyLFU's results are the traces of Ristretto.
 - W-TinyLFU's results are the traces of Caffeine.
-- Mathematical evaluation is the most common evaluation method.
-- Engineering evaluation is a corrected evaluation method based on hits per memory size.
-  - Current engineering hit ratios are calculated by simplified evaluation.
-  - Accurate last engineering hit ratios of W-TinyLFU are approx. +10%.
 
 1. Set the datasets to `./benchmark/trace` (See `./benchmark/ratio.ts`).
 2. Run `npm i`.
