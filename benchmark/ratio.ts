@@ -25,18 +25,23 @@ describe('Benchmark: Package', async function () {
     const lru = new LRU<number, 1>(capacity);
     //const arc = new ARC<number, 1>(capacity);
     const stats = new Stats();
-    //for (let i = 0; i < capacity; ++i) {
-    //  //arc.set(-i, 1);
-    //  //arc.set(-i - 1 % capacity, 1);
-    //  //arc.get(-i);
-    //  dwc.set(-i, 1);
-    //  dwc.set(-i - 1 % capacity, 1);
-    //  dwc.get(-i);
+    //for (let i = 0; i < capacity * 100; ++i) {
+    //  //arc.set(Number.MIN_SAFE_INTEGER + i, 1);
+    //  dwc.set(Number.MIN_SAFE_INTEGER + i, 1);
+    //  if (i + 1 === capacity) for (const { key } of [...dwc['LRU']].slice(dwc['window'])) {
+    //    //arc.get(key);
+    //    dwc.get(key);
+    //  }
     //}
-    //for (const { key } of dwc['LFU']) {
-    //  //arc.get(key);
-    //  dwc.get(key);
+    //for (let i = 0; i < keys.length; ++i) {
+    //  const key = keys[i];
+    //  ++stats.total;
+    //  stats.lru += lru.get(key) ?? (lru.set(key, 1), 0);
+    //  //stats.arc += arc.get(key) ?? (arc.set(key, 1), 0);
+    //  stats.dwc += dwc.get(key) ?? (dwc.set(key, 1), 0);
     //}
+    //print(`${label} ${capacity.toLocaleString('en')}`, stats, dwc);
+    //stats.clear();
     //for (let i = 0; i < keys.length; ++i) {
     //  const key = keys[i];
     //  ++stats.total;
