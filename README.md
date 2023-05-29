@@ -78,7 +78,7 @@ DNS cache server, etc.
 
 ## Resistance
 
-LIRS's burst resistance means the resistance to continuous cache misses.
+LIRS's burst resistance means the resistance to continuous cache misses for the last LIR entry or the HIR entries.
 
 |Algorithm|Type |Scan|Loop|Burst|
 |:-------:|:---:|:--:|:--:|:---:|
@@ -159,7 +159,7 @@ Note that LIRS and TinyLFU are risky cache algorithms.
   - Spike latency
     - ***Bulk deletion of low-frequency entries takes linear time.***
   - Vulnerable algorithm
-    - ***Continuous cache misses at the last of LIR and of HIR entries explode key size.***
+    - ***Continuous cache misses for the last LIR entry or the HIR entries explode key size.***
       - https://issues.redhat.com/browse/ISPN-7171
       - https://issues.redhat.com/browse/ISPN-7246
 - TinyLFU
@@ -168,7 +168,7 @@ Note that LIRS and TinyLFU are risky cache algorithms.
     - *Burst access saturates Bloom filters.*
     - TinyLFU is worse than LRU in theory.
   - Language dependent
-    - *Impossible to efficiently implement without pointer addresses or fast hash functions.*
+    - **Impossible to efficiently implement without pointer addresses or fast hash functions.**
   - High overhead
     - Read and write average 40 array elements per access.
   - Restricted delete operation
@@ -180,7 +180,7 @@ Note that LIRS and TinyLFU are risky cache algorithms.
     - *Burst access degrades performance.*
 - W-TinyLFU
   - Language dependent
-    - *Impossible to efficiently implement without pointer addresses or fast hash functions.*
+    - **Impossible to efficiently implement without pointer addresses or fast hash functions.**
   - High overhead
     - Read and write average 40 array elements per access.
   - Restricted delete operation
