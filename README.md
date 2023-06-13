@@ -41,26 +41,26 @@ Memoize, etc.
 |Algorithm|Entry overhead|Key size|Total per entry|Attenuation coefficient|
 |:-------:|-------------:|-------:|--------------:|----------------------:|
 |LRU      |      16 bytes|      1x|       32 bytes|                100.00%|
-|ARC      |      18 bytes|      2x|       60 bytes|                 53.33%|
 |DWC      |      18 bytes|      1x|       34 bytes|                 94.11%|
+|ARC      |      18 bytes|      2x|       60 bytes|                 53.33%|
 |(LIRS)   |      35 bytes|      3x|      137 bytes|                 23.35%|
 |(LIRS)   |      35 bytes|     10x|      438 bytes|                  7.30%|
 |(TinyLFU)|      56 bytes|      1x|       72 bytes|                 44.44%|
 |W-TinyLFU|      56 bytes|      1x|       72 bytes|                 44.44%|
 
-#### 128 byte key and 8 byte value (Session ID / ID, index)
+#### 32 byte key and 8 byte value (Session ID / ID)
 
 In-memory KVS, etc.
 
 |Algorithm|Entry overhead|Key size|Total per entry|Attenuation coefficient|
 |:-------:|-------------:|-------:|--------------:|----------------------:|
-|LRU      |      16 bytes|      1x|      152 bytes|                100.00%|
-|ARC      |      18 bytes|      2x|      300 bytes|                 50.66%|
-|DWC      |      18 bytes|      1x|      154 bytes|                 98.70%|
-|(LIRS)   |      35 bytes|      3x|      497 bytes|                 30.58%|
-|(LIRS)   |      35 bytes|     10x|    1,638 bytes|                  9.27%|
-|(TinyLFU)|      56 bytes|      1x|      192 bytes|                 79.16%|
-|W-TinyLFU|      56 bytes|      1x|      192 bytes|                 79.16%|
+|LRU      |      16 bytes|      1x|       56 bytes|                100.00%|
+|DWC      |      18 bytes|      1x|       58 bytes|                 96.55%|
+|ARC      |      18 bytes|      2x|       90 bytes|                 62.22%|
+|(LIRS)   |      35 bytes|      3x|      139 bytes|                 40.28%|
+|(LIRS)   |      35 bytes|     10x|      363 bytes|                 15.42%|
+|(TinyLFU)|      56 bytes|      1x|       96 bytes|                 58.33%|
+|W-TinyLFU|      56 bytes|      1x|       96 bytes|                 58.33%|
 
 #### 16 byte key and 512 byte value (Domain / DNS packet)
 
@@ -69,8 +69,8 @@ DNS cache server, etc.
 |Algorithm|Entry overhead|Key size|Total per entry|Attenuation coefficient|
 |:-------:|-------------:|-------:|--------------:|----------------------:|
 |LRU      |      16 bytes|      1x|      544 bytes|                100.00%|
-|ARC      |      18 bytes|      2x|      580 bytes|                 93.37%|
 |DWC      |      18 bytes|      1x|      546 bytes|                 99.63%|
+|ARC      |      18 bytes|      2x|      580 bytes|                 93.37%|
 |(LIRS)   |      35 bytes|      3x|      665 bytes|                 81.80%|
 |(LIRS)   |      35 bytes|     10x|    1,022 bytes|                 53.22%|
 |(TinyLFU)|      56 bytes|      1x|      584 bytes|                 93.15%|
@@ -129,10 +129,11 @@ Generally superior and almost flawless.
 - High resistance
   - Scan, loop, and burst resistance
 - Few tradeoffs
-  - Not the highest mathematical hit ratio
-    - Highest hit ratio of each workload are resulted by W-TinyLFU or ARC.
+  - Not the highest hit ratio
+    - Highest hit ratio of each workload is resulted by W-TinyLFU or ARC.
   - Statistical accuracy dependent
     - Very smaller cache size than sufficient can degrade hit ratio.
+    - Cache size 1,000 or more is recommended.
 
 ## Tradeoffs
 
@@ -151,7 +152,7 @@ Note that LIRS and TinyLFU are risky cache algorithms.
   - Few resistance
     - No loop resistance.
 - DWC
-  - Not the highest mathematical hit ratio
+  - Not the highest hit ratio
   - Statistical accuracy dependent
 - LIRS
   - Extremely inefficient
@@ -754,72 +755,6 @@ const key = random() < 0.9
   : random() * capacity * 9 + capacity | 0;
 cache.get(key) ?? cache.set(key, {});
 ```
-
-## Comprehensive evaluation
-
-### Hit ratio
-
-#### Mathematical
-
-|Class    |Algorithms    |
-|:--------|:-------------|
-|Very high|W-TinyLFU     |
-|High     |DWC, (LIRS)   |
-|Middle   |ARC, (TinyLFU)|
-|Low      |LRU           |
-
-#### Engineering
-
-|Class    |Algorithms    |
-|:--------|:-------------|
-|High     |DWC           |
-|Middle   |LRU           |
-|Low      |W-TinyLFU, (LIRS), ARC, (TinyLFU)|
-
-### Efficiency
-
-|Total per entry|Algorithm|Key size|
-|--------------:|:-------:|-------:|
-|       32 bytes|LRU      |      1x|
-|       34 bytes|DWC      |      1x|
-|       60 bytes|ARC      |      2x|
-|       72 bytes|W-TinyLFU|      1x|
-|       72 bytes|(TinyLFU)|      1x|
-|      137 bytes|(LIRS)   |      3x|
-|      438 bytes|(LIRS)   |     10x|
-
-### Resistance
-
-|Class|Effect|Algorithms       |
-|:----|:-----|:----------------|
-|Total|High  |W-TinyLFU, DWC   |
-|Most |High  |(TinyLFU), (LIRS)|
-|Few  |Low   |ARC              |
-|None |None  |LRU              |
-
-### Throughput
-
-|Type                        |Algorithms        |
-|:---------------------------|:-----------------|
-|Dynamic lists (Lock-free)   |DWC > (LIRS) > ARC|
-|Bloom filter + Dynamic lists|(TinyLFU)         |
-|Dynamic lists + Bloom filter|W-TinyLFU         |
-|Static list                 |LRU               |
-
-### Latency
-
-|Worst time  |Algorithms           |
-|:-----------|:--------------------|
-|Constant    |LRU, DWC, ARC        |
-|Linear (1)  |W-TinyLFU > (TinyLFU)|
-|Linear (> 1)|(LIRS)               |
-
-### Vulnerability
-
-|Type   |Algorithms|
-|:------|:---------|
-|Degrade|(TinyLFU) |
-|Crush  |(LIRS)    |
 
 ## API
 
