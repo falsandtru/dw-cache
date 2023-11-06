@@ -29,6 +29,9 @@
     "NOTICE",
     "LICENSE"
   ],
+  "dependencies": {
+    "spica": "0.0.761"
+  },
   "devDependencies": {
     "@types/lru-cache": "7.10.9",
     "@types/mocha": "10.0.3",
@@ -50,7 +53,6 @@
     "lru-cache": "^10.0.1",
     "mocha": "^10.2.0",
     "npm-check-updates": "^16.14.6",
-    "spica": "0.0.761",
     "ts-loader": "^9.5.0",
     "typescript": "5.2.2",
     "webpack": "^5.89.0",
