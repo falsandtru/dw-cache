@@ -675,9 +675,7 @@ DWC / LRU hit ratio ratio 100%
 
 ## Throughput
 
-80-120% of [lru-cache](https://www.npmjs.com/package/lru-cache).
-
-Note that the number of trials per capacity for simulation 1,000,000 is insufficient.
+70-100% of [lru-cache](https://www.npmjs.com/package/lru-cache).
 
 No result with 10,000,000 because lru-cache crushes with the next error on the next machine of GitHub Actions.
 It is verified that the error was thrown also when benchmarking only lru-cache.
@@ -697,53 +695,53 @@ LRUCache: spica/lru<br>
 DW-Cache: spica/cache<br>
 
 ```
-'Clock    new x 1,328,833 ops/sec ±3.63% (113 runs sampled)'
+'Clock    new x 1,763,824 ops/sec ±1.63% (110 runs sampled)'
 
-'ISCCache new x 13,768 ops/sec ±1.00% (120 runs sampled)'
+'ISCCache new x 18,264 ops/sec ±0.93% (121 runs sampled)'
 
-'LRUCache new x 27,168,783 ops/sec ±1.50% (122 runs sampled)'
+'LRUCache new x 32,227,912 ops/sec ±0.31% (121 runs sampled)'
 
-'DW-Cache new x 6,049,201 ops/sec ±0.86% (122 runs sampled)'
+'DW-Cache new x 8,784,622 ops/sec ±0.95% (123 runs sampled)'
 
-'Clock    simulation 100 x 13,493,137 ops/sec ±1.65% (121 runs sampled)'
+'Clock    simulation 100 x 20,058,200 ops/sec ±0.25% (122 runs sampled)'
 
-'ISCCache simulation 100 x 8,651,793 ops/sec ±1.85% (121 runs sampled)'
+'ISCCache simulation 100 x 13,149,209 ops/sec ±0.74% (119 runs sampled)'
 
-'LRUCache simulation 100 x 10,604,646 ops/sec ±2.24% (120 runs sampled)'
+'LRUCache simulation 100 x 16,276,867 ops/sec ±0.42% (123 runs sampled)'
 
-'DW-Cache simulation 100 x 7,242,013 ops/sec ±1.65% (121 runs sampled)'
+'DW-Cache simulation 100 x 8,946,056 ops/sec ±0.32% (123 runs sampled)'
 
-'Clock    simulation 1,000 x 10,694,963 ops/sec ±1.81% (120 runs sampled)'
+'Clock    simulation 1,000 x 16,296,712 ops/sec ±0.34% (122 runs sampled)'
 
-'ISCCache simulation 1,000 x 7,700,019 ops/sec ±1.90% (121 runs sampled)'
+'ISCCache simulation 1,000 x 12,217,221 ops/sec ±0.32% (123 runs sampled)'
 
-'LRUCache simulation 1,000 x 9,184,813 ops/sec ±2.13% (120 runs sampled)'
+'LRUCache simulation 1,000 x 14,060,730 ops/sec ±0.46% (123 runs sampled)'
 
-'DW-Cache simulation 1,000 x 7,041,470 ops/sec ±1.77% (120 runs sampled)'
+'DW-Cache simulation 1,000 x 10,347,832 ops/sec ±0.36% (122 runs sampled)'
 
-'Clock    simulation 10,000 x 10,517,215 ops/sec ±1.78% (122 runs sampled)'
+'Clock    simulation 10,000 x 14,543,513 ops/sec ±0.28% (123 runs sampled)'
 
-'ISCCache simulation 10,000 x 7,365,593 ops/sec ±1.67% (121 runs sampled)'
+'ISCCache simulation 10,000 x 9,887,331 ops/sec ±0.25% (121 runs sampled)'
 
-'LRUCache simulation 10,000 x 8,685,666 ops/sec ±1.81% (121 runs sampled)'
+'LRUCache simulation 10,000 x 10,450,793 ops/sec ±0.84% (122 runs sampled)'
 
-'DW-Cache simulation 10,000 x 7,317,621 ops/sec ±1.42% (120 runs sampled)'
+'DW-Cache simulation 10,000 x 7,607,348 ops/sec ±1.66% (121 runs sampled)'
 
-'Clock    simulation 100,000 x 7,417,826 ops/sec ±1.60% (118 runs sampled)'
+'Clock    simulation 100,000 x 8,862,762 ops/sec ±1.81% (117 runs sampled)'
 
-'ISCCache simulation 100,000 x 4,523,157 ops/sec ±1.22% (117 runs sampled)'
+'ISCCache simulation 100,000 x 5,558,458 ops/sec ±1.63% (114 runs sampled)'
 
-'LRUCache simulation 100,000 x 5,424,344 ops/sec ±2.10% (119 runs sampled)'
+'LRUCache simulation 100,000 x 6,300,914 ops/sec ±2.14% (116 runs sampled)'
 
-'DW-Cache simulation 100,000 x 4,190,537 ops/sec ±1.44% (113 runs sampled)'
+'DW-Cache simulation 100,000 x 5,286,871 ops/sec ±2.29% (108 runs sampled)'
 
-'Clock    simulation 1,000,000 x 4,519,623 ops/sec ±3.63% (106 runs sampled)'
+'Clock    simulation 1,000,000 x 4,498,736 ops/sec ±3.84% (103 runs sampled)'
 
-'ISCCache simulation 1,000,000 x 2,081,961 ops/sec ±3.35% (101 runs sampled)'
+'ISCCache simulation 1,000,000 x 2,312,825 ops/sec ±3.71% (98 runs sampled)'
 
-'LRUCache simulation 1,000,000 x 2,686,808 ops/sec ±3.88% (103 runs sampled)'
+'LRUCache simulation 1,000,000 x 2,092,870 ops/sec ±3.20% (104 runs sampled)'
 
-'DW-Cache simulation 1,000,000 x 2,481,012 ops/sec ±2.54% (111 runs sampled)'
+'DW-Cache simulation 1,000,000 x 1,997,412 ops/sec ±3.42% (105 runs sampled)'
 ```
 
 ```ts
