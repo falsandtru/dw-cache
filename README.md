@@ -195,8 +195,7 @@ Note that LIRS and TinyLFU are risky cache algorithms.
 Note that another cache algorithm sometimes changes the parameter values per workload to get a favorite result as the paper of TinyLFU has changed the window size of W-TinyLFU.
 
 - DWC's results are measured by the same default parameter values.
-- TinyLFU's results are the traces of Ristretto.
-- W-TinyLFU's results are the traces of Caffeine.
+- TinyLFU's results are the traces of Caffeine.
 
 1. Set the datasets to `./benchmark/trace` (See `./benchmark/ratio.ts`).
 2. Run `npm i`.
@@ -208,7 +207,6 @@ Note that another cache algorithm sometimes changes the parameter values per wor
 
 https://github.com/dgraph-io/benchmarks<br>
 https://github.com/ben-manes/caffeine/wiki/Efficiency<br>
-https://github.com/dgraph-io/ristretto<br>
 https://docs.google.com/spreadsheets/d/1G3deNz1gJCoXBE2IuraUSwLE7H_EMn4Sn2GU0HTpI5Y (https://github.com/jedisct1/rust-arc-cache/issues/1)<br>
 
 <!--
@@ -264,22 +262,22 @@ const data = {
       borderColor: Utils.color(3),
     },
     {
-      label: 'TinyLFU',
-      data: [11, 25, 32, 38, 44, 48, 52, 55],
-      borderColor: Utils.color(4),
-    },
-    {
       label: 'W-TinyLFU',
       data: [14.79, 28.72, 39.82, 45.26, 51.61, 57.82, 64.22, 70.6],
       borderColor: Utils.color(8),
+    },
+    {
+      label: 'TinyLFU',
+      data: [14.56, 29.01, 39.58, 45.61, 51.02, 57.76, 64.23, 70.52],
+      borderColor: Utils.color(4),
     },
   ]
 };
 -->
 
-![image](https://github.com/falsandtru/dw-cache/assets/3143368/8848e401-562a-410d-8b3f-8eab61f27c9d)
+![image](https://github.com/falsandtru/dw-cache/assets/3143368/9b251c9b-742b-4d16-839e-f57c8e0aa088)
 
-W-TinyLFU > DWC > (LIRS) > (TinyLFU) > ARC > LRU
+W-TinyLFU, (TinyLFU) > DWC > (LIRS) > ARC > LRU
 
 - DWC is an approximation of W-TinyLFU.
 
@@ -364,22 +362,22 @@ const data = {
       borderColor: Utils.color(3),
     },
     {
-      label: 'TinyLFU',
-      data: [6, 18, 27, 37, 48, 56, 62, 68],
-      borderColor: Utils.color(4),
-    },
-    {
       label: 'W-TinyLFU',
       data: [12.29, 23.55, 33.62, 42.77, 50.96, 58.62, 64.9, 70.26],
       borderColor: Utils.color(8),
+    },
+    {
+      label: 'TinyLFU',
+      data: [10.46, 22.68, 33.32, 42.91, 51.35, 59.12, 65.25, 70.6],
+      borderColor: Utils.color(4),
     },
   ]
 };
 -->
 
-![image](https://github.com/falsandtru/dw-cache/assets/3143368/90eefd17-d4c2-4d15-844a-f5c8950c132c)
+![image](https://github.com/falsandtru/dw-cache/assets/3143368/9f534551-ac69-4923-bd5b-dac199837680)
 
-W-TinyLFU > (TinyLFU) > (LIRS) > DWC, ARC > LRU
+W-TinyLFU, (TinyLFU) > (LIRS) > DWC, ARC > LRU
 
 - DWC is an approximation of ARC.
 
@@ -464,23 +462,22 @@ const data = {
       borderColor: Utils.color(3),
     },
     {
-      label: 'TinyLFU',
-      data: [16, 22, 23, 26, 29, 29, 31, 32],
-      borderColor: Utils.color(4),
+      label: 'W-TinyLFU',
+      data: [22.76, 29.21, 32.97, 35.3, 37.52, 38.99, 40.37, 41.67],
+      borderColor: Utils.color(8),
     },
     {
-      label: 'W-TinyLFU',
-      // data: [22.76, 29.21, 32.97, 35.3, 37.52, 38.99, 40.37, 41.67],
-      data: [24, 32, 37, 40, 43, 43, 45, 46],
-      borderColor: Utils.color(8),
+      label: 'TinyLFU',
+      data: [15.9, 19.51, 21.9, 24.41, 26.18, 28.65, 30.03, 31.11],
+      borderColor: Utils.color(4),
     },
   ]
 };
 -->
 
-![image](https://github.com/falsandtru/dw-cache/assets/3143368/2b4f4e7e-c367-4d4f-9f28-3671a68acdea)
+![image](https://github.com/falsandtru/dw-cache/assets/3143368/f2de23e2-6f7a-4679-a2b8-418fbe7e2f6f)
 
-W-TinyLFU > ARC > DWC > (LIRS) > LRU > (TinyLFU)
+ARC > DWC > W-TinyLFU > (LIRS) > LRU > (TinyLFU)
 
 - DWC is an approximation of ARC.
 
@@ -565,22 +562,22 @@ const data = {
       borderColor: Utils.color(3),
     },
     {
-      label: 'TinyLFU',
-      data: [18, 26, 40, 46, 51, 54, 55, 57],
-      borderColor: Utils.color(4),
-    },
-    {
       label: 'W-TinyLFU',
       data: [15.15, 33.08, 43.11, 50.57, 51.87, 53.57, 55.61, 57.96],
       borderColor: Utils.color(8),
+    },
+    {
+      label: 'TinyLFU',
+      data: [16.56, 33.85, 43.86, 50.96, 52.05, 53.57, 55.89, 57.96],
+      borderColor: Utils.color(4),
     },
   ]
 };
 -->
 
-![image](https://github.com/falsandtru/dw-cache/assets/3143368/5ddf1b74-1ba6-4e79-a556-b6d830c174c4)
+![image](https://github.com/falsandtru/dw-cache/assets/3143368/58b1abb7-37b8-4e36-ae77-391893ef4d2e)
 
-W-TinyLFU, (LIRS) > DWC > (TinyLFU) >> ARC > LRU
+W-TinyLFU, (TinyLFU), (LIRS) > DWC >> ARC > LRU
 
 - DWC is an approximation of W-TinyLFU.
 
