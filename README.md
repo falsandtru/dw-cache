@@ -57,8 +57,8 @@ In-memory KVS, etc.
 |LRU      |      16 bytes|      1x|       56 bytes|                100.00%|
 |DWC      |      18 bytes|      1x|       58 bytes|                 96.55%|
 |ARC      |      18 bytes|      2x|       90 bytes|                 62.22%|
-|(LIRS)   |      35 bytes|      3x|      139 bytes|                 40.28%|
-|(LIRS)   |      35 bytes|     10x|      363 bytes|                 15.42%|
+|(LIRS)   |      35 bytes|      3x|      209 bytes|                 26.79%|
+|(LIRS)   |      35 bytes|     10x|      678 bytes|                  8.25%|
 |(TinyLFU)|      56 bytes|      1x|       96 bytes|                 58.33%|
 |W-TinyLFU|      56 bytes|      1x|       96 bytes|                 58.33%|
 
