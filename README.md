@@ -632,8 +632,6 @@ DWC / LRU hit ratio ratio 100%
 ```
 
 <!--
-### LOOP
-
 ```
 LOOP 100
 LRU hit ratio 0.00%
@@ -670,6 +668,102 @@ LRU hit ratio 99.80%
 DWC hit ratio 99.80%
 DWC - LRU hit ratio delta 0.00%
 DWC / LRU hit ratio ratio 100%
+
+WS1 1,000,000
+LRU hit ratio 2.95%
+DWC hit ratio 8.77%
+DWC - LRU hit ratio delta 5.82%
+DWC / LRU hit ratio ratio 297%
+
+WS1 2,000,000
+LRU hit ratio 6.08%
+DWC hit ratio 14.37%
+DWC - LRU hit ratio delta 8.29%
+DWC / LRU hit ratio ratio 236%
+
+WS1 3,000,000
+LRU hit ratio 9.63%
+DWC hit ratio 18.65%
+DWC - LRU hit ratio delta 9.02%
+DWC / LRU hit ratio ratio 193%
+
+WS1 4,000,000
+LRU hit ratio 21.59%
+DWC hit ratio 27.22%
+DWC - LRU hit ratio delta 5.62%
+DWC / LRU hit ratio ratio 126%
+
+WS1 5,000,000
+LRU hit ratio 33.91%
+DWC hit ratio 37.77%
+DWC - LRU hit ratio delta 3.86%
+DWC / LRU hit ratio ratio 111%
+
+WS1 6,000,000
+LRU hit ratio 45.74%
+DWC hit ratio 48.43%
+DWC - LRU hit ratio delta 2.69%
+DWC / LRU hit ratio ratio 105%
+
+WS1 7,000,000
+LRU hit ratio 54.89%
+DWC hit ratio 56.74%
+DWC - LRU hit ratio delta 1.85%
+DWC / LRU hit ratio ratio 103%
+
+WS1 8,000,000
+LRU hit ratio 61.40%
+DWC hit ratio 62.11%
+DWC - LRU hit ratio delta 0.71%
+DWC / LRU hit ratio ratio 101%
+
+F1 2,500
+LRU hit ratio 27.74%
+DWC hit ratio 24.96%
+DWC - LRU hit ratio delta -2.77%
+DWC / LRU hit ratio ratio 89%
+
+F1 5,000
+LRU hit ratio 30.55%
+DWC hit ratio 30.91%
+DWC - LRU hit ratio delta 0.35%
+DWC / LRU hit ratio ratio 101%
+
+F1 7,500
+LRU hit ratio 32.18%
+DWC hit ratio 33.74%
+DWC - LRU hit ratio delta 1.56%
+DWC / LRU hit ratio ratio 104%
+
+F1 10,000
+LRU hit ratio 33.27%
+DWC hit ratio 35.39%
+DWC - LRU hit ratio delta 2.12%
+DWC / LRU hit ratio ratio 106%
+
+F1 12,500
+LRU hit ratio 34.19%
+DWC hit ratio 36.46%
+DWC - LRU hit ratio delta 2.27%
+DWC / LRU hit ratio ratio 106%
+
+F1 15,000
+LRU hit ratio 34.97%
+DWC hit ratio 37.35%
+DWC - LRU hit ratio delta 2.37%
+DWC / LRU hit ratio ratio 106%
+
+F1 17,500
+LRU hit ratio 35.62%
+DWC hit ratio 37.90%
+DWC - LRU hit ratio delta 2.27%
+DWC / LRU hit ratio ratio 106%
+
+F1 20,000
+LRU hit ratio 36.17%
+DWC hit ratio 38.61%
+DWC - LRU hit ratio delta 2.44%
+DWC / LRU hit ratio ratio 106%
 ```
 -->
 
