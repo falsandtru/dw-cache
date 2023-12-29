@@ -41,10 +41,10 @@ Memoize, etc.
 |Algorithm|Entry overhead|Key size|Total per entry|Attenuation coefficient|
 |:-------:|-------------:|-------:|--------------:|----------------------:|
 |LRU      |      16 bytes|      1x|       32 bytes|                100.00%|
-|DWC      |      18 bytes|      1x|       34 bytes|                 94.11%|
-|ARC      |      18 bytes|      2x|       60 bytes|                 53.33%|
-|(LIRS)   |      35 bytes|      3x|      137 bytes|                 23.35%|
-|(LIRS)   |      35 bytes|     10x|      438 bytes|                  7.30%|
+|DWC      |      17 bytes|      1x|       33 bytes|                 96.96%|
+|ARC      |      17 bytes|      2x|       58 bytes|                 55.17%|
+|(LIRS)   |      33 bytes|      3x|      131 bytes|                 24.42%|
+|(LIRS)   |      33 bytes|     10x|      418 bytes|                  7.65%|
 |(TinyLFU)|      56 bytes|      1x|       72 bytes|                 44.44%|
 |W-TinyLFU|      56 bytes|      1x|       72 bytes|                 44.44%|
 
@@ -55,10 +55,10 @@ In-memory KVS, etc.
 |Algorithm|Entry overhead|Key size|Total per entry|Attenuation coefficient|
 |:-------:|-------------:|-------:|--------------:|----------------------:|
 |LRU      |      16 bytes|      1x|       56 bytes|                100.00%|
-|DWC      |      18 bytes|      1x|       58 bytes|                 96.55%|
-|ARC      |      18 bytes|      2x|       90 bytes|                 62.22%|
-|(LIRS)   |      35 bytes|      3x|      209 bytes|                 26.79%|
-|(LIRS)   |      35 bytes|     10x|      678 bytes|                  8.25%|
+|DWC      |      17 bytes|      1x|       57 bytes|                 98.24%|
+|ARC      |      17 bytes|      2x|       88 bytes|                 63.63%|
+|(LIRS)   |      33 bytes|      3x|      203 bytes|                 27.58%|
+|(LIRS)   |      33 bytes|     10x|      658 bytes|                  8.51%|
 |(TinyLFU)|      56 bytes|      1x|       96 bytes|                 58.33%|
 |W-TinyLFU|      56 bytes|      1x|       96 bytes|                 58.33%|
 
@@ -69,10 +69,10 @@ DNS cache server, etc.
 |Algorithm|Entry overhead|Key size|Total per entry|Attenuation coefficient|
 |:-------:|-------------:|-------:|--------------:|----------------------:|
 |LRU      |      16 bytes|      1x|      544 bytes|                100.00%|
-|DWC      |      18 bytes|      1x|      546 bytes|                 99.63%|
-|ARC      |      18 bytes|      2x|      580 bytes|                 93.37%|
-|(LIRS)   |      35 bytes|      3x|      665 bytes|                 81.80%|
-|(LIRS)   |      35 bytes|     10x|    1,022 bytes|                 53.22%|
+|DWC      |      17 bytes|      1x|      545 bytes|                 99.81%|
+|ARC      |      17 bytes|      2x|      578 bytes|                 94.11%|
+|(LIRS)   |      33 bytes|      3x|      659 bytes|                 82.54%|
+|(LIRS)   |      33 bytes|     10x|    1,002 bytes|                 54.29%|
 |(TinyLFU)|      56 bytes|      1x|      584 bytes|                 93.15%|
 |W-TinyLFU|      56 bytes|      1x|      584 bytes|                 93.15%|
 
