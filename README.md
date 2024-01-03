@@ -769,8 +769,6 @@ DWC / LRU hit ratio ratio 107%
 
 ## Throughput
 
-60-90% of [lru-cache](https://www.npmjs.com/package/lru-cache).
-
 No result with 10,000,000 because lru-cache crushes with the next error on the next machine of GitHub Actions.
 It is verified that the error was thrown also when benchmarking only lru-cache.
 Of course it is verified that DWC works fine under the same condition.
@@ -788,60 +786,113 @@ LRUCache: spica/lru<br>
 DW-Cache: spica/cache<br>
 
 ```
-'Clock    new x 1,681,457 ops/sec ±1.18% (117 runs sampled)'
+'Clock    new x 1,650,836 ops/sec ±1.94% (94 runs sampled)'
 
-'ISCCache new x 17,725 ops/sec ±0.84% (119 runs sampled)'
+'ISCCache new x 18,042 ops/sec ±0.66% (105 runs sampled)'
 
-'LRUCache new x 32,201,503 ops/sec ±0.26% (123 runs sampled)'
+'LRUCache new x 30,098,951 ops/sec ±0.23% (106 runs sampled)'
 
-'DW-Cache new x 6,962,509 ops/sec ±0.28% (123 runs sampled)'
+'DW-Cache new x 7,021,323 ops/sec ±0.30% (105 runs sampled)'
 
-'Clock    simulation 100 x 20,067,017 ops/sec ±0.27% (122 runs sampled)'
+'Clock    simulation 100 10% x 9,762,593 ops/sec ±0.36% (107 runs sampled)'
 
-'ISCCache simulation 100 x 13,461,209 ops/sec ±0.36% (122 runs sampled)'
+'ISCCache simulation 100 10% x 8,761,469 ops/sec ±0.38% (107 runs sampled)'
 
-'LRUCache simulation 100 x 16,250,516 ops/sec ±0.53% (123 runs sampled)'
+'LRUCache simulation 100 10% x 10,769,407 ops/sec ±0.28% (107 runs sampled)'
 
-'DW-Cache simulation 100 x 7,809,927 ops/sec ±0.29% (123 runs sampled)'
+'DW-Cache simulation 100 10% x 7,242,192 ops/sec ±0.50% (105 runs sampled)'
 
-'Clock    simulation 1,000 x 16,387,821 ops/sec ±0.73% (123 runs sampled)'
+'Clock    simulation 1,000 10% x 9,601,967 ops/sec ±0.48% (107 runs sampled)'
 
-'ISCCache simulation 1,000 x 11,893,246 ops/sec ±0.27% (123 runs sampled)'
+'ISCCache simulation 1,000 10% x 7,986,140 ops/sec ±0.58% (106 runs sampled)'
 
-'LRUCache simulation 1,000 x 13,991,155 ops/sec ±0.50% (123 runs sampled)'
+'LRUCache simulation 1,000 10% x 9,735,550 ops/sec ±0.41% (106 runs sampled)'
 
-'DW-Cache simulation 1,000 x 7,221,664 ops/sec ±0.33% (123 runs sampled)'
+'DW-Cache simulation 1,000 10% x 6,592,345 ops/sec ±0.37% (107 runs sampled)'
 
-'Clock    simulation 10,000 x 14,583,648 ops/sec ±0.51% (123 runs sampled)'
+'Clock    simulation 10,000 10% x 9,344,809 ops/sec ±0.40% (105 runs sampled)'
 
-'ISCCache simulation 10,000 x 9,693,221 ops/sec ±0.58% (122 runs sampled)'
+'ISCCache simulation 10,000 10% x 7,193,304 ops/sec ±0.83% (106 runs sampled)'
 
-'LRUCache simulation 10,000 x 10,558,716 ops/sec ±0.82% (122 runs sampled)'
+'LRUCache simulation 10,000 10% x 8,881,517 ops/sec ±0.41% (104 runs sampled)'
 
-'DW-Cache simulation 10,000 x 6,604,530 ops/sec ±0.25% (123 runs sampled)'
+'DW-Cache simulation 10,000 10% x 6,020,040 ops/sec ±0.50% (106 runs sampled)'
 
-'Clock    simulation 100,000 x 8,904,873 ops/sec ±1.76% (118 runs sampled)'
+'Clock    simulation 100,000 10% x 5,948,133 ops/sec ±1.22% (101 runs sampled)'
 
-'ISCCache simulation 100,000 x 5,527,676 ops/sec ±1.70% (114 runs sampled)'
+'ISCCache simulation 100,000 10% x 3,654,505 ops/sec ±1.47% (101 runs sampled)'
 
-'LRUCache simulation 100,000 x 6,309,913 ops/sec ±2.23% (114 runs sampled)'
+'LRUCache simulation 100,000 10% x 5,615,930 ops/sec ±1.35% (100 runs sampled)'
 
-'DW-Cache simulation 100,000 x 4,970,814 ops/sec ±2.23% (109 runs sampled)'
+'DW-Cache simulation 100,000 10% x 4,255,377 ops/sec ±1.79% (97 runs sampled)'
 
-'Clock    simulation 1,000,000 x 4,708,193 ops/sec ±4.16% (102 runs sampled)'
+'Clock    simulation 1,000,000 10% x 2,605,647 ops/sec ±3.98% (93 runs sampled)'
 
-'ISCCache simulation 1,000,000 x 2,396,780 ops/sec ±4.46% (95 runs sampled)'
+'ISCCache simulation 1,000,000 10% x 1,453,643 ops/sec ±2.92% (95 runs sampled)'
 
-'LRUCache simulation 1,000,000 x 2,290,716 ops/sec ±3.21% (107 runs sampled)'
+'LRUCache simulation 1,000,000 10% x 2,081,983 ops/sec ±4.23% (88 runs sampled)'
 
-'DW-Cache simulation 1,000,000 x 2,088,055 ops/sec ±3.22% (110 runs sampled)'
-```
+'DW-Cache simulation 1,000,000 10% x 2,598,274 ops/sec ±4.42% (89 runs sampled)'
 
-```ts
-const key = random() < 0.9
-  ? random() * capacity * 1 | 0
-  : random() * capacity * 9 + capacity | 0;
-cache.get(key) ?? cache.set(key, {});
+'Clock    simulation 100 90% x 25,014,146 ops/sec ±0.33% (107 runs sampled)'
+
+'ISCCache simulation 100 90% x 22,495,828 ops/sec ±0.74% (105 runs sampled)'
+
+'LRUCache simulation 100 90% x 20,969,655 ops/sec ±0.84% (107 runs sampled)'
+
+'DW-Cache simulation 100 90% x 9,730,398 ops/sec ±0.32% (107 runs sampled)'
+
+'Clock    simulation 1,000 90% x 23,025,311 ops/sec ±0.51% (107 runs sampled)'
+
+'ISCCache simulation 1,000 90% x 19,347,819 ops/sec ±0.34% (107 runs sampled)'
+
+'LRUCache simulation 1,000 90% x 18,240,448 ops/sec ±0.28% (107 runs sampled)'
+
+'DW-Cache simulation 1,000 90% x 11,382,934 ops/sec ±0.19% (108 runs sampled)'
+
+'Clock    simulation 10,000 90% x 20,506,917 ops/sec ±0.25% (105 runs sampled)'
+
+'ISCCache simulation 10,000 90% x 15,441,103 ops/sec ±1.24% (105 runs sampled)'
+
+'LRUCache simulation 10,000 90% x 13,104,661 ops/sec ±0.61% (105 runs sampled)'
+
+'DW-Cache simulation 10,000 90% x 8,747,757 ops/sec ±0.92% (107 runs sampled)'
+
+'Clock    simulation 100,000 90% x 12,049,875 ops/sec ±1.49% (100 runs sampled)'
+
+'ISCCache simulation 100,000 90% x 8,173,371 ops/sec ±1.17% (102 runs sampled)'
+
+'LRUCache simulation 100,000 90% x 8,188,424 ops/sec ±2.08% (100 runs sampled)'
+
+'DW-Cache simulation 100,000 90% x 5,973,422 ops/sec ±2.65% (100 runs sampled)'
+
+'Clock    simulation 1,000,000 90% x 5,578,321 ops/sec ±4.20% (92 runs sampled)'
+
+'ISCCache simulation 1,000,000 90% x 2,963,294 ops/sec ±2.91% (95 runs sampled)'
+
+'LRUCache simulation 1,000,000 90% x 2,235,658 ops/sec ±2.83% (95 runs sampled)'
+
+'DW-Cache simulation 1,000,000 90% x 1,931,442 ops/sec ±2.32% (98 runs sampled)'
+
+'ISCCache simulation 100 90% expire x 4,172,541 ops/sec ±5.34% (94 runs sampled)'
+
+'DW-Cache simulation 100 90% expire x 8,241,722 ops/sec ±0.42% (107 runs sampled)'
+
+'ISCCache simulation 1,000 90% expire x 4,169,949 ops/sec ±3.98% (97 runs sampled)'
+
+'DW-Cache simulation 1,000 90% expire x 8,218,212 ops/sec ±0.30% (107 runs sampled)'
+
+'ISCCache simulation 10,000 90% expire x 3,539,574 ops/sec ±4.02% (98 runs sampled)'
+
+'DW-Cache simulation 10,000 90% expire x 6,338,384 ops/sec ±1.07% (105 runs sampled)'
+
+'ISCCache simulation 100,000 90% expire x 2,429,074 ops/sec ±4.48% (94 runs sampled)'
+
+'DW-Cache simulation 100,000 90% expire x 1,977,169 ops/sec ±2.71% (86 runs sampled)'
+
+'ISCCache simulation 1,000,000 90% expire x 448,719 ops/sec ±5.09% (82 runs sampled)'
+
+'DW-Cache simulation 1,000,000 90% expire x 629,254 ops/sec ±3.81% (98 runs sampled)'
 ```
 
 ## API
