@@ -12,6 +12,8 @@ https://github.com/falsandtru/spica
 
 ## Efficiency
 
+TLRU and TRC are abbreviations for TrueLRU (spica/tlru).
+
 ### Mathematical efficiency
 
 Some different cache algorithms require extra memory space to retain evicted keys.
@@ -21,6 +23,7 @@ Note that admission algorithm doesn't work without eviction algorithm.
 |Algorithm|Type |Time complexity<br>(Worst case)|Space complexity<br>(Extra)|Key size|Data structures|
 |:-------:|:---:|:------:|:------:|:---------:|:-----:|
 |LRU      |Evict|Constant|Constant|    1x     |1 list |
+|TLRU     |Evict|Constant|Constant|    1x     |1 list |
 |DWC      |Evict|Constant|Constant|    1x     |2 lists|
 |ARC      |Evict|Constant|Linear  |    2x     |4 lists|
 |LIRS     |Evict|Linear  |Linear  |**3-2500x**|2 lists|
@@ -41,6 +44,7 @@ Memoize, etc.
 |Algorithm|Entry overhead|Key size|Total per entry|Attenuation coefficient|
 |:-------:|-------------:|-------:|--------------:|----------------------:|
 |LRU      |      16 bytes|      1x|       32 bytes|                100.00%|
+|TLRU     |      16 bytes|      1x|       32 bytes|                100.00%|
 |DWC      |      17 bytes|      1x|       33 bytes|                 96.96%|
 |ARC      |      17 bytes|      2x|       58 bytes|                 55.17%|
 |(LIRS)   |      33 bytes|      3x|      131 bytes|                 24.42%|
@@ -55,6 +59,7 @@ In-memory KVS, etc.
 |Algorithm|Entry overhead|Key size|Total per entry|Attenuation coefficient|
 |:-------:|-------------:|-------:|--------------:|----------------------:|
 |LRU      |      16 bytes|      1x|       56 bytes|                100.00%|
+|TLRU     |      16 bytes|      1x|       56 bytes|                100.00%|
 |DWC      |      17 bytes|      1x|       57 bytes|                 98.24%|
 |ARC      |      17 bytes|      2x|       88 bytes|                 63.63%|
 |(LIRS)   |      33 bytes|      3x|      203 bytes|                 27.58%|
@@ -69,6 +74,7 @@ DNS cache server, etc.
 |Algorithm|Entry overhead|Key size|Total per entry|Attenuation coefficient|
 |:-------:|-------------:|-------:|--------------:|----------------------:|
 |LRU      |      16 bytes|      1x|      544 bytes|                100.00%|
+|TLRU     |      16 bytes|      1x|      544 bytes|                100.00%|
 |DWC      |      17 bytes|      1x|      545 bytes|                 99.81%|
 |ARC      |      17 bytes|      2x|      578 bytes|                 94.11%|
 |(LIRS)   |      33 bytes|      3x|      659 bytes|                 82.54%|
@@ -79,10 +85,12 @@ DNS cache server, etc.
 ## Resistance
 
 LIRS's burst resistance means the resistance to continuous cache misses for the last LIR entry or the HIR entries.
+TLRU's loop resistance is limited.
 
 |Algorithm|Type |Scan|Loop|Burst|
 |:-------:|:---:|:--:|:--:|:---:|
 |LRU      |Evict|    |    |  ✓ |
+|TLRU     |Evict| ✓ |  ✓ | ✓  |
 |DWC      |Evict| ✓ |  ✓ | ✓  |
 |ARC      |Evict| ✓ |     | ✓  |
 |LIRS     |Evict| ✓ |  ✓ |     |
@@ -134,6 +142,10 @@ Generally superior and almost flawless.
   - Statistical accuracy dependent
     - Very smaller cache size than sufficient can degrade hit ratio.
     - Cache size 1,000 or more is recommended.
+    - For discontinuous workloads, TLRU is better.
+  - No tradeoffs other than hit ratio
+    - Other advanced cache algorithms have some tradeoffs such as spike latency by linear time complexity, delayed memory release by linear space complexity, or implementability.
+      - Other advanced cache algorithms cannot generally replace LRU due to these tradeoffs.
 
 ## Tradeoffs
 
@@ -143,6 +155,14 @@ Note that LIRS and TinyLFU are risky cache algorithms.
   - Low performance
   - No resistance
     - **Scan access clears all entries.**
+- TLRU
+  - Middle performance
+    - Lower hit ratio than DWC.
+  - Limited resistance
+    - Limited loop resistance.
+- DWC
+  - Not the highest hit ratio
+  - Statistical accuracy dependent
 - ARC
   - Middle performance
   - Inefficient
@@ -151,9 +171,6 @@ Note that LIRS and TinyLFU are risky cache algorithms.
     - 4 lists.
   - Few resistance
     - No loop resistance.
-- DWC
-  - Not the highest hit ratio
-  - Statistical accuracy dependent
 - LIRS
   - Extremely inefficient
     - ***3-2500x key size.***
@@ -257,6 +274,11 @@ const data = {
       borderColor: Utils.color(2),
     },
     {
+      label: 'TrueLRU',
+      data: [7.94, 21.70, 33.46, 39.28, 46.10, 53.28, 60.42, 68.74],
+      borderColor: Utils.color(1),
+    },
+    {
       label: 'LIRS',
       data: [12.98, 26.85, 38.02, 38.14, 38.18, 47.25, 59.89, 71.74],
       borderColor: Utils.color(3),
@@ -275,57 +297,65 @@ const data = {
 };
 -->
 
-![image](https://github.com/falsandtru/dw-cache/assets/3143368/57c88cdd-9c1e-498f-a656-f56f20bab079)
+![image](https://github.com/falsandtru/dw-cache/assets/3143368/744260e0-4fb7-4a89-bd30-731c9c3d9399)
 
-W-TinyLFU, (TinyLFU) > DWC > (LIRS) > ARC > LRU
+W-TinyLFU, (TinyLFU) > DWC > (LIRS) > TLRU > ARC > LRU
 
 - DWC is an approximation of W-TinyLFU.
 
 ```
 DS1 1,000,000
 LRU hit ratio 3.08%
+TRC hit ratio 7.94%
 DWC hit ratio 14.73%
 DWC - LRU hit ratio delta 11.65%
 DWC / LRU hit ratio ratio 477%
 
 DS1 2,000,000
 LRU hit ratio 10.74%
+TRC hit ratio 21.70%
 DWC hit ratio 27.94%
 DWC - LRU hit ratio delta 17.20%
 DWC / LRU hit ratio ratio 260%
 
 DS1 3,000,000
 LRU hit ratio 18.59%
+TRC hit ratio 33.46%
 DWC hit ratio 39.46%
 DWC - LRU hit ratio delta 20.87%
 DWC / LRU hit ratio ratio 212%
 
 DS1 4,000,000
 LRU hit ratio 20.24%
+TRC hit ratio 39.28%
 DWC hit ratio 44.20%
 DWC - LRU hit ratio delta 23.96%
 DWC / LRU hit ratio ratio 218%
 
 DS1 5,000,000
 LRU hit ratio 21.03%
+TRC hit ratio 46.10%
 DWC hit ratio 50.19%
 DWC - LRU hit ratio delta 29.16%
 DWC / LRU hit ratio ratio 238%
 
 DS1 6,000,000
 LRU hit ratio 33.95%
+TRC hit ratio 53.28%
 DWC hit ratio 56.83%
 DWC - LRU hit ratio delta 22.88%
 DWC / LRU hit ratio ratio 167%
 
 DS1 7,000,000
 LRU hit ratio 38.89%
+TRC hit ratio 60.42%
 DWC hit ratio 62.55%
 DWC - LRU hit ratio delta 23.65%
 DWC / LRU hit ratio ratio 160%
 
 DS1 8,000,000
 LRU hit ratio 43.03%
+TRC hit ratio 68.74%
 DWC hit ratio 70.03%
 DWC - LRU hit ratio delta 26.99%
 DWC / LRU hit ratio ratio 162%
@@ -357,6 +387,11 @@ const data = {
       borderColor: Utils.color(2),
     },
     {
+      label: 'TrueLRU',
+      data: [3.96, 12.98, 21.55, 30.31, 38.81, 47.22, 55.58, 64.00],
+      borderColor: Utils.color(1),
+    },
+    {
       label: 'LIRS',
       data: [12.4, 15.55, 25.08, 34.69, 44.27, 53.15, 60.99, 67.64],
       borderColor: Utils.color(3),
@@ -375,57 +410,65 @@ const data = {
 };
 -->
 
-![image](https://github.com/falsandtru/dw-cache/assets/3143368/bb3f3eac-3193-4f22-90d8-2cc819e073fb)
+![image](https://github.com/falsandtru/dw-cache/assets/3143368/72bf6cdc-6351-4c3c-b019-d6f55845f4b9)
 
-W-TinyLFU, (TinyLFU) > (LIRS) > DWC > ARC > LRU
+W-TinyLFU, (TinyLFU) > (LIRS) > DWC > TLRU, ARC > LRU
 
 - DWC is an approximation of ARC.
 
 ```
 S3 100,000
 LRU hit ratio 2.32%
+TRC hit ratio 3.96%
 DWC hit ratio 10.14%
 DWC - LRU hit ratio delta 7.81%
 DWC / LRU hit ratio ratio 435%
 
 S3 200,000
 LRU hit ratio 4.63%
+TRC hit ratio 12.98%
 DWC hit ratio 20.25%
 DWC - LRU hit ratio delta 15.61%
 DWC / LRU hit ratio ratio 437%
 
 S3 300,000
 LRU hit ratio 7.58%
+TRC hit ratio 21.55%
 DWC hit ratio 27.39%
 DWC - LRU hit ratio delta 19.80%
 DWC / LRU hit ratio ratio 360%
 
 S3 400,000
 LRU hit ratio 12.03%
+TRC hit ratio 30.31%
 DWC hit ratio 32.69%
 DWC - LRU hit ratio delta 20.65%
 DWC / LRU hit ratio ratio 271%
 
 S3 500,000
 LRU hit ratio 22.76%
+TRC hit ratio 38.81%
 DWC hit ratio 38.12%
 DWC - LRU hit ratio delta 15.35%
 DWC / LRU hit ratio ratio 167%
 
 S3 600,000
 LRU hit ratio 34.63%
+TRC hit ratio 47.22%
 DWC hit ratio 46.82%
 DWC - LRU hit ratio delta 12.19%
 DWC / LRU hit ratio ratio 135%
 
 S3 700,000
 LRU hit ratio 46.04%
+TRC hit ratio 55.58%
 DWC hit ratio 55.71%
 DWC - LRU hit ratio delta 9.66%
 DWC / LRU hit ratio ratio 120%
 
 S3 800,000
 LRU hit ratio 56.59%
+TRC hit ratio 64.00%
 DWC hit ratio 64.03%
 DWC - LRU hit ratio delta 7.43%
 DWC / LRU hit ratio ratio 113%
@@ -457,6 +500,11 @@ const data = {
       borderColor: Utils.color(2),
     },
     {
+      label: 'TrueLRU',
+      data: [16.92, 28.52, 33.50, 37.01, 39.18, 41.19, 42.65, 43.95],
+      borderColor: Utils.color(1),
+    },
+    {
       label: 'LIRS',
       data: [18.27, 26.87, 31.71, 34.82, 37.24, 39.2, 40.79, 42.52],
       borderColor: Utils.color(3),
@@ -475,57 +523,65 @@ const data = {
 };
 -->
 
-![image](https://github.com/falsandtru/dw-cache/assets/3143368/1861b8c7-1ca4-492e-bf72-0019a8a180c3)
+![image](https://github.com/falsandtru/dw-cache/assets/3143368/aa5336fc-e9f2-4d6a-97bc-59a0aa8e2f20)
 
-ARC > DWC > W-TinyLFU > (LIRS) > LRU > (TinyLFU)
+ARC > DWC > TLRU > W-TinyLFU > (LIRS) > LRU > (TinyLFU)
 
 - DWC is an approximation of ARC.
 
 ```
 OLTP 250
 LRU hit ratio 16.47%
+TRC hit ratio 16.92%
 DWC hit ratio 19.59%
 DWC - LRU hit ratio delta 3.11%
 DWC / LRU hit ratio ratio 118%
 
 OLTP 500
 LRU hit ratio 23.44%
+TRC hit ratio 28.52%
 DWC hit ratio 29.12%
 DWC - LRU hit ratio delta 5.68%
 DWC / LRU hit ratio ratio 124%
 
 OLTP 750
 LRU hit ratio 28.28%
+TRC hit ratio 33.50%
 DWC hit ratio 34.90%
 DWC - LRU hit ratio delta 6.62%
 DWC / LRU hit ratio ratio 123%
 
 OLTP 1,000
 LRU hit ratio 32.83%
+TRC hit ratio 37.01%
 DWC hit ratio 37.93%
 DWC - LRU hit ratio delta 5.10%
 DWC / LRU hit ratio ratio 115%
 
 OLTP 1,250
 LRU hit ratio 36.20%
+TRC hit ratio 39.18%
 DWC hit ratio 39.96%
 DWC - LRU hit ratio delta 3.75%
 DWC / LRU hit ratio ratio 110%
 
 OLTP 1,500
 LRU hit ratio 38.69%
+TRC hit ratio 41.19%
 DWC hit ratio 41.79%
 DWC - LRU hit ratio delta 3.09%
 DWC / LRU hit ratio ratio 108%
 
 OLTP 1,750
 LRU hit ratio 40.78%
+TRC hit ratio 42.65%
 DWC hit ratio 43.43%
 DWC - LRU hit ratio delta 2.64%
 DWC / LRU hit ratio ratio 106%
 
 OLTP 2,000
 LRU hit ratio 42.46%
+TRC hit ratio 43.95%
 DWC hit ratio 44.70%
 DWC - LRU hit ratio delta 2.23%
 DWC / LRU hit ratio ratio 105%
@@ -557,6 +613,11 @@ const data = {
       borderColor: Utils.color(2),
     },
     {
+      label: 'TrueLRU',
+      data: [10.48, 23.88, 36.31, 46.82, 52.04, 53.00, 55.88, 57.96],
+      borderColor: Utils.color(1),
+    },
+    {
       label: 'LIRS',
       data: [15.91, 33.6, 43.61, 50.56, 51.85, 53.55, 55.58, 57.96],
       borderColor: Utils.color(3),
@@ -575,57 +636,65 @@ const data = {
 };
 -->
 
-![image](https://github.com/falsandtru/dw-cache/assets/3143368/83ecb920-246f-41d7-90f5-93820aba2ce6)
+![image](https://github.com/falsandtru/dw-cache/assets/3143368/d9e57f61-7cc8-4e37-b57a-46d360b8d476)
 
-W-TinyLFU, (TinyLFU), (LIRS) > DWC >> ARC > LRU
+W-TinyLFU, (TinyLFU), (LIRS) > DWC > TLRU >> ARC > LRU
 
 - DWC is an approximation of W-TinyLFU.
 
 ```
 GLI 250
 LRU hit ratio 0.93%
+TRC hit ratio 10.48%
 DWC hit ratio 15.44%
 DWC - LRU hit ratio delta 14.51%
 DWC / LRU hit ratio ratio 1658%
 
 GLI 500
 LRU hit ratio 0.96%
+TRC hit ratio 23.88%
 DWC hit ratio 31.53%
 DWC - LRU hit ratio delta 30.56%
 DWC / LRU hit ratio ratio 3270%
 
 GLI 750
 LRU hit ratio 1.16%
+TRC hit ratio 36.31%
 DWC hit ratio 41.55%
 DWC - LRU hit ratio delta 40.39%
 DWC / LRU hit ratio ratio 3571%
 
 GLI 1,000
 LRU hit ratio 11.22%
+TRC hit ratio 46.82%
 DWC hit ratio 49.30%
 DWC - LRU hit ratio delta 38.08%
 DWC / LRU hit ratio ratio 439%
 
 GLI 1,250
 LRU hit ratio 21.25%
+TRC hit ratio 52.04%
 DWC hit ratio 52.42%
 DWC - LRU hit ratio delta 31.16%
 DWC / LRU hit ratio ratio 246%
 
 GLI 1,500
 LRU hit ratio 36.56%
+TRC hit ratio 53.00%
 DWC hit ratio 53.49%
 DWC - LRU hit ratio delta 16.92%
 DWC / LRU hit ratio ratio 146%
 
 GLI 1,750
 LRU hit ratio 45.04%
+TRC hit ratio 55.88%
 DWC hit ratio 55.60%
 DWC - LRU hit ratio delta 10.55%
 DWC / LRU hit ratio ratio 123%
 
 GLI 2,000
 LRU hit ratio 57.41%
+TRC hit ratio 57.96%
 DWC hit ratio 57.96%
 DWC - LRU hit ratio delta 0.54%
 DWC / LRU hit ratio ratio 100%
@@ -635,132 +704,154 @@ DWC / LRU hit ratio ratio 100%
 ```
 LOOP 100
 LRU hit ratio 0.00%
+TRC hit ratio 0.00%
 DWC hit ratio 8.12%
 DWC - LRU hit ratio delta 8.12%
 DWC / LRU hit ratio ratio Infinity%
 
 LOOP 250
 LRU hit ratio 0.00%
+TRC hit ratio 0.00%
 DWC hit ratio 21.33%
 DWC - LRU hit ratio delta 21.33%
 DWC / LRU hit ratio ratio Infinity%
 
 LOOP 500
 LRU hit ratio 0.00%
+TRC hit ratio 0.00%
 DWC hit ratio 44.42%
 DWC - LRU hit ratio delta 44.42%
 DWC / LRU hit ratio ratio Infinity%
 
 LOOP 750
 LRU hit ratio 0.00%
+TRC hit ratio 0.00%
 DWC hit ratio 67.62%
 DWC - LRU hit ratio delta 67.62%
 DWC / LRU hit ratio ratio Infinity%
 
 LOOP 1,000
 LRU hit ratio 0.00%
+TRC hit ratio 0.00%
 DWC hit ratio 96.77%
 DWC - LRU hit ratio delta 96.77%
 DWC / LRU hit ratio ratio Infinity%
 
 LOOP 1,250
 LRU hit ratio 99.80%
+TRC hit ratio 99.80%
 DWC hit ratio 99.80%
 DWC - LRU hit ratio delta 0.00%
 DWC / LRU hit ratio ratio 100%
 
 WS1 1,000,000
 LRU hit ratio 2.95%
+TRC hit ratio 6.97%
 DWC hit ratio 10.37%
 DWC - LRU hit ratio delta 7.42%
 DWC / LRU hit ratio ratio 351%
 
 WS1 2,000,000
 LRU hit ratio 6.08%
+TRC hit ratio 17.18%
 DWC hit ratio 18.37%
 DWC - LRU hit ratio delta 12.28%
 DWC / LRU hit ratio ratio 301%
 
 WS1 3,000,000
 LRU hit ratio 9.63%
+TRC hit ratio 26.32%
 DWC hit ratio 21.94%
 DWC - LRU hit ratio delta 12.31%
 DWC / LRU hit ratio ratio 227%
 
 WS1 4,000,000
 LRU hit ratio 21.59%
+TRC hit ratio 35.30%
 DWC hit ratio 27.22%
 DWC - LRU hit ratio delta 5.62%
 DWC / LRU hit ratio ratio 126%
 
 WS1 5,000,000
 LRU hit ratio 33.91%
+TRC hit ratio 43.80%
 DWC hit ratio 37.77%
 DWC - LRU hit ratio delta 3.86%
 DWC / LRU hit ratio ratio 111%
 
 WS1 6,000,000
 LRU hit ratio 45.74%
+TRC hit ratio 51.37%
 DWC hit ratio 48.43%
 DWC - LRU hit ratio delta 2.69%
 DWC / LRU hit ratio ratio 105%
 
 WS1 7,000,000
 LRU hit ratio 54.89%
+TRC hit ratio 57.48%
 DWC hit ratio 56.74%
 DWC - LRU hit ratio delta 1.85%
 DWC / LRU hit ratio ratio 103%
 
 WS1 8,000,000
 LRU hit ratio 61.40%
+TRC hit ratio 62.34%
 DWC hit ratio 62.11%
 DWC - LRU hit ratio delta 0.71%
 DWC / LRU hit ratio ratio 101%
 
 F1 2,500
 LRU hit ratio 27.74%
+TRC hit ratio 27.85%
 DWC hit ratio 25.12%
 DWC - LRU hit ratio delta -2.61%
 DWC / LRU hit ratio ratio 90%
 
 F1 5,000
 LRU hit ratio 30.55%
+TRC hit ratio 31.72%
 DWC hit ratio 30.20%
 DWC - LRU hit ratio delta -0.35%
 DWC / LRU hit ratio ratio 98%
 
 F1 7,500
 LRU hit ratio 32.18%
+TRC hit ratio 34.25%
 DWC hit ratio 33.85%
 DWC - LRU hit ratio delta 1.67%
 DWC / LRU hit ratio ratio 105%
 
 F1 10,000
 LRU hit ratio 33.27%
+TRC hit ratio 35.73%
 DWC hit ratio 35.64%
 DWC - LRU hit ratio delta 2.36%
 DWC / LRU hit ratio ratio 107%
 
 F1 12,500
 LRU hit ratio 34.19%
+TRC hit ratio 36.75%
 DWC hit ratio 36.73%
 DWC - LRU hit ratio delta 2.54%
 DWC / LRU hit ratio ratio 107%
 
 F1 15,000
 LRU hit ratio 34.97%
+TRC hit ratio 37.69%
 DWC hit ratio 37.61%
 DWC - LRU hit ratio delta 2.64%
 DWC / LRU hit ratio ratio 107%
 
 F1 17,500
 LRU hit ratio 35.62%
+TRC hit ratio 38.31%
 DWC hit ratio 38.17%
 DWC - LRU hit ratio delta 2.55%
 DWC / LRU hit ratio ratio 107%
 
 F1 20,000
 LRU hit ratio 36.17%
+TRC hit ratio 38.83%
 DWC hit ratio 38.80%
 DWC - LRU hit ratio delta 2.63%
 DWC / LRU hit ratio ratio 107%
@@ -781,118 +872,164 @@ Of course it is verified that DWC works fine under the same condition.
   Memory: 5.88 GB / 6.78 GB
 
 Clock: spica/clock<br>
-ISCCache: [lru-cache](https://www.npmjs.com/package/lru-cache)<br>
-LRUCache: spica/lru<br>
-DW-Cache: spica/cache<br>
+ISC: [lru-cache](https://www.npmjs.com/package/lru-cache)<br>
+LRU: spica/lru<br>
+TRC-C: spica/tlru (spica/trul.clock)<br>
+TRC-L: spica/trul.lru<br>
+DWC: spica/cache<br>
 
 ```
-'Clock    new x 1,650,836 ops/sec ±1.94% (94 runs sampled)'
+'Clock new x 1,552,561 ops/sec ±1.66% (113 runs sampled)'
 
-'ISCCache new x 18,042 ops/sec ±0.66% (105 runs sampled)'
+'ISC   new x 17,669 ops/sec ±0.83% (122 runs sampled)'
 
-'LRUCache new x 30,098,951 ops/sec ±0.23% (106 runs sampled)'
+'LRU   new x 26,469,709 ops/sec ±0.93% (121 runs sampled)'
 
-'DW-Cache new x 7,021,323 ops/sec ±0.30% (105 runs sampled)'
+'TRC-C new x 24,865,728 ops/sec ±0.89% (120 runs sampled)'
 
-'Clock    simulation 100 10% x 9,762,593 ops/sec ±0.36% (107 runs sampled)'
+'TRC-L new x 25,006,319 ops/sec ±0.91% (122 runs sampled)'
 
-'ISCCache simulation 100 10% x 8,761,469 ops/sec ±0.38% (107 runs sampled)'
+'DWC   new x 6,775,282 ops/sec ±0.94% (121 runs sampled)'
 
-'LRUCache simulation 100 10% x 10,769,407 ops/sec ±0.28% (107 runs sampled)'
+'Clock simulation 100 10% x 9,363,738 ops/sec ±0.61% (121 runs sampled)'
 
-'DW-Cache simulation 100 10% x 7,242,192 ops/sec ±0.50% (105 runs sampled)'
+'ISC   simulation 100 10% x 9,008,687 ops/sec ±0.80% (121 runs sampled)'
 
-'Clock    simulation 1,000 10% x 9,601,967 ops/sec ±0.48% (107 runs sampled)'
+'LRU   simulation 100 10% x 10,725,903 ops/sec ±0.56% (121 runs sampled)'
 
-'ISCCache simulation 1,000 10% x 7,986,140 ops/sec ±0.58% (106 runs sampled)'
+'TRC-C simulation 100 10% x 10,571,693 ops/sec ±0.64% (122 runs sampled)'
 
-'LRUCache simulation 1,000 10% x 9,735,550 ops/sec ±0.41% (106 runs sampled)'
+'TRC-L simulation 100 10% x 8,459,734 ops/sec ±0.78% (122 runs sampled)'
 
-'DW-Cache simulation 1,000 10% x 6,592,345 ops/sec ±0.37% (107 runs sampled)'
+'DWC   simulation 100 10% x 6,584,195 ops/sec ±0.42% (123 runs sampled)'
 
-'Clock    simulation 10,000 10% x 9,344,809 ops/sec ±0.40% (105 runs sampled)'
+'Clock simulation 1,000 10% x 9,384,521 ops/sec ±0.60% (122 runs sampled)'
 
-'ISCCache simulation 10,000 10% x 7,193,304 ops/sec ±0.83% (106 runs sampled)'
+'ISC   simulation 1,000 10% x 8,268,271 ops/sec ±0.96% (121 runs sampled)'
 
-'LRUCache simulation 10,000 10% x 8,881,517 ops/sec ±0.41% (104 runs sampled)'
+'LRU   simulation 1,000 10% x 9,449,176 ops/sec ±0.79% (122 runs sampled)'
 
-'DW-Cache simulation 10,000 10% x 6,020,040 ops/sec ±0.50% (106 runs sampled)'
+'TRC-C simulation 1,000 10% x 9,205,839 ops/sec ±0.45% (121 runs sampled)'
 
-'Clock    simulation 100,000 10% x 5,948,133 ops/sec ±1.22% (101 runs sampled)'
+'TRC-L simulation 1,000 10% x 8,005,839 ops/sec ±0.95% (122 runs sampled)'
 
-'ISCCache simulation 100,000 10% x 3,654,505 ops/sec ±1.47% (101 runs sampled)'
+'DWC   simulation 1,000 10% x 7,532,780 ops/sec ±0.59% (122 runs sampled)'
 
-'LRUCache simulation 100,000 10% x 5,615,930 ops/sec ±1.35% (100 runs sampled)'
+'Clock simulation 10,000 10% x 9,359,627 ops/sec ±0.79% (122 runs sampled)'
 
-'DW-Cache simulation 100,000 10% x 4,255,377 ops/sec ±1.79% (97 runs sampled)'
+'ISC   simulation 10,000 10% x 6,781,153 ops/sec ±0.72% (121 runs sampled)'
 
-'Clock    simulation 1,000,000 10% x 2,605,647 ops/sec ±3.98% (93 runs sampled)'
+'LRU   simulation 10,000 10% x 8,730,973 ops/sec ±0.72% (120 runs sampled)'
 
-'ISCCache simulation 1,000,000 10% x 1,453,643 ops/sec ±2.92% (95 runs sampled)'
+'TRC-C simulation 10,000 10% x 8,021,631 ops/sec ±2.00% (119 runs sampled)'
 
-'LRUCache simulation 1,000,000 10% x 2,081,983 ops/sec ±4.23% (88 runs sampled)'
+'TRC-L simulation 10,000 10% x 6,130,857 ops/sec ±2.73% (116 runs sampled)'
 
-'DW-Cache simulation 1,000,000 10% x 2,598,274 ops/sec ±4.42% (89 runs sampled)'
+'DWC   simulation 10,000 10% x 5,836,941 ops/sec ±1.04% (122 runs sampled)'
 
-'Clock    simulation 100 90% x 25,014,146 ops/sec ±0.33% (107 runs sampled)'
+'Clock simulation 100,000 10% x 5,590,625 ops/sec ±1.73% (115 runs sampled)'
 
-'ISCCache simulation 100 90% x 22,495,828 ops/sec ±0.74% (105 runs sampled)'
+'ISC   simulation 100,000 10% x 3,278,209 ops/sec ±1.70% (111 runs sampled)'
 
-'LRUCache simulation 100 90% x 20,969,655 ops/sec ±0.84% (107 runs sampled)'
+'LRU   simulation 100,000 10% x 4,765,807 ops/sec ±2.79% (111 runs sampled)'
 
-'DW-Cache simulation 100 90% x 9,730,398 ops/sec ±0.32% (107 runs sampled)'
+'TRC-C simulation 100,000 10% x 4,685,016 ops/sec ±2.90% (105 runs sampled)'
 
-'Clock    simulation 1,000 90% x 23,025,311 ops/sec ±0.51% (107 runs sampled)'
+'TRC-L simulation 100,000 10% x 4,150,880 ops/sec ±2.95% (111 runs sampled)'
 
-'ISCCache simulation 1,000 90% x 19,347,819 ops/sec ±0.34% (107 runs sampled)'
+'DWC   simulation 100,000 10% x 3,822,807 ops/sec ±2.51% (108 runs sampled)'
 
-'LRUCache simulation 1,000 90% x 18,240,448 ops/sec ±0.28% (107 runs sampled)'
+'Clock simulation 1,000,000 10% x 2,280,505 ops/sec ±4.09% (97 runs sampled)'
 
-'DW-Cache simulation 1,000 90% x 11,382,934 ops/sec ±0.19% (108 runs sampled)'
+'ISC   simulation 1,000,000 10% x 1,241,084 ops/sec ±4.17% (101 runs sampled)'
 
-'Clock    simulation 10,000 90% x 20,506,917 ops/sec ±0.25% (105 runs sampled)'
+'LRU   simulation 1,000,000 10% x 1,742,529 ops/sec ±3.63% (89 runs sampled)'
 
-'ISCCache simulation 10,000 90% x 15,441,103 ops/sec ±1.24% (105 runs sampled)'
+'TRC-C simulation 1,000,000 10% x 1,973,322 ops/sec ±5.40% (88 runs sampled)'
 
-'LRUCache simulation 10,000 90% x 13,104,661 ops/sec ±0.61% (105 runs sampled)'
+'TRC-L simulation 1,000,000 10% x 1,644,990 ops/sec ±4.36% (97 runs sampled)'
 
-'DW-Cache simulation 10,000 90% x 8,747,757 ops/sec ±0.92% (107 runs sampled)'
+'DWC   simulation 1,000,000 10% x 1,951,708 ops/sec ±3.92% (98 runs sampled)'
 
-'Clock    simulation 100,000 90% x 12,049,875 ops/sec ±1.49% (100 runs sampled)'
+'Clock simulation 100 90% x 21,254,002 ops/sec ±0.68% (123 runs sampled)'
 
-'ISCCache simulation 100,000 90% x 8,173,371 ops/sec ±1.17% (102 runs sampled)'
+'ISC   simulation 100 90% x 19,742,448 ops/sec ±0.62% (122 runs sampled)'
 
-'LRUCache simulation 100,000 90% x 8,188,424 ops/sec ±2.08% (100 runs sampled)'
+'LRU   simulation 100 90% x 18,749,189 ops/sec ±0.68% (122 runs sampled)'
 
-'DW-Cache simulation 100,000 90% x 5,973,422 ops/sec ±2.65% (100 runs sampled)'
+'TRC-C simulation 100 90% x 16,785,649 ops/sec ±0.63% (122 runs sampled)'
 
-'Clock    simulation 1,000,000 90% x 5,578,321 ops/sec ±4.20% (92 runs sampled)'
+'TRC-L simulation 100 90% x 16,148,417 ops/sec ±0.80% (122 runs sampled)'
 
-'ISCCache simulation 1,000,000 90% x 2,963,294 ops/sec ±2.91% (95 runs sampled)'
+'DWC   simulation 100 90% x 10,688,142 ops/sec ±0.60% (121 runs sampled)'
 
-'LRUCache simulation 1,000,000 90% x 2,235,658 ops/sec ±2.83% (95 runs sampled)'
+'Clock simulation 1,000 90% x 19,744,639 ops/sec ±0.85% (122 runs sampled)'
 
-'DW-Cache simulation 1,000,000 90% x 1,931,442 ops/sec ±2.32% (98 runs sampled)'
+'ISC   simulation 1,000 90% x 17,049,505 ops/sec ±0.90% (121 runs sampled)'
 
-'ISCCache simulation 100 90% expire x 4,172,541 ops/sec ±5.34% (94 runs sampled)'
+'LRU   simulation 1,000 90% x 16,579,637 ops/sec ±0.58% (122 runs sampled)'
 
-'DW-Cache simulation 100 90% expire x 8,241,722 ops/sec ±0.42% (107 runs sampled)'
+'TRC-C simulation 1,000 90% x 15,110,520 ops/sec ±0.63% (121 runs sampled)'
 
-'ISCCache simulation 1,000 90% expire x 4,169,949 ops/sec ±3.98% (97 runs sampled)'
+'TRC-L simulation 1,000 90% x 14,668,067 ops/sec ±0.55% (122 runs sampled)'
 
-'DW-Cache simulation 1,000 90% expire x 8,218,212 ops/sec ±0.30% (107 runs sampled)'
+'DWC   simulation 1,000 90% x 8,654,990 ops/sec ±0.44% (123 runs sampled)'
 
-'ISCCache simulation 10,000 90% expire x 3,539,574 ops/sec ±4.02% (98 runs sampled)'
+'Clock simulation 10,000 90% x 17,330,494 ops/sec ±1.05% (121 runs sampled)'
 
-'DW-Cache simulation 10,000 90% expire x 6,338,384 ops/sec ±1.07% (105 runs sampled)'
+'ISC   simulation 10,000 90% x 13,822,754 ops/sec ±0.54% (122 runs sampled)'
 
-'ISCCache simulation 100,000 90% expire x 2,429,074 ops/sec ±4.48% (94 runs sampled)'
+'LRU   simulation 10,000 90% x 11,492,835 ops/sec ±1.18% (120 runs sampled)'
 
-'DW-Cache simulation 100,000 90% expire x 1,977,169 ops/sec ±2.71% (86 runs sampled)'
+'TRC-C simulation 10,000 90% x 10,603,672 ops/sec ±1.00% (121 runs sampled)'
 
-'ISCCache simulation 1,000,000 90% expire x 448,719 ops/sec ±5.09% (82 runs sampled)'
+'TRC-L simulation 10,000 90% x 9,814,431 ops/sec ±1.61% (119 runs sampled)'
 
-'DW-Cache simulation 1,000,000 90% expire x 629,254 ops/sec ±3.81% (98 runs sampled)'
+'DWC   simulation 10,000 90% x 7,915,551 ops/sec ±0.91% (121 runs sampled)'
+
+'Clock simulation 100,000 90% x 10,156,702 ops/sec ±1.60% (113 runs sampled)'
+
+'ISC   simulation 100,000 90% x 7,467,007 ops/sec ±1.15% (117 runs sampled)'
+
+'LRU   simulation 100,000 90% x 7,179,007 ops/sec ±2.16% (117 runs sampled)'
+
+'TRC-C simulation 100,000 90% x 6,660,546 ops/sec ±2.31% (112 runs sampled)'
+
+'TRC-L simulation 100,000 90% x 6,263,904 ops/sec ±2.89% (110 runs sampled)'
+
+'DWC   simulation 100,000 90% x 5,045,747 ops/sec ±4.65% (111 runs sampled)'
+
+'Clock simulation 1,000,000 90% x 3,587,431 ops/sec ±4.83% (96 runs sampled)'
+
+'ISC   simulation 1,000,000 90% x 2,312,996 ops/sec ±3.32% (104 runs sampled)'
+
+'LRU   simulation 1,000,000 90% x 1,770,884 ops/sec ±2.79% (102 runs sampled)'
+
+'TRC-C simulation 1,000,000 90% x 1,803,313 ops/sec ±3.00% (105 runs sampled)'
+
+'TRC-L simulation 1,000,000 90% x 1,649,346 ops/sec ±1.57% (113 runs sampled)'
+
+'DWC   simulation 1,000,000 90% x 1,589,534 ops/sec ±1.67% (115 runs sampled)'
+
+'ISC   simulation 100 90% expire x 4,261,673 ops/sec ±4.13% (112 runs sampled)'
+
+'DWC   simulation 100 90% expire x 7,782,281 ops/sec ±0.41% (123 runs sampled)'
+
+'ISC   simulation 1,000 90% expire x 3,984,608 ops/sec ±4.70% (109 runs sampled)'
+
+'DWC   simulation 1,000 90% expire x 7,160,830 ops/sec ±0.87% (121 runs sampled)'
+
+'ISC   simulation 10,000 90% expire x 3,594,196 ops/sec ±2.68% (115 runs sampled)'
+
+'DWC   simulation 10,000 90% expire x 5,985,963 ops/sec ±1.45% (120 runs sampled)'
+
+'ISC   simulation 100,000 90% expire x 2,442,721 ops/sec ±3.29% (104 runs sampled)'
+
+'DWC   simulation 100,000 90% expire x 2,143,528 ops/sec ±4.06% (108 runs sampled)'
+
+'ISC   simulation 1,000,000 90% expire x 476,958 ops/sec ±5.88% (91 runs sampled)'
+
+'DWC   simulation 1,000,000 90% expire x 582,347 ops/sec ±4.32% (106 runs sampled)'
 ```
 
 ## API
@@ -934,6 +1071,8 @@ export namespace Cache {
 export class Cache<K, V> {
   constructor(capacity: number, opts?: Cache.Options<K, V>);
   constructor(opts: Cache.Options<K, V>);
+  readonly length: number;
+  readonly size: number;
   add(key: K, value: V, opts?: { size?: number; age?: number; }): boolean;
   add(this: Cache<K, undefined>, key: K, value?: V, opts?: { size?: number; age?: number; }): boolean;
   put(key: K, value: V, opts?: { size?: number; age?: number; }): boolean;
@@ -945,8 +1084,24 @@ export class Cache<K, V> {
   delete(key: K): boolean;
   clear(): void;
   resize(capacity: number, resource?: number): void;
+  [Symbol.iterator](): Iterator<[K, V], undefined, undefined>;
+}
+
+export class TLRU<K, V> {
+  constructor(
+    capacity: number,
+    step: number = 1,
+    window: number = 100,
+    retrial: boolean = true,
+  );
   readonly length: number;
   readonly size: number;
+  add(key: K, value: V): boolean;
+  set(key: K, value: V): this;
+  get(key: K): V | undefined;
+  has(key: K): boolean;
+  delete(key: K): boolean;
+  clear(): void;
   [Symbol.iterator](): Iterator<[K, V], undefined, undefined>;
 }
 ```

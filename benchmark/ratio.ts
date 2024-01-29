@@ -1,5 +1,6 @@
 import { Cache } from '../index';
 import { LRU } from 'spica/lru';
+import { TLRU } from 'spica/tlru';
 //import { ARC } from './arc';
 import { cofetch } from 'spica/cofetch';
 import { memoize } from 'spica/memoize';
@@ -11,24 +12,28 @@ describe('Benchmark: Package', async function () {
   class Stats {
     total = 0;
     lru = 0;
+    trc = 0;
     arc = 0;
     dwc = 0;
     clear() {
       this.total = 0;
       this.lru = 0;
+      this.trc = 0;
       this.arc = 0;
       this.dwc = 0;
     }
   }
   async function run(label: string, source: string, capacity: number) {
     const keys = await parse(source);
-    const dwc = new Cache<number, 1>(capacity);
     const lru = new LRU<number, 1>(capacity);
+    const trc = new TLRU<number, 1>(capacity);
     //const arc = new ARC<number, 1>(capacity);
+    const dwc = new Cache<number, 1>(capacity);
     const stats = new Stats();
     //for (let i = 0; i < capacity * 100; ++i) {
     //  //arc.set(Number.MIN_SAFE_INTEGER + i, 1);
     //  dwc.set(Number.MIN_SAFE_INTEGER + i, 1);
+    //  trc.get(Number.MIN_SAFE_INTEGER + i - 1);
     //  if (i + 1 === capacity) for (const { key } of [...dwc['LRU']].slice(dwc['window'])) {
     //    //arc.get(key);
     //    dwc.get(key);
@@ -38,7 +43,7 @@ describe('Benchmark: Package', async function () {
     //for (let i = 0; i < keys.length; ++i) {
     //  const key = keys[i];
     //  ++stats.total;
-    //  stats.lru += lru.get(key) ?? (lru.set(key, 1), 0);
+    //  //stats.lru += lru.get(key) ?? (lru.set(key, 1), 0);
     //  //stats.arc += arc.get(key) ?? (arc.set(key, 1), 0);
     //  stats.dwc += dwc.get(key) ?? (dwc.set(key, 1), 0);
     //}
@@ -47,7 +52,7 @@ describe('Benchmark: Package', async function () {
     //for (let i = 0; i < keys.length; ++i) {
     //  const key = keys[i];
     //  ++stats.total;
-    //  stats.lru += lru.get(key) ?? (lru.set(key, 1), 0);
+    //  //stats.lru += lru.get(key) ?? (lru.set(key, 1), 0);
     //  //stats.arc += arc.get(key) ?? (arc.set(key, 1), 0);
     //  stats.dwc += dwc.get(key) ?? (dwc.set(key, 1), 0);
     //}
@@ -58,6 +63,7 @@ describe('Benchmark: Package', async function () {
       const key = keys[i];
       ++stats.total;
       stats.lru += lru.get(key) ?? (lru.set(key, 1), 0);
+      stats.trc += trc.get(key) ?? (trc.set(key, 1), 0);
       //stats.arc += arc.get(key) ?? (arc.set(key, 1), 0);
       stats.dwc += dwc.get(key) ?? (dwc.set(key, 1), 0);
     }
@@ -85,6 +91,7 @@ describe('Benchmark: Package', async function () {
   function print(label: string, stats: Stats, dwc: Cache<unknown, unknown>): void {
     console.log(label);
     console.log('LRU hit ratio', `${format(stats.lru * 100 / stats.total, 2)}%`);
+    console.log('TRC hit ratio', `${format(stats.trc * 100 / stats.total, 2)}%`);
     //console.log('ARC hit ratio', `${format(stats.arc * 100 / stats.total, 2)}%`);
     console.log('DWC hit ratio', `${format(stats.dwc * 100 / stats.total, 2)}%`);
     console.log('DWC - LRU hit ratio delta', `${format((stats.dwc - stats.lru) * 100 / stats.total, 2)}%`);
@@ -113,12 +120,12 @@ describe('Benchmark: Package', async function () {
     await run(`F1`, '/base/benchmark/trace/Financial1.spc', capacity);
   }
 
-  for (const capacity of [1e6, 2e6, 3e6, 4e6, 5e6, 6e6, 7e6, 8e6]) {
-    await run(`WS1`, '/base/benchmark/trace/WebSearch1.spc', capacity);
-  }
-
   for (const capacity of [1e5, 2e5, 3e5, 4e5, 5e5, 6e5, 7e5, 8e5]) {
     await run(`S3`, '/base/benchmark/trace/s3.arc', capacity);
+  }
+
+  for (const capacity of [1e6, 2e6, 3e6, 4e6, 5e6, 6e6, 7e6, 8e6]) {
+    await run(`WS1`, '/base/benchmark/trace/WebSearch1.spc', capacity);
   }
 
   for (const capacity of [1e6, 2e6, 3e6, 4e6, 5e6, 6e6, 7e6, 8e6]) {
