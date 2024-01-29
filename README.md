@@ -1088,12 +1088,7 @@ export class Cache<K, V> {
 }
 
 export class TLRU<K, V> {
-  constructor(
-    capacity: number,
-    step: number = 1,
-    window: number = 100,
-    retrial: boolean = true,
-  );
+  constructor(capacity: number, step?: number, window?: number, retrial?: boolean);
   readonly length: number;
   readonly size: number;
   add(key: K, value: V): boolean;
