@@ -309,56 +309,48 @@ LRU hit ratio 3.08%
 TRC hit ratio 7.94%
 DWC hit ratio 14.73%
 DWC - LRU hit ratio delta 11.65%
-DWC / LRU hit ratio ratio 477%
 
 DS1 2,000,000
 LRU hit ratio 10.74%
 TRC hit ratio 21.70%
 DWC hit ratio 27.94%
 DWC - LRU hit ratio delta 17.20%
-DWC / LRU hit ratio ratio 260%
 
 DS1 3,000,000
 LRU hit ratio 18.59%
 TRC hit ratio 33.46%
 DWC hit ratio 39.46%
 DWC - LRU hit ratio delta 20.87%
-DWC / LRU hit ratio ratio 212%
 
 DS1 4,000,000
 LRU hit ratio 20.24%
 TRC hit ratio 39.28%
 DWC hit ratio 44.20%
 DWC - LRU hit ratio delta 23.96%
-DWC / LRU hit ratio ratio 218%
 
 DS1 5,000,000
 LRU hit ratio 21.03%
 TRC hit ratio 46.10%
 DWC hit ratio 50.19%
 DWC - LRU hit ratio delta 29.16%
-DWC / LRU hit ratio ratio 238%
 
 DS1 6,000,000
 LRU hit ratio 33.95%
 TRC hit ratio 53.28%
 DWC hit ratio 56.83%
 DWC - LRU hit ratio delta 22.88%
-DWC / LRU hit ratio ratio 167%
 
 DS1 7,000,000
 LRU hit ratio 38.89%
 TRC hit ratio 60.42%
 DWC hit ratio 62.55%
 DWC - LRU hit ratio delta 23.65%
-DWC / LRU hit ratio ratio 160%
 
 DS1 8,000,000
 LRU hit ratio 43.03%
 TRC hit ratio 68.74%
 DWC hit ratio 70.03%
 DWC - LRU hit ratio delta 26.99%
-DWC / LRU hit ratio ratio 162%
 ```
 
 ### S3
@@ -422,56 +414,48 @@ LRU hit ratio 2.32%
 TRC hit ratio 3.96%
 DWC hit ratio 10.14%
 DWC - LRU hit ratio delta 7.81%
-DWC / LRU hit ratio ratio 435%
 
 S3 200,000
 LRU hit ratio 4.63%
 TRC hit ratio 12.98%
 DWC hit ratio 20.25%
 DWC - LRU hit ratio delta 15.61%
-DWC / LRU hit ratio ratio 437%
 
 S3 300,000
 LRU hit ratio 7.58%
 TRC hit ratio 21.55%
 DWC hit ratio 27.39%
 DWC - LRU hit ratio delta 19.80%
-DWC / LRU hit ratio ratio 360%
 
 S3 400,000
 LRU hit ratio 12.03%
 TRC hit ratio 30.31%
 DWC hit ratio 32.69%
 DWC - LRU hit ratio delta 20.65%
-DWC / LRU hit ratio ratio 271%
 
 S3 500,000
 LRU hit ratio 22.76%
 TRC hit ratio 38.81%
 DWC hit ratio 38.12%
 DWC - LRU hit ratio delta 15.35%
-DWC / LRU hit ratio ratio 167%
 
 S3 600,000
 LRU hit ratio 34.63%
 TRC hit ratio 47.22%
 DWC hit ratio 46.82%
 DWC - LRU hit ratio delta 12.19%
-DWC / LRU hit ratio ratio 135%
 
 S3 700,000
 LRU hit ratio 46.04%
 TRC hit ratio 55.58%
 DWC hit ratio 55.71%
 DWC - LRU hit ratio delta 9.66%
-DWC / LRU hit ratio ratio 120%
 
 S3 800,000
 LRU hit ratio 56.59%
 TRC hit ratio 64.00%
 DWC hit ratio 64.03%
 DWC - LRU hit ratio delta 7.43%
-DWC / LRU hit ratio ratio 113%
 ```
 
 ### OLTP
@@ -535,56 +519,48 @@ LRU hit ratio 16.47%
 TRC hit ratio 16.92%
 DWC hit ratio 19.59%
 DWC - LRU hit ratio delta 3.11%
-DWC / LRU hit ratio ratio 118%
 
 OLTP 500
 LRU hit ratio 23.44%
 TRC hit ratio 28.52%
 DWC hit ratio 29.12%
 DWC - LRU hit ratio delta 5.68%
-DWC / LRU hit ratio ratio 124%
 
 OLTP 750
 LRU hit ratio 28.28%
 TRC hit ratio 33.50%
 DWC hit ratio 34.90%
 DWC - LRU hit ratio delta 6.62%
-DWC / LRU hit ratio ratio 123%
 
 OLTP 1,000
 LRU hit ratio 32.83%
 TRC hit ratio 37.01%
 DWC hit ratio 37.93%
 DWC - LRU hit ratio delta 5.10%
-DWC / LRU hit ratio ratio 115%
 
 OLTP 1,250
 LRU hit ratio 36.20%
 TRC hit ratio 39.18%
 DWC hit ratio 39.96%
 DWC - LRU hit ratio delta 3.75%
-DWC / LRU hit ratio ratio 110%
 
 OLTP 1,500
 LRU hit ratio 38.69%
 TRC hit ratio 41.19%
 DWC hit ratio 41.79%
 DWC - LRU hit ratio delta 3.09%
-DWC / LRU hit ratio ratio 108%
 
 OLTP 1,750
 LRU hit ratio 40.78%
 TRC hit ratio 42.65%
 DWC hit ratio 43.43%
 DWC - LRU hit ratio delta 2.64%
-DWC / LRU hit ratio ratio 106%
 
 OLTP 2,000
 LRU hit ratio 42.46%
 TRC hit ratio 43.95%
 DWC hit ratio 44.70%
 DWC - LRU hit ratio delta 2.23%
-DWC / LRU hit ratio ratio 105%
 ```
 
 ### GLI
@@ -648,56 +624,48 @@ LRU hit ratio 0.93%
 TRC hit ratio 10.48%
 DWC hit ratio 15.44%
 DWC - LRU hit ratio delta 14.51%
-DWC / LRU hit ratio ratio 1658%
 
 GLI 500
 LRU hit ratio 0.96%
 TRC hit ratio 23.88%
 DWC hit ratio 31.53%
 DWC - LRU hit ratio delta 30.56%
-DWC / LRU hit ratio ratio 3270%
 
 GLI 750
 LRU hit ratio 1.16%
 TRC hit ratio 36.31%
 DWC hit ratio 41.55%
 DWC - LRU hit ratio delta 40.39%
-DWC / LRU hit ratio ratio 3571%
 
 GLI 1,000
 LRU hit ratio 11.22%
 TRC hit ratio 46.82%
 DWC hit ratio 49.30%
 DWC - LRU hit ratio delta 38.08%
-DWC / LRU hit ratio ratio 439%
 
 GLI 1,250
 LRU hit ratio 21.25%
 TRC hit ratio 52.04%
 DWC hit ratio 52.42%
 DWC - LRU hit ratio delta 31.16%
-DWC / LRU hit ratio ratio 246%
 
 GLI 1,500
 LRU hit ratio 36.56%
 TRC hit ratio 53.00%
 DWC hit ratio 53.49%
 DWC - LRU hit ratio delta 16.92%
-DWC / LRU hit ratio ratio 146%
 
 GLI 1,750
 LRU hit ratio 45.04%
 TRC hit ratio 55.88%
 DWC hit ratio 55.60%
 DWC - LRU hit ratio delta 10.55%
-DWC / LRU hit ratio ratio 123%
 
 GLI 2,000
 LRU hit ratio 57.41%
 TRC hit ratio 57.96%
 DWC hit ratio 57.96%
 DWC - LRU hit ratio delta 0.54%
-DWC / LRU hit ratio ratio 100%
 ```
 
 <!--
@@ -707,154 +675,132 @@ LRU hit ratio 0.00%
 TRC hit ratio 0.00%
 DWC hit ratio 8.12%
 DWC - LRU hit ratio delta 8.12%
-DWC / LRU hit ratio ratio Infinity%
 
 LOOP 250
 LRU hit ratio 0.00%
 TRC hit ratio 0.00%
 DWC hit ratio 21.33%
 DWC - LRU hit ratio delta 21.33%
-DWC / LRU hit ratio ratio Infinity%
 
 LOOP 500
 LRU hit ratio 0.00%
 TRC hit ratio 0.00%
 DWC hit ratio 44.42%
 DWC - LRU hit ratio delta 44.42%
-DWC / LRU hit ratio ratio Infinity%
 
 LOOP 750
 LRU hit ratio 0.00%
 TRC hit ratio 0.00%
 DWC hit ratio 67.62%
 DWC - LRU hit ratio delta 67.62%
-DWC / LRU hit ratio ratio Infinity%
 
 LOOP 1,000
 LRU hit ratio 0.00%
 TRC hit ratio 0.00%
 DWC hit ratio 96.77%
 DWC - LRU hit ratio delta 96.77%
-DWC / LRU hit ratio ratio Infinity%
 
 LOOP 1,250
 LRU hit ratio 99.80%
 TRC hit ratio 99.80%
 DWC hit ratio 99.80%
 DWC - LRU hit ratio delta 0.00%
-DWC / LRU hit ratio ratio 100%
 
 WS1 1,000,000
 LRU hit ratio 2.95%
 TRC hit ratio 6.97%
 DWC hit ratio 10.37%
 DWC - LRU hit ratio delta 7.42%
-DWC / LRU hit ratio ratio 351%
 
 WS1 2,000,000
 LRU hit ratio 6.08%
 TRC hit ratio 17.18%
 DWC hit ratio 18.37%
 DWC - LRU hit ratio delta 12.28%
-DWC / LRU hit ratio ratio 301%
 
 WS1 3,000,000
 LRU hit ratio 9.63%
 TRC hit ratio 26.32%
 DWC hit ratio 21.94%
 DWC - LRU hit ratio delta 12.31%
-DWC / LRU hit ratio ratio 227%
 
 WS1 4,000,000
 LRU hit ratio 21.59%
 TRC hit ratio 35.30%
 DWC hit ratio 27.22%
 DWC - LRU hit ratio delta 5.62%
-DWC / LRU hit ratio ratio 126%
 
 WS1 5,000,000
 LRU hit ratio 33.91%
 TRC hit ratio 43.80%
 DWC hit ratio 37.77%
 DWC - LRU hit ratio delta 3.86%
-DWC / LRU hit ratio ratio 111%
 
 WS1 6,000,000
 LRU hit ratio 45.74%
 TRC hit ratio 51.37%
 DWC hit ratio 48.43%
 DWC - LRU hit ratio delta 2.69%
-DWC / LRU hit ratio ratio 105%
 
 WS1 7,000,000
 LRU hit ratio 54.89%
 TRC hit ratio 57.48%
 DWC hit ratio 56.74%
 DWC - LRU hit ratio delta 1.85%
-DWC / LRU hit ratio ratio 103%
 
 WS1 8,000,000
 LRU hit ratio 61.40%
 TRC hit ratio 62.34%
 DWC hit ratio 62.11%
 DWC - LRU hit ratio delta 0.71%
-DWC / LRU hit ratio ratio 101%
 
 F1 2,500
 LRU hit ratio 27.74%
 TRC hit ratio 27.85%
 DWC hit ratio 25.12%
 DWC - LRU hit ratio delta -2.61%
-DWC / LRU hit ratio ratio 90%
 
 F1 5,000
 LRU hit ratio 30.55%
 TRC hit ratio 31.72%
 DWC hit ratio 30.20%
 DWC - LRU hit ratio delta -0.35%
-DWC / LRU hit ratio ratio 98%
 
 F1 7,500
 LRU hit ratio 32.18%
 TRC hit ratio 34.25%
 DWC hit ratio 33.85%
 DWC - LRU hit ratio delta 1.67%
-DWC / LRU hit ratio ratio 105%
 
 F1 10,000
 LRU hit ratio 33.27%
 TRC hit ratio 35.73%
 DWC hit ratio 35.64%
 DWC - LRU hit ratio delta 2.36%
-DWC / LRU hit ratio ratio 107%
 
 F1 12,500
 LRU hit ratio 34.19%
 TRC hit ratio 36.75%
 DWC hit ratio 36.73%
 DWC - LRU hit ratio delta 2.54%
-DWC / LRU hit ratio ratio 107%
 
 F1 15,000
 LRU hit ratio 34.97%
 TRC hit ratio 37.69%
 DWC hit ratio 37.61%
 DWC - LRU hit ratio delta 2.64%
-DWC / LRU hit ratio ratio 107%
 
 F1 17,500
 LRU hit ratio 35.62%
 TRC hit ratio 38.31%
 DWC hit ratio 38.17%
 DWC - LRU hit ratio delta 2.55%
-DWC / LRU hit ratio ratio 107%
 
 F1 20,000
 LRU hit ratio 36.17%
 TRC hit ratio 38.83%
 DWC hit ratio 38.80%
 DWC - LRU hit ratio delta 2.63%
-DWC / LRU hit ratio ratio 107%
 ```
 -->
 
