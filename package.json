@@ -30,7 +30,7 @@
     "LICENSE"
   ],
   "dependencies": {
-    "spica": "0.0.778"
+    "spica": "0.0.779"
   },
   "devDependencies": {
     "@types/lru-cache": "7.10.9",

@@ -213,6 +213,7 @@ Note that another cache algorithm sometimes changes the parameter values per wor
 
 - DWC's results are measured by the same default parameter values.
 - TinyLFU's results are the traces of Caffeine.
+  - Ristretto's results are 5-10% lower than Caffeine's ones due to their changes.
 
 1. Set the datasets to `./benchmark/trace` (See `./benchmark/ratio.ts`).
 2. Run `npm i`.
@@ -1030,19 +1031,6 @@ export class Cache<K, V> {
   delete(key: K): boolean;
   clear(): void;
   resize(capacity: number, resource?: number): void;
-  [Symbol.iterator](): Iterator<[K, V], undefined, undefined>;
-}
-
-export class TLRU<K, V> {
-  constructor(capacity: number, step?: number, window?: number, retrial?: boolean);
-  readonly length: number;
-  readonly size: number;
-  add(key: K, value: V): boolean;
-  set(key: K, value: V): this;
-  get(key: K): V | undefined;
-  has(key: K): boolean;
-  delete(key: K): boolean;
-  clear(): void;
   [Symbol.iterator](): Iterator<[K, V], undefined, undefined>;
 }
 ```
