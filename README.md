@@ -93,8 +93,8 @@ TLRU's loop resistance is limited.
 |TLRU     |Evict| ✓ |  ✓ | ✓  |
 |DWC      |Evict| ✓ |  ✓ | ✓  |
 |ARC      |Evict| ✓ |     | ✓  |
-|(LIRS)   |Evict| ✓ |  ✓ |     |
-|(TinyLFU)|Admit| ✓ |  ✓ |     |
+|LIRS     |Evict| ✓ |  ✓ |     |
+|TinyLFU  |Admit| ✓ |  ✓ |     |
 |W-TinyLFU|Admit| ✓ |  ✓ | ✓  |
 
 ## Strategies
@@ -300,7 +300,7 @@ const data = {
 
 ![image](https://github.com/falsandtru/dw-cache/assets/3143368/744260e0-4fb7-4a89-bd30-731c9c3d9399)
 
-W-TinyLFU, (TinyLFU) > DWC > (LIRS) > TLRU > ARC > LRU
+W-TinyLFU, (TinyLFU) > DWC > (LIRS), TLRU > ARC > LRU
 
 - DWC is an approximation of W-TinyLFU.
 
