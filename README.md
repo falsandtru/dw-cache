@@ -93,8 +93,8 @@ TLRU's loop resistance is limited.
 |TLRU     |Evict| ✓ |  ✓ | ✓  |
 |DWC      |Evict| ✓ |  ✓ | ✓  |
 |ARC      |Evict| ✓ |     | ✓  |
-|LIRS     |Evict| ✓ |  ✓ |     |
-|TinyLFU  |Admit| ✓ |  ✓ |     |
+|(LIRS)   |Evict| ✓ |  ✓ |     |
+|(TinyLFU)|Admit| ✓ |  ✓ |     |
 |W-TinyLFU|Admit| ✓ |  ✓ | ✓  |
 
 ## Strategies
