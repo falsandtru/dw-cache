@@ -3,7 +3,7 @@ import { LRU } from 'spica/lru';
 import { TLRU } from 'spica/tlru';
 //import { ARC } from './arc';
 import { cofetch } from 'spica/cofetch';
-import { memoize } from 'spica/memoize';
+import { reduce } from 'spica/memoize';
 import { wait } from 'spica/timer';
 
 describe('Benchmark: Package', async function () {
@@ -69,7 +69,7 @@ describe('Benchmark: Package', async function () {
     }
     print(`${label} ${capacity.toLocaleString('en')}`, stats, dwc);
   }
-  const parse = memoize(async function (source: string): Promise<readonly number[]> {
+  const parse = reduce(async function (source: string): Promise<readonly number[]> {
     const { responseText: data } = await cofetch(source);
     const acc = [];
     for (let i = 0; i < data.length; i = data.indexOf('\n', i + 1) + 1 || data.length) {
