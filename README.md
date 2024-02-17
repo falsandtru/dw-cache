@@ -300,7 +300,7 @@ const data = {
 
 ![image](https://github.com/falsandtru/dw-cache/assets/3143368/b91e5843-beab-4db8-b17b-79c9ae22104a)
 
-W-TinyLFU, (TinyLFU) > DWC > (LIRS), TLRU > ARC > LRU
+W-TinyLFU, (TinyLFU) > DWC > TLRU, (LIRS) > ARC > LRU
 
 - DWC is an approximation of W-TinyLFU.
 
