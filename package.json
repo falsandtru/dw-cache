@@ -30,7 +30,7 @@
     "LICENSE"
   ],
   "dependencies": {
-    "spica": "0.0.782"
+    "spica": "0.0.787"
   },
   "devDependencies": {
     "@types/mocha": "10.0.6",
