@@ -31,11 +31,13 @@ describe('Benchmark: Package', async function () {
     const dwc = new Cache<number, 1>(capacity);
     const stats = new Stats();
     //for (let i = 0; i < capacity * 100; ++i) {
+    //  //trc.get(Number.MIN_SAFE_INTEGER + i);
     //  //arc.set(Number.MIN_SAFE_INTEGER + i, 1);
-    //  dwc.set(Number.MIN_SAFE_INTEGER + i, 1);
-    //  trc.get(Number.MIN_SAFE_INTEGER + i - 1);
+    //  dwc.set(Number.MIN_SAFE_INTEGER + i + 1, 1);
+    //
+    //  //trc.get(Number.MIN_SAFE_INTEGER + i);
+    //  //arc.get(Number.MIN_SAFE_INTEGER + i);
     //  if (i + 1 === capacity) for (const { key } of [...dwc['LRU']].slice(dwc['window'])) {
-    //    //arc.get(key);
     //    dwc.get(key);
     //  }
     //}
@@ -44,6 +46,7 @@ describe('Benchmark: Package', async function () {
     //  const key = keys[i];
     //  ++stats.total;
     //  //stats.lru += lru.get(key) ?? (lru.set(key, 1), 0);
+    //  //stats.trc += trc.get(key) ?? (trc.set(key, 1), 0);
     //  //stats.arc += arc.get(key) ?? (arc.set(key, 1), 0);
     //  stats.dwc += dwc.get(key) ?? (dwc.set(key, 1), 0);
     //}
@@ -53,6 +56,7 @@ describe('Benchmark: Package', async function () {
     //  const key = keys[i];
     //  ++stats.total;
     //  //stats.lru += lru.get(key) ?? (lru.set(key, 1), 0);
+    //  //stats.trc += trc.get(key) ?? (trc.set(key, 1), 0);
     //  //stats.arc += arc.get(key) ?? (arc.set(key, 1), 0);
     //  stats.dwc += dwc.get(key) ?? (dwc.set(key, 1), 0);
     //}
