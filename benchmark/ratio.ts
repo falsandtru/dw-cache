@@ -138,4 +138,8 @@ describe('Benchmark: Package', async function () {
     await run(`DS1`, '/base/benchmark/trace/ds1.arc', capacity);
   }
 
+  for (const capacity of [1e6, 2e6, 3e6, 4e6, 5e6, 6e6, 7e6, 8e6]) {
+    await run(`WS2`, '/base/benchmark/trace/WebSearch2.spc', capacity);
+  }
+
 });
