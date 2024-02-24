@@ -110,13 +110,11 @@ Generally superior and almost flawless.
 - ***Highest performance***
   - High hit ratio (DS1, S3, OLTP, GLI)
     - ***Highest hit ratio of all the general-purpose cache algorithms.***
-      - Approximate to W-TinyLFU (DS1, GLI).
-      - Approximate to ARC (S3, OLTP).
       - W-TinyLFU is basically not a general-purpose cache algorithm due to some problems.
         - W-TinyLFU is not a general-purpose cache algorithm *without dynamic window and incremental reset*.
         - W-TinyLFU is impossible to efficiently implement *without pointer addresses or fast hash functions*.
         - W-TinyLFU's benchmark settings are not described (Especially suspicious with OLTP).
-    - ***Highest engineering hit ratio of all the general cache algorithms.***
+    - ***Highest engineering hit ratio of all the advanced cache algorithms.***
       - As a result of engineering efficiency.
   - Low time overhead (High throughput)
     - Use only two lists.
@@ -142,7 +140,7 @@ Generally superior and almost flawless.
   - Statistical accuracy dependent
     - Very smaller cache size than sufficient can degrade hit ratio.
     - Cache size 1,000 or more is recommended.
-    - For discontinuous workloads, TLRU is better.
+    - On discontinuous workloads, TLRU is better.
   - No tradeoffs other than hit ratio
     - Other advanced cache algorithms have some tradeoffs such as spike latency by linear time complexity, delayed memory release by linear space complexity, or implementability.
       - Other advanced cache algorithms cannot generally replace LRU due to these tradeoffs.
@@ -212,20 +210,19 @@ Note that LIRS and TinyLFU are risky cache algorithms.
 Note that another cache algorithm sometimes changes the parameter values per workload to get a favorite result as the paper of TinyLFU has changed the window size of W-TinyLFU.
 
 - DWC's results are measured by the same default parameter values.
-- TinyLFU's results are the traces of Caffeine.
-  - Ristretto's results are 5-10% lower than Caffeine's ones due to their changes.
+- Other results are measured by the simulator in Caffeine.
+  - https://github.com/ben-manes/caffeine/wiki/Efficiency
+  - https://docs.google.com/spreadsheets/d/1G3deNz1gJCoXBE2IuraUSwLE7H_EMn4Sn2GU0HTpI5Y (https://github.com/jedisct1/rust-arc-cache/issues/1)
 
 1. Set the datasets to `./benchmark/trace` (See `./benchmark/ratio.ts`).
+    - https://github.com/dgraph-io/benchmarks
+    - https://traces.cs.umass.edu/index.php/Storage/Storage
 2. Run `npm i`.
 3. Run `npm run bench`.
 4. Click the DEBUG button to open a debug tab.
 5. Close the previous tab.
 6. Press F12 key to open devtools.
 7. Select the console tab.
-
-https://github.com/dgraph-io/benchmarks<br>
-https://github.com/ben-manes/caffeine/wiki/Efficiency<br>
-https://docs.google.com/spreadsheets/d/1G3deNz1gJCoXBE2IuraUSwLE7H_EMn4Sn2GU0HTpI5Y (https://github.com/jedisct1/rust-arc-cache/issues/1)<br>
 
 <!--
 // https://www.chartjs.org/docs/latest/charts/line.html
@@ -437,7 +434,7 @@ DWC hit ratio 54.07%
 DWC - LRU hit ratio delta 16.12%
 
 WS2 6,000,000
-LRU hit ratio 51.68%
+LRU hit ratio 51.69%
 TRC hit ratio 60.05%
 DWC hit ratio 62.40%
 DWC - LRU hit ratio delta 10.71%
@@ -786,7 +783,7 @@ const data = {
     },
     {
       label: 'DWC',
-      data: [19.54, 29.36, 34.81, 37.74, 39.94, 41.81, 43.22, 44.62],
+      data: [19.47, 29.36, 34.73, 37.74, 39.92, 41.81, 43.34, 44.62],
       borderColor: Utils.color(2),
     },
     {
@@ -813,7 +810,7 @@ const data = {
 };
 -->
 
-![image](https://github.com/falsandtru/dw-cache/assets/3143368/3e7e1395-9f81-4f47-b28f-67630f7c6346)
+![image](https://github.com/falsandtru/dw-cache/assets/3143368/19977288-49af-484b-a11c-a56dd53d50cc)
 
 ARC > DWC > TLRU > W-TinyLFU > (LIRS) > LRU > (TinyLFU)
 
@@ -821,8 +818,8 @@ ARC > DWC > TLRU > W-TinyLFU > (LIRS) > LRU > (TinyLFU)
 OLTP 250
 LRU hit ratio 16.47%
 TRC hit ratio 17.06%
-DWC hit ratio 19.54%
-DWC - LRU hit ratio delta 3.07%
+DWC hit ratio 19.47%
+DWC - LRU hit ratio delta 3.00%
 
 OLTP 500
 LRU hit ratio 23.44%
@@ -833,8 +830,8 @@ DWC - LRU hit ratio delta 5.92%
 OLTP 750
 LRU hit ratio 28.28%
 TRC hit ratio 33.11%
-DWC hit ratio 34.81%
-DWC - LRU hit ratio delta 6.53%
+DWC hit ratio 34.73%
+DWC - LRU hit ratio delta 6.45%
 
 OLTP 1,000
 LRU hit ratio 32.83%
@@ -845,8 +842,8 @@ DWC - LRU hit ratio delta 4.91%
 OLTP 1,250
 LRU hit ratio 36.20%
 TRC hit ratio 38.88%
-DWC hit ratio 39.94%
-DWC - LRU hit ratio delta 3.73%
+DWC hit ratio 39.92%
+DWC - LRU hit ratio delta 3.71%
 
 OLTP 1,500
 LRU hit ratio 38.69%
@@ -857,8 +854,8 @@ DWC - LRU hit ratio delta 3.11%
 OLTP 1,750
 LRU hit ratio 40.78%
 TRC hit ratio 42.36%
-DWC hit ratio 43.22%
-DWC - LRU hit ratio delta 2.43%
+DWC hit ratio 43.34%
+DWC - LRU hit ratio delta 2.56%
 
 OLTP 2,000
 LRU hit ratio 42.46%
@@ -889,12 +886,12 @@ const data = {
     },
     {
       label: 'DWC',
-      data: [15.54, 31.38, 41.57, 47.83, 52.55, 53.64, 54.70, 57.96],
+      data: [15.80, 31.38, 41.65, 47.83, 52.54, 53.64, 54.77, 57.96],
       borderColor: Utils.color(2),
     },
     {
       label: 'TrueLRU',
-      data: [10.62, 25.03, 37.21, 47.24, 52.04, 53.00, 55.88, 57.96],
+      data: [10.62, 25.03, 37.28, 47.17, 52.04, 53.00, 55.88, 57.96],
       borderColor: Utils.color(1),
     },
     {
@@ -916,7 +913,7 @@ const data = {
 };
 -->
 
-![image](https://github.com/falsandtru/dw-cache/assets/3143368/9b3c0789-b749-486d-9fcf-de3bf99bd5f8)
+![image](https://github.com/falsandtru/dw-cache/assets/3143368/b0c44dce-ad66-4720-af60-0428cf505f36)
 
 W-TinyLFU, (TinyLFU), (LIRS) > DWC > TLRU >> ARC > LRU
 
@@ -924,8 +921,8 @@ W-TinyLFU, (TinyLFU), (LIRS) > DWC > TLRU >> ARC > LRU
 GLI 250
 LRU hit ratio 0.93%
 TRC hit ratio 10.62%
-DWC hit ratio 15.54%
-DWC - LRU hit ratio delta 14.61%
+DWC hit ratio 15.80%
+DWC - LRU hit ratio delta 14.87%
 
 GLI 500
 LRU hit ratio 0.96%
@@ -935,21 +932,21 @@ DWC - LRU hit ratio delta 30.41%
 
 GLI 750
 LRU hit ratio 1.16%
-TRC hit ratio 37.21%
-DWC hit ratio 41.57%
-DWC - LRU hit ratio delta 40.40%
+TRC hit ratio 37.28%
+DWC hit ratio 41.65%
+DWC - LRU hit ratio delta 40.49%
 
 GLI 1,000
 LRU hit ratio 11.22%
-TRC hit ratio 47.24%
+TRC hit ratio 47.17%
 DWC hit ratio 47.83%
 DWC - LRU hit ratio delta 36.61%
 
 GLI 1,250
 LRU hit ratio 21.25%
 TRC hit ratio 52.04%
-DWC hit ratio 52.55%
-DWC - LRU hit ratio delta 31.29%
+DWC hit ratio 52.54%
+DWC - LRU hit ratio delta 31.28%
 
 GLI 1,500
 LRU hit ratio 36.56%
@@ -960,8 +957,8 @@ DWC - LRU hit ratio delta 17.07%
 GLI 1,750
 LRU hit ratio 45.04%
 TRC hit ratio 55.88%
-DWC hit ratio 54.70%
-DWC - LRU hit ratio delta 9.65%
+DWC hit ratio 54.77%
+DWC - LRU hit ratio delta 9.72%
 
 GLI 2,000
 LRU hit ratio 57.41%
@@ -971,7 +968,6 @@ DWC - LRU hit ratio delta 0.54%
 ```
 
 <!--
-```
 LOOP 100
 LRU hit ratio 0.00%
 TRC hit ratio 0.00%
@@ -981,8 +977,8 @@ DWC - LRU hit ratio delta 8.14%
 LOOP 250
 LRU hit ratio 0.00%
 TRC hit ratio 0.00%
-DWC hit ratio 21.67%
-DWC - LRU hit ratio delta 21.67%
+DWC hit ratio 21.80%
+DWC - LRU hit ratio delta 21.80%
 
 LOOP 500
 LRU hit ratio 0.00%
@@ -993,8 +989,8 @@ DWC - LRU hit ratio delta 43.37%
 LOOP 750
 LRU hit ratio 0.00%
 TRC hit ratio 0.00%
-DWC hit ratio 67.36%
-DWC - LRU hit ratio delta 67.36%
+DWC hit ratio 67.98%
+DWC - LRU hit ratio delta 67.98%
 
 LOOP 1,000
 LRU hit ratio 0.00%
@@ -1007,7 +1003,6 @@ LRU hit ratio 99.80%
 TRC hit ratio 99.80%
 DWC hit ratio 99.80%
 DWC - LRU hit ratio delta 0.00%
-```
 -->
 
 ## Throughput
@@ -1201,11 +1196,11 @@ export namespace Cache {
     readonly sample?: number;
     readonly sweep?: {
       readonly threshold?: number;
-      readonly ratio?: number;
       readonly window?: number;
       readonly room?: number;
-      readonly range?: number;
-      readonly shift?: number;
+      readonly ground?: number;
+      readonly interval?: number;
+      readonly slide?: number;
     };
   }
 }
