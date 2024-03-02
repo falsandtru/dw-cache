@@ -10,99 +10,6 @@ The source code is maintained on the next source repository.
 
 https://github.com/falsandtru/spica
 
-## Efficiency
-
-TLRU and TRC are abbreviations for TrueLRU (spica/tlru).
-
-### Mathematical efficiency
-
-Some different cache algorithms require extra memory space to retain evicted keys.
-Linear time complexity indicates the existence of batch processing.
-Note that admission algorithm doesn't work without eviction algorithm.
-
-|Algorithm|Type |Time complexity<br>(Worst case)|Space complexity<br>(Extra)|Key size|Data structures|
-|:-------:|:---:|:------:|:------:|:---------:|:-----:|
-|LRU      |Evict|Constant|Constant|    1x     |1 list |
-|TLRU     |Evict|Constant|Constant|    1x     |1 list |
-|DWC      |Evict|Constant|Constant|    1x     |2 lists|
-|ARC      |Evict|Constant|Linear  |    2x     |4 lists|
-|LIRS     |Evict|Linear  |Linear  |**3-2500x**|2 lists|
-|TinyLFU  |Admit|Linear  |Linear  |*~1-10x*<br>(8bit * 10N * 4)|5 arrays|
-|W-TinyLFU|Admit|Linear  |Linear  |*~1-10x*<br>(8bit * 10N * 4)|1 list<br>4 arrays|
-
-https://github.com/ben-manes/caffeine/wiki/Efficiency<br>
-https://github.com/zhongch4g/LIRS2/blob/master/src/replace_lirs_base.cc
-
-### Engineering efficiency
-
-A pointer is 8 bytes, bool and int8 are each 1 byte in C.
-
-#### 8 byte key and value (int64, float64, 8 chars)
-
-Memoize, etc.
-
-|Algorithm|Entry overhead|Key size|Total per entry|Attenuation coefficient|
-|:-------:|-------------:|-------:|--------------:|----------------------:|
-|LRU      |      16 bytes|      1x|       32 bytes|                100.00%|
-|TLRU     |      16 bytes|      1x|       32 bytes|                100.00%|
-|DWC      |      17 bytes|      1x|       33 bytes|                 96.96%|
-|ARC      |      17 bytes|      2x|       58 bytes|                 55.17%|
-|(LIRS)   |      33 bytes|      3x|      131 bytes|                 24.42%|
-|(LIRS)   |      33 bytes|     10x|      418 bytes|                  7.65%|
-|(TinyLFU)|      56 bytes|      1x|       72 bytes|                 44.44%|
-|W-TinyLFU|      56 bytes|      1x|       72 bytes|                 44.44%|
-
-#### 32 byte key and 8 byte value (Session ID / ID)
-
-In-memory KVS, etc.
-
-|Algorithm|Entry overhead|Key size|Total per entry|Attenuation coefficient|
-|:-------:|-------------:|-------:|--------------:|----------------------:|
-|LRU      |      16 bytes|      1x|       56 bytes|                100.00%|
-|TLRU     |      16 bytes|      1x|       56 bytes|                100.00%|
-|DWC      |      17 bytes|      1x|       57 bytes|                 98.24%|
-|ARC      |      17 bytes|      2x|       88 bytes|                 63.63%|
-|(LIRS)   |      33 bytes|      3x|      203 bytes|                 27.58%|
-|(LIRS)   |      33 bytes|     10x|      658 bytes|                  8.51%|
-|(TinyLFU)|      56 bytes|      1x|       96 bytes|                 58.33%|
-|W-TinyLFU|      56 bytes|      1x|       96 bytes|                 58.33%|
-
-#### 16 byte key and 512 byte value (Domain / DNS packet)
-
-DNS cache server, etc.
-
-|Algorithm|Entry overhead|Key size|Total per entry|Attenuation coefficient|
-|:-------:|-------------:|-------:|--------------:|----------------------:|
-|LRU      |      16 bytes|      1x|      544 bytes|                100.00%|
-|TLRU     |      16 bytes|      1x|      544 bytes|                100.00%|
-|DWC      |      17 bytes|      1x|      545 bytes|                 99.81%|
-|ARC      |      17 bytes|      2x|      578 bytes|                 94.11%|
-|(LIRS)   |      33 bytes|      3x|      659 bytes|                 82.54%|
-|(LIRS)   |      33 bytes|     10x|    1,002 bytes|                 54.29%|
-|(TinyLFU)|      56 bytes|      1x|      584 bytes|                 93.15%|
-|W-TinyLFU|      56 bytes|      1x|      584 bytes|                 93.15%|
-
-## Resistance
-
-LIRS's burst resistance means the resistance to continuous cache misses for the last LIR entry or the HIR entries.
-TLRU's loop resistance is limited.
-
-|Algorithm|Type |Scan|Loop|Burst|
-|:-------:|:---:|:--:|:--:|:---:|
-|LRU      |Evict|    |    |  ✓ |
-|TLRU     |Evict| ✓ |  ✓ | ✓  |
-|DWC      |Evict| ✓ |  ✓ | ✓  |
-|ARC      |Evict| ✓ |     | ✓  |
-|LIRS     |Evict| ✓ |  ✓ |     |
-|TinyLFU  |Admit| ✓ |  ✓ |     |
-|W-TinyLFU|Admit| ✓ |  ✓ | ✓  |
-
-## Strategies
-
-- Dynamic partition
-- Sampled history injection
-- Transitive wide MRU with cyclic replacement
-
 ## Properties
 
 Generally superior and almost flawless.
@@ -209,6 +116,99 @@ Note that LIRS and TinyLFU are risky cache algorithms.
     - *Frequent delete operations degrade performance.*
   - Spike latency
     - ***Whole reset of Bloom filters takes linear time.***
+
+## Strategies
+
+- Dynamic partition
+- Sampled history injection
+- Transitive wide MRU with cyclic replacement
+
+## Efficiency
+
+TLRU and TRC are abbreviations for TrueLRU (spica/tlru).
+
+### Mathematical efficiency
+
+Some different cache algorithms require extra memory space to retain evicted keys.
+Linear time complexity indicates the existence of batch processing.
+Note that admission algorithm doesn't work without eviction algorithm.
+
+|Algorithm|Type |Time complexity<br>(Worst case)|Space complexity<br>(Extra)|Key size|Data structures|
+|:-------:|:---:|:------:|:------:|:---------:|:-----:|
+|LRU      |Evict|Constant|Constant|    1x     |1 list |
+|TLRU     |Evict|Constant|Constant|    1x     |1 list |
+|DWC      |Evict|Constant|Constant|    1x     |2 lists|
+|ARC      |Evict|Constant|Linear  |    2x     |4 lists|
+|LIRS     |Evict|Linear  |Linear  |**3-2500x**|2 lists|
+|TinyLFU  |Admit|Linear  |Linear  |*~1-10x*<br>(8bit * 10N * 4)|5 arrays|
+|W-TinyLFU|Admit|Linear  |Linear  |*~1-10x*<br>(8bit * 10N * 4)|1 list<br>4 arrays|
+
+https://github.com/ben-manes/caffeine/wiki/Efficiency<br>
+https://github.com/zhongch4g/LIRS2/blob/master/src/replace_lirs_base.cc
+
+### Engineering efficiency
+
+A pointer is 8 bytes, bool and int8 are each 1 byte in C.
+
+#### 8 byte key and value (int64, float64, 8 chars)
+
+Memoize, etc.
+
+|Algorithm|Entry overhead|Key size|Total per entry|Attenuation coefficient|
+|:-------:|-------------:|-------:|--------------:|----------------------:|
+|LRU      |      16 bytes|      1x|       32 bytes|                100.00%|
+|TLRU     |      16 bytes|      1x|       32 bytes|                100.00%|
+|DWC      |      17 bytes|      1x|       33 bytes|                 96.96%|
+|ARC      |      17 bytes|      2x|       58 bytes|                 55.17%|
+|(LIRS)   |      33 bytes|      3x|      131 bytes|                 24.42%|
+|(LIRS)   |      33 bytes|     10x|      418 bytes|                  7.65%|
+|(TinyLFU)|      56 bytes|      1x|       72 bytes|                 44.44%|
+|W-TinyLFU|      56 bytes|      1x|       72 bytes|                 44.44%|
+
+#### 32 byte key and 8 byte value (Session ID / ID)
+
+In-memory KVS, etc.
+
+|Algorithm|Entry overhead|Key size|Total per entry|Attenuation coefficient|
+|:-------:|-------------:|-------:|--------------:|----------------------:|
+|LRU      |      16 bytes|      1x|       56 bytes|                100.00%|
+|TLRU     |      16 bytes|      1x|       56 bytes|                100.00%|
+|DWC      |      17 bytes|      1x|       57 bytes|                 98.24%|
+|ARC      |      17 bytes|      2x|       88 bytes|                 63.63%|
+|(LIRS)   |      33 bytes|      3x|      203 bytes|                 27.58%|
+|(LIRS)   |      33 bytes|     10x|      658 bytes|                  8.51%|
+|(TinyLFU)|      56 bytes|      1x|       96 bytes|                 58.33%|
+|W-TinyLFU|      56 bytes|      1x|       96 bytes|                 58.33%|
+
+#### 16 byte key and 512 byte value (Domain / DNS packet)
+
+DNS cache server, etc.
+
+|Algorithm|Entry overhead|Key size|Total per entry|Attenuation coefficient|
+|:-------:|-------------:|-------:|--------------:|----------------------:|
+|LRU      |      16 bytes|      1x|      544 bytes|                100.00%|
+|TLRU     |      16 bytes|      1x|      544 bytes|                100.00%|
+|DWC      |      17 bytes|      1x|      545 bytes|                 99.81%|
+|ARC      |      17 bytes|      2x|      578 bytes|                 94.11%|
+|(LIRS)   |      33 bytes|      3x|      659 bytes|                 82.54%|
+|(LIRS)   |      33 bytes|     10x|    1,002 bytes|                 54.29%|
+|(TinyLFU)|      56 bytes|      1x|      584 bytes|                 93.15%|
+|W-TinyLFU|      56 bytes|      1x|      584 bytes|                 93.15%|
+
+## Resistance
+
+LIRS's burst resistance means the resistance to continuous cache misses for the last LIR entry or the HIR entries.
+TLRU's loop resistance is limited.
+
+|Algorithm|Type |Scan|Loop|Burst|
+|:-------:|:---:|:--:|:--:|:---:|
+|LRU      |Evict|    |    |  ✓ |
+|TLRU     |Evict| ✓ |  ✓ | ✓  |
+|DWC      |Evict| ✓ |  ✓ | ✓  |
+|ARC      |Evict| ✓ |     | ✓  |
+|LIRS     |Evict| ✓ |  ✓ |     |
+|TinyLFU  |Admit| ✓ |  ✓ |     |
+|W-TinyLFU|Admit| ✓ |  ✓ | ✓  |
 
 ## Hit ratio
 
