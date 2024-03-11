@@ -27,10 +27,14 @@ describe('Benchmark: Package', async function () {
     const dwc = new Cache<number, 1>(capacity);
     const stats = new Stats();
     //for (let i = 0; i < capacity * 100; ++i) {
+    //  //lru.set(Number.MIN_SAFE_INTEGER + i, 1);
+    //  //trc.set(Number.MIN_SAFE_INTEGER + i, 1);
+    //  dwc.set(Number.MIN_SAFE_INTEGER + i, 1);
+    //  //lru.get(Number.MIN_SAFE_INTEGER + i);
     //  //trc.get(Number.MIN_SAFE_INTEGER + i);
-    //  dwc.set(Number.MIN_SAFE_INTEGER + i + 1, 1);
-    //  //trc.get(Number.MIN_SAFE_INTEGER + i);
-    //  if (i + 1 === capacity) for (const { key } of [...dwc['LRU']].slice(dwc['window'])) {
+    //  dwc.get(Number.MIN_SAFE_INTEGER + i + 1);
+    //  if (i + 1 !== capacity) continue;
+    //  for (const { key } of [...dwc['LRU']].slice(dwc['window'])) {
     //    dwc.get(key);
     //  }
     //}
